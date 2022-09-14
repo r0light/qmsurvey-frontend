@@ -1,7 +1,7 @@
 # Quality Model Validation Survey frontend
 
 A web application that acts as the frontend for conducting quality model validation surveys. Users can rate impacts that product factors have on defined quality aspects.
-To actually use it and also store survey data, the backend is also required: [https://github.com/r0light/qmsurvey-frontend](https://github.com/r0light/qmsurvey-frontend)
+To actually use it and also store survey data, the backend is also required: [https://github.com/r0light/qmsurvey-backend](https://github.com/r0light/qmsurvey-backend)
 
 ## Recommended IDE Setup
 
