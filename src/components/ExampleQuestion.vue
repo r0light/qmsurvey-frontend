@@ -23,7 +23,7 @@ function propagateTriedExample() {
     The following <span class="bold">exemplary question</span> explains the
     concept:
     The <em>product factor</em> ({{ exampleFactor.name }}) is described at
-    the top and you can click on any of the the quality aspects (Confidentiality, Reusability, ...) below it to rate how it impacts that quality aspect if it is present in a system.
+    the top and you can click on any of the quality aspects (Confidentiality, Reusability, ...) below it to rate how it impacts that quality aspect if it is present in a system.
     The quality aspects mostly stem from the <a href="https://iso25000.com/index.php/en/iso-25000-standards/iso-25010">ISO25010 standard for software product quality</a> and for each a short explanation is provided by hovering over the question mark. 
     If you are ready, you can start on the next page where the actual product factors listed.
   </p>

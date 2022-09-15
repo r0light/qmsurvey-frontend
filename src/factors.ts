@@ -65,182 +65,182 @@ function shuffle(array: any[]) {
 const factors = {
     "secretsStoredInSpecializedServices": {
         "name": "Secrets stored in specialized services",
-        "description": "A dedicated backing service to host secrets (e.g. passwords, access tokens, encryption keys) can be used which is also able to manage secrets (for example revoke them or replace them with updated secrets). Components receive secrets from this backing services and therefore secrets can be stored securely in one place only, but also stay readily available when needed."
+        "description": "A dedicated backing service to host secrets (e.g. passwords, access tokens, encryption keys) exists. All secrets required by a system are hosted in this backing service where they can also be managed (for example they can be revoked or replaced with updated secrets). Components fetch secrets from this backing services in a controlled way when they need them."
     },
     "accessControlManagementConsistency": {
         "name": "Access control management consistency",
-        "description": "By managing access control for endpoints in a consistent way, that means for example using the same format of access control lists or a single account directory in a dedicated backing service for all components, vulnerabilities through misconfiguration can be reduced or avoided. Furthermore it is easier to verify that access restrictions are implemented correctly."
+        "description": "Access control for endpoints is managed in a consistent way, that means for example always the same format is used for access control lists or a single account directory in a dedicated backing service exists for all components. Access control configurations can then be made always in the same known style and only in a dedicated place. Based on such a consistent access control configuration, also verifications can be performed to ensure that access restrictions are implemented correctly."
     },
     "accountSeparation": {
         "name": "Account separation",
-        "description": "Components should be separated by assigning them different accounts, ideally each component should have an individual account. Through this, it is possible to trace which component performed which actions and in case of an attack accounts that are compromised can be restricted on a fine-grained level so that parts of a system which are not compromised can remain functional."
+        "description": "Components are separated by assigning them different accounts. Ideally each component has an individual account. Through this, it is possible to trace which component performed which actions and it is possible to restrict access to other components on a fine-grained level, so that for example in the case of an attack, compromised components can be isolated based on their account."
     },
     "authenticationDelegation": {
         "name": "Authentication delegation",
-        "description": "Delegating the verification of an entity for authenticity to a dedicated backing service removes this concern from individual components so that their focus can remain on business functionalities while for example different authentication options can be managed in one place only."
+        "description": "The verification of an entity for authenticity, for example upon a request, is delegated to a dedicated backing service. This concern is therefore removed from individual components so that their focus can remain on business functionalities while for example different authentication options can be managed in one place only."
     },
     "limitedDataScope": {
         "name": "Limited data scope",
-        "description": "To keep the functional scope of a service limited and therefore cohesive, the service should be concerned only with a limited number of data aggregates that need to be administrated together, for example to fulfill data consistency requirements. Data aggregates for which consistency requirements can be relaxed might be distributed over separate services."
+        "description": "The number of data aggregates that are processed in a service is limited to those which need to be administrated together, for example to fulfill data consistency requirements. The aim is to keep the functional scope of a service cohesive. Data aggregates for which consistency requirements can be relaxed might be distributed over separate services."
     },
     "commandQueryResponsibilitySegregation": {
         "name": "Command Query Responsibility Segregation",
-        "description": "By separating endpoints for read (query) and write (command) operations on data aggregates into different services, changes to these operating can be made independently and also different representations for data aggregates can be used. It can be useful when operations on data aggregates have differing usage patterns, require different formats, or are changed for different reasons."
+        "description": "Endpoints for read (query) and write (command) operations on the same data aggregate are separated into different services. Changes to these operations can then be made independently and also different representations for data aggregates can be used. That way operations on data aggregates can be adjusted to differing usage patterns, different format requirements, or if they are changed for different reasons."
     },
     "mostlyStatelessServices": {
         "name": "Mostly stateless services",
-        "description": "Most services in a cloud-native application should be stateless, that means not requiring durable disk space on the infrastructure that they run on. Stateless services can be replaced, scaled and updated more easily. Stateful services should be reduced to a minimum."
+        "description": "Most services in a system are kept stateless, that means not requiring durable disk space on the infrastructure that they run on. Stateless services can be replaced, updated or replicated at any time. Stateful services are reduced to a minimum."
     },
     "specializedStatefulServices": {
         "name": "Specialized stateful services",
-        "description": "For stateful components, that means components that do require durable disk space on the infrastructure that they run on, specialized software or frameworks should be used that can handle distributed state by replicating it over several components or component instances while still ensuring consistency requirements for that state."
+        "description": "For stateful components, that means components that do require durable disk space on the infrastructure that they run on, specialized software or frameworks are used that can handle distributed state by replicating it over several components or component instances while still ensuring consistency requirements for that state."
     },
     "asynchronousCommunication": {
         "name": "Asynchronous communication",
-        "description": "By preferring asynchronous links (e.g. based on messaging backing services) for the communication between components, they can be decoupled in time so that not all linked components need to be available at the same time for a successful communication. Additionally, callers do not need to await a response."
+        "description": "Asynchronous links (e.g. based on messaging backing services) are preferred for the communication between components. That way, components are decoupled in time meaning that not all linked components need to be available at the same time for a successful communication. Additionally, callers do not await a response."
     },
     "persistentCommunication": {
         "name": "Persistent communication",
-        "description": "By using links that persist messages which have been sent (e.g. based on messaging backing services), components can be decoupled, because components need not even exist at the time a message is sent, but can still receive a message. Through this, communication can also be repeated in case of failures."
+        "description": "Links persist messages which have been sent (e.g. based on messaging backing services). That way, components are decoupled, because components need not yet exist at the time a message is sent, but can still receive a message. Communication can also be repeated, because persisted messages can be retrieved again."
     },
     "usageOfExistingSolutionsForNon-CoreCapabilities": {
         "name": "Usage of existing solutions for non-core capabilities",
-        "description": "For non-core capabilities readily available solutions can be used. This means solutions which are based on a standard or a specification, are widely adopted and ideally open source so that their well-functioning is ensured by a broader community. Non-core capabilities include interface technologies or protocols for endpoints, infrastructure technologies, and software for backing services. By using such solutions effort might be reduced and components might be easier to integrate."
+        "description": "For non-core capabilities readily available solutions are used. This means solutions which are based on a standard or a specification, are widely adopted and ideally open source so that their well-functioning is ensured by a broader community. Non-core capabilities include interface technologies or protocols for endpoints, infrastructure technologies (for example container orchestration engines), and software for backing services. That way capabilities don't need to self-implemented and existing integration options can be used."
     },
     "separationByGateways": {
         "name": "Separation by gateways",
-        "description": "By separating components or groups of components through gateways, communication can be proxied and controlled at specific components. It also abstracts one part of a system from another so that it can be reused by different components without needing direct links to components that actually provide the needed functionality. This also enables the redirection of communication when components change without changing the gateway endpoint. Furthermore, incoming communication from outside of a system can be controlled at a central component (the gateway) to enable access control."
+        "description": "Individual components or groups of components are separated through gateways. That means communication is proxied and controlled at specific gateway components. It also abstracts one part of a system from another so that it can be reused by different components without needing direct links to components that actually provide the needed functionality. This way, communication can also be redirected when component endpoints change without changing the gateway endpoint. Also incoming communication from outside of a system can be directed at external endpoints of a central component (the gateway)."
     },
     "consistentCentralizedLogging": {
         "name": "Consistent centralized logging",
-        "description": "Logging functionality, specifically the automated collection of logs, should be concentrated in a centralized component which combines and stores logs from the components of a system. The logs should also be consistent regarding their format and level of granularity. The goal is to facilitate log analysis, for example by also enabling a correlation of logs from different components."
+        "description": "Logging functionality, specifically the automated collection of logs, is concentrated in a centralized backing service which combines and stores logs from the components of a system. The logs are kept consistent regarding their format and level of granularity. In the backing service also log analysis functionalities are provided, for example by also enabling a correlation of logs from different components."
     },
     "consistentCentralizedMetrics": {
         "name": "Consistent centralized metrics",
-        "description": "Metrics gathering and calculation functionality for monitoring purposes should be concentrated in a centralized component which combines, aggregates and stores metrics from the components of a system. The metrics should also be consistent regarding their format and level of granularity, although multiple levels of granularity should be supported. The goal is to facilitate the analysis of metrics, for example by also enabling correlations of metrics."
+        "description": "Metrics gathering and calculation functionality for monitoring purposes is concentrated in a centralized component which combines, aggregates and stores metrics from the components of a system. The metrics are kept consistent regarding their format and support multiple levels of granularity. In the backing service also metric analysis functionalities are provided, for example by also enabling correlations of metrics."
     },
     "distributedTracingOfInvocations": {
         "name": "Distributed tracing of invocations",
-        "description": "For request traces that span multiple components in a cloud-native system, distributed tracing should be enabled so that traces based on correlation IDs are captured automatically which can then be analyzed and problems within request traces can be clearly attributed to single components."
+        "description": "For request traces that span multiple components in a system, distributed tracing is enabled so that traces based on correlation IDs are captured automatically and stored in a backing service where they can be analyzed and problems within request traces can be clearly attributed to single components."
     },
     "healthAndReadinessChecks": {
         "name": "Health and readiness Checks",
-        "description": "All components in a cloud-native system should enable health and readiness checks so that unhealthy components can be quickly identified and fixed and communication is carried out only between healthy and ready components. Health and readiness checks can for example be dedicated endpoints of components which can be called regularly to check a component. Furthermore, health and readiness checks enable an up-to-date holistic overview of the health of a system."
+        "description": "All components in a system offer health and readiness checks so that unhealthy components can be identified and communication can be restricted to happen only between healthy and ready components. Health and readiness checks can for example be dedicated endpoints of components which can be called regularly to check a component. That way, also an up-to-date holistic overview of the health of a system is enabled."
     },
     "automatedInfrastructure": {
         "name": "Automated infrastructure",
-        "description": "Infrastructure provisioning and management should be automated as much as possible to reduce the operational effort. That means infrastructure should be created automatically when needed, kept up-to-date automatically while in use, and removed automatically once not needed anymore. Ideally it should be combined with components deployments so that no explicit infrastructure management is needed for a component deployment."
+        "description": "Infrastructure provisioning and management is automated as much as possible and manual tasks are reduced. That means infrastructure is created automatically when needed, kept up-to-date automatically while in use, and removed automatically once not needed anymore. Ideally it is combined with components deployments so that no manual infrastructure management is needed for a component deployment."
     },
     "useInfrastructureAsCode": {
         "name": "Use infrastructure as code",
-        "description": "To avoid manual infrastructure operation and configuration, the infrastructure requirements and constraints should be defined (coded) independently of the actual runtime in a storable format. That way a defined infrastructure can be automatically provisioned repeatedly and ideally on different underlying infrastructures (cloud providers) based on the stored infrastructure definition."
+        "description": "The infrastructure requirements and constraints of a system are defined (coded) independently of the actual runtime in a storable format. That way a defined infrastructure can be automatically provisioned repeatedly and ideally also on different underlying infrastructures (cloud providers) based on the stored infrastructure definition. Infrastructure provisioning and configuration operations are not performed manually via an interface of a cloud provider."
     },
     "dynamicScheduling": {
         "name": "Dynamic scheduling",
-        "description": "Resource provisioning to deployed components should be dynamic and automated so that every component is ensured to have the resources it needs and only that many resources are provisioned wich are really needed at the same time. This requires dynamic adjustments to resources to adapt to changing environments. This capability should be part of the used infrastructure."
+        "description": "Resource provisioning to deployed components is dynamic and automated so that every component is ensured to have the resources it needs and only that many resources are provisioned wich are really needed at the same time. This requires dynamic adjustments to resources to adapt to changing environments. This capability is part of the used infrastructure."
     },
     "limitedRequestTraceScope": {
         "name": "Limited request trace scope",
-        "description": "A request that requires the collaboration of several services should still be limited to as few services as possible, because otherwise services become more dependent on each other the more they need to collaborate to handle requests."
+        "description": "A request that requires the collaboration of several services is still limited to as few services as possible. Otherwise, the more services are part of a request trace the more dependent they are on each other."
     },
     "logicalGrouping": {
         "name": "Logical grouping",
-        "description": "To increase the independence of services, services should also be grouped so that services which are related are in the same group, but services which are independent are separated further. That way a separation can also be achieved on the network and infrastructure level by separating independent service groups more strictly. Potential impacts of a compromised or misbehaving service can therefore be reduced to the group to which it belongs but other groups are unaffected."
+        "description": "Services are logically grouped so that services which are related (for example by having many links or processing the same data aggregates) are in the same group, but services which are more independent are separated in different groups. That way a separation can also be achieved on the network and infrastructure level by separating service groups more strictly, such as having different subnets for such logical groups or not letting different groups run on the same infrastructure. Potential impacts of a compromised or misbehaving service can therefore be reduced to the group to which it belongs but other groups are ideally unaffected."
     },
     "backingServiceDecentralization": {
         "name": "Backing service decentralization",
-        "description": "By assigning different backing services to different components a decentralization can be achieved which makes components more independent. For example, instead of one message broker for a whole system, several message brokers can be used, each for a group of components that are interrelated. A problem in one messaging broker has an impact on only those components using it, but not on components having separate message brokers."
+        "description": "Different backing services are assigned to different components. That way, a decentralization is achieved. For example, instead of one message broker for a whole system, several message brokers can be used, each for a group of components that are interrelated. A problem in one messaging broker has an impact on only those components using it, but not on components having separate message brokers."
     },
     "managedInfrastructure": {
         "name": "Managed infrastructure",
-        "description": "Infrastructure such as basic computing, storage or network resources can be managed by a cloud provider to ensure a stable functioning and up-to-date functionalities. Responsibility is transferred, operational overhead is reduced and costs can be made more flexible because providers and vendors can provide a usage-based pricing."
+        "description": "Infrastructure such as basic computing, storage or network resources, but potentially also software infrastructure (for example a container orchestration engine) is managed by a cloud provider who is responsible for a stable functioning and up-to-date functionalities. The more infrastructure is managed, the more operational responsibility is transferred. This will also be reflected in the costs which are then calculated more on usage-based pricing schemes."
     },
     "managedBackingServices": {
         "name": "Managed backing services",
-        "description": "Especially backing services that provide non-business functionality can be operated and managed by vendors to ensure a stable functioning and up-to-date functionalities. This reduces operational overhead and costs can be made more flexible because vendors can provide a usage-based pricing."
+        "description": "Backing services that provide non-business functionality are operated and managed by vendors who are responsible for a stable functioning and up-to-date functionalities. Operational responsibility is transferred which is also reflected in the costs which are then calculated more on usage-based pricing schemes."
     },
     "serviceReplication": {
         "name": "Service replication",
-        "description": "In a cloud-native application services and therefore their provided functionalities should be replicated across different locations so that the latency for accesses from different locations is minimized and the incoming load can be distributed among replicas."
+        "description": "Services and therefore their provided functionalities are replicated across different locations so that the latency for accesses from different locations is minimized and the incoming load can be distributed among replicas."
     },
     "horizontalDataReplication": {
         "name": "Horizontal data replication",
-        "description": "Data should be replicated horizontally, that means duplicated across several instances of a storage backing service so that a higher load can be handled and replicas closer to the service where data is needed can be used to reduce latency."
+        "description": "Data is replicated horizontally, that means duplicated across several instances of a storage backing service so that a higher load can be handled and replicas closer to the service where data is needed can be used to reduce latency."
     },
     "verticalDataReplication": {
         "name": "Vertical data replication",
-        "description": "Data should be replicated vertically, that means across a request trace so that it is available closer to where a request initially comes in. Typically caching is used for vertical data replication."
+        "description": "Data is replicated vertically, that means across a request trace so that it is available closer to where a request initially comes in. Typically caching is used for vertical data replication."
     },
     "shardedDataStoreReplication": {
         "name": "Sharded data store replication",
-        "description": "Data should be sharded, that means split into several storage backing service instances by a reasonable strategy so that requests can be distributed across shards to increase performance. One storage backing service instance is then less likely to be overloaded with requests."
+        "description": "Data storage is sharded, that means data is split into several storage backing service instances by a certain strategy so that requests can be distributed across shards to increase performance. One example strategy could be to shard data geographically, that means user data from one location is stored in one shard while user data from another location is stored in a different shard. One storage backing service instance is then less likely to be overloaded with requests, because the number of potential requests is limited by the amount of data in that instance."
     },
     "resourceLimits": {
         "name": "Resource limits",
-        "description": "For all components the maximum amount of resources a component can consume should be limited based on its predicted needs so that resources can be provisioned efficiently. That means a component gets the resources that it needs, but not more than necessary. By making the resource requirements explicit, for example in a configuration file, these limits can be enforced by the infrastructure."
+        "description": "For all components the maximum amount of resources a component can consume is limited based on its predicted needs so that resources are provisioned efficiently. That means a component gets the resources that it needs, but not more than necessary. By making the resource requirements explicit, for example in a configuration file, these limits can be enforced by the infrastructure."
     },
     "built-InAutoscaling": {
         "name": "Built-in autoscaling",
-        "description": "In a cloud-native application, autoscaling of components should be automated and built-in into the infrastructure to reduce the operational effort for scaling. Autoscaling should be based on appropriate rules so that resource utilization is optimized."
+        "description": "Horizontal up- and down-scaling of components is automated and built into the infrastructure on which components run. Horizontal scaling means that component instances are replicated when the load increases and components instances are removed when load decreases. This autoscaling is based on rules which can be configured according to system needs."
     },
     "infrastructureAbstraction": {
         "name": "Infrastructure abstraction",
-        "description": "In a cloud-native application the used infrastructure should be abstracted by clear boundaries to decouple the system from physical hardware or also virtual hardware to minimize the effort and risk involved with managing infrastructure. For example, when a container orchestration system is provided, the system should be operable on that level of abstraction. Problems with hardware or VMs are handled transparently by the provider."
+        "description": "The used infrastructure such as physical hardware, virtual hardware, or software platform is abstracted by clear boundaries to enable a clear differentiation of responsibilities for operating and managing infrastructure. For example, when a managed container orchestration system is used, the system is operable on that level of abstraction meaning that the API of the orchestration system is the boundary. Problems with underlying hardware or VMs are handled transparently by the provider."
     },
     "cloudVendorAbstraction": {
         "name": "Cloud vendor abstraction",
-        "description": "In a cloud-native application the infrastructure and backing services offered by a cloud vendor and used by a system should be based on unified or standardized interfaces so that vendor specifics are abstracted and a system could potentially be transferred to a another cloud vendor."
+        "description": "The managed infrastructure and backing services used by a system and provided by a cloud vendor are based on unified or standardized interfaces so that vendor specifics are abstracted and a system could potentially be transferred to a another cloud vendor offering the same unified or standardized interfaces."
     },
     "configurationStoredInSpecializedServices": {
         "name": "Configuration stored in specialized services",
-        "description": "By storing configuration values in specialized backing services and not only environment variables for example, changing configurations at runtime is facilitated and can be enabled by connecting components to such specialized backing services and checking for updated configurations at runtime. Additionally, configurations can be stored once, but accessed by different components."
+        "description": "Configuration values are stored in specialized backing services and not only environment variables for example. That way, changing configurations at runtime is facilitated and can be enabled by connecting components to such specialized backing services and checking for updated configurations at runtime. Additionally, configurations can be stored once, but accessed by different components."
     },
     "immutableArtifacts": {
         "name": "Immutable artifacts",
-        "description": "Infrastructure and services of a cloud-native application should be defined and described in its entirety at development time so that artifacts are immutable at runtime. This means upgrades are introduced at runtime through replacement instead of modification. Furthermore components do not differ across environments and in case of replication all replicas are identical to avoid unexpected behavior."
+        "description": "Infrastructure and components of a system are defined and described in its entirety at development time so that artifacts are immutable at runtime. This means upgrades are introduced at runtime through replacement of components instead of modification. Furthermore components do not differ across environments and in case of replication all replicas are identical to avoid unexpected behavior."
     },
     "physicalDataDistribution": {
         "name": "Physical data distribution",
-        "description": "Data storage for Data aggregates should be distributed across physical locations (e.g. availability zones) to ensure availability even in the case of data center failures."
+        "description": "Storage Backing Service instances where Data aggregates are persisted are distributed across physical locations (e.g. availability zones of a cloud vendor) so that even in the case of a failure of one physical location, another physical location is still useable."
     },
     "physicalServiceDistribution": {
         "name": "Physical service distribution",
-        "description": "Components should be distributed through replication across physical locations (e.g. availability zones) to ensure availability even in the case of data center failures."
+        "description": "Components are distributed through replication across physical locations (e.g. availability zones of a cloud vendor) so that even in the case of a failure of one physical location, another physical location is still useable."
     },
     "rollingUpgradesEnabled": {
         "name": "Rolling upgrades enabled",
-        "description": "If the infrastructure on which components of a cloud-native application are deployed provides the ability for rolling upgrades, upgrades can be performed seamlessly in an automated manner with reduced effort. Seamlessly means that upgrades of components do not necessitate planned downtime."
+        "description": "The infrastructure on which components are deployed provides the ability for rolling upgrades. That means upgrades of components can be performed seamlessly in an automated manner. Seamlessly means that upgrades of components do not necessitate planned downtime."
     },
     "retriesForSafeInvocations": {
         "name": "Retries for safe invocations",
-        "description": "Links that are safe to invoke multiple times without leading to unintended state changes, should be retried in case of failures to automatically handle transient faults in communication. That way faults can be prevented from being propagated higher up in the request trace."
+        "description": "Links that are safe to invoke multiple times without leading to unintended state changes, are automatically retried in case of errors to transparently handle transient faults in communication. That way faults can be prevented from being propagated higher up in a request trace."
     },
     "circuitBreakedCommunication": {
         "name": "Circuit breaked communication",
-        "description": "If a link is broken for an extended time, a circuit breaker can help to avoid unnecessary communication and therefore waiting time, because it does not perform communication which is known to fail. Instead, an error response is immediately returned or a default response is given, if possible."
+        "description": "For links a circuit breaker implementation is used which avoids unnecessary communication and therefore waiting time if a communication is known to fail. Instead the circuit breaker immediately returns an error response of a default response, is possible, while periodically retrying communication in the background"
     },
     "automatedRestarts": {
         "name": "Automated restarts",
-        "description": "In a cloud-native application, when a component is found to be unhealthy, it should be automatically and directly restarted so that a recover from failures is possible. Ideally this capability should be provided by the infrastructure."
+        "description": "When a component is found to be unhealthy, that means not functioning as expected, it is directly and automatically restarted. Ideally this capability is provided by the infrastructure on which a component is running."
     },
     "api-BasedCommunication": {
         "name": "API-based communication",
         "description": "In a cloud-native application services should offer well-defined, standardized, documented, and declarative APIs for communication. Communication should happen only via such APIs and can be both synchronous or asynchronous."
     },
-    "contract-Based": {
-        "name": "Contract-based",
-        "description": "By defining contracts for links, changes to endpoints can be evaluated by their impact on the contract and delayed when a contract would be broken. That way consumers of endpoints can adapt to changes when necessary."
+    "contract-BasedLinks": {
+        "name": "Contract-based Links",
+        "description": "Contracts are defined for the communication via links so that changes to endpoints can be evaluated by their impact on the contract and delayed when a contract would be broken. That way consumers of endpoints can adapt to changes when necessary without suddenly breaking communication via a link due to a changed endpoint."
     },
     "mediatedCommunication": {
         "name": "Mediated communication",
-        "description": "By mediating communication links through additional components, there is no direct dependence on the other communication partner and additional operations can be performed to manage the communication, also in a centrally and consistently configurable way. Such operations can for example be access control, load balancing, retries, or monitoring."
+        "description": "Communication from one component via a link is mediated through additional components so that there is no direct dependence on the other communication partner and additional operations can be performed to manage the communication, also in a centrally and consistently configurable way. Such operations can for example be access control, load balancing, retries, or monitoring."
     },
     "addressingAbstraction": {
         "name": "Addressing abstraction",
-        "description": "By abstracting from specific addresses for reaching other components, address changes can be handled automatically without impacting the link between components. This can be achieved for example through service discovery where components are addressed through abstract service names and specific addresses are resolved through service discovery."
+        "description": "In a link from one component to another the specific addresses for reaching the other component is not used, but instead an abstract address is used. That way, the specific addresses of components can be changed without impacting the link between components. This can be achieved for example through service discovery where components are addressed through abstract service names and specific addresses are resolved through service discovery which can be implemented in the infrastructure or a backing service."
     },
     "communicationPartnerAbstraction": {
         "name": "Communication partner abstraction",
-        "description": "By abstracting from specific components as linked communication partners, components are further decoupled and don't need to exist at the same time for communication. An example is event-driven communication where events are published to channels and can also be received by components which are created later in time."
+        "description": "Communication via links is not based on specific communication partners (specific components) but abstracted based on the content of communication. An example is event-driven communication where events are published to channels without the publisher knowing which components receive events and events can therefore also be received by components which are created later in time."
     }
 };
