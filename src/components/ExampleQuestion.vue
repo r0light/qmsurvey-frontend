@@ -11,7 +11,9 @@ const exampleFactor = {
   answered: false
 };
 
-const emit = defineEmits(["triedExample"]);
+const emit = defineEmits<{
+  (e: "triedExample"): void;
+}>();
 
 function propagateTriedExample() {
   emit("triedExample");

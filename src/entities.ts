@@ -16,25 +16,25 @@ const entities = {
         name: "Component",
         description: "A Component is an abstract description for a part of the system and refers to an executable and addressable unit. A Component can be a Service that implements and provides business functionality or a Backing Service that provides general functionality needed by other Components, e.g., messaging, load balancing, logging, but also data storage."
     },
-    service: {
-        name: "Service",
-        description: "A Service is a component that implements business functionality and provides it via an interface to other components."
+    storageBackingService: {
+        name: "Storage Backing Service",
+        description: "A Storage Backing Service is a special case of a Backing Service that describes databases and is therefore explicitly stateful."
     },
     backingService: {
         name: "Backing Service",
         description: "A Backing Service is a component that provides general functionality needed by other components, e.g., messaging, load balancing, logging."
     },
-    storageBackingService: {
-        name: "Storage Backing Service",
-        description: "A Storage Backing Service is a special case of a Backing Service that describes databases and is therefore explicitly stateful."
-    },
-    endpoint: {
-        name: "Endpoint",
-        description: "An Endpoint is a communication endpoint and part of the interface of a Component. It can for example be a REST endpoint or a message producer or listener."
+    service: {
+        name: "Service",
+        description: "A Service is a component that implements business functionality and provides it via an interface to other components."
     },
     externalEndpoint: {
         name: "External Endpoint",
         description: "An External Endpoint is a special case of an Endpoint that is made available to the public."
+    },
+    endpoint: {
+        name: "Endpoint",
+        description: "An Endpoint is a communication endpoint and part of the interface of a Component. It can for example be a REST endpoint or a message producer or listener."
     },
     link: {
         name: "Link",

@@ -45,6 +45,25 @@ export function getRandomly(numberOfFactors: number): InitialFactor[] {
     return shuffled;
 }
 
+export function getAlphabetically(numberOfFactors: number): InitialFactor[] {
+    let allFactors: InitialFactor[] = listFactors();
+    let sorted = allFactors.sort(compareName);
+    if (numberOfFactors > 0 && numberOfFactors < sorted.length) {
+        sorted = sorted.slice(0, numberOfFactors);
+    }
+    return sorted;
+}
+
+function compareName(factorA: InitialFactor, factorB: InitialFactor) {
+    if ( factorA.name < factorB.name ){
+        return -1;
+      }
+      if ( factorA.name > factorB.name ){
+        return 1;
+      }
+      return 0;
+}
+
 // props to https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(array: any[]) {
     let currentIndex: number = array.length, randomIndex;
@@ -228,7 +247,7 @@ const factors = {
         "description": "In a cloud-native application services should offer well-defined, standardized, documented, and declarative APIs for communication. Communication should happen only via such APIs and can be both synchronous or asynchronous."
     },
     "contract-BasedLinks": {
-        "name": "Contract-based Links",
+        "name": "Contract-based links",
         "description": "Contracts are defined for the communication via links so that changes to endpoints can be evaluated by their impact on the contract and delayed when a contract would be broken. That way consumers of endpoints can adapt to changes when necessary without suddenly breaking communication via a link due to a changed endpoint."
     },
     "mediatedCommunication": {

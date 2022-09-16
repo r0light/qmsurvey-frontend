@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import Welcome from "./components/Welcome.vue";
 import ExampleQuestion from "./components/ExampleQuestion.vue";
+import FactorOverview from "./components/FactorOverview.vue";
 import QualityAspectsQuestion from "./components/QualityAspectsQuestion.vue";
 import Demographics from "./components/Demographics.vue";
 import Feedback from "./components/Feedback.vue";
@@ -24,7 +25,7 @@ import {
 import { increaseTimeLimit, startPause } from "./timerManagement";
 import { getEmptyImpacts } from "./aspectRating";
 import type { Factor } from "./factors";
-import { getRandomly } from "./factors";
+import { getAlphabetically } from "./factors";
 import type { DemographicValues } from "./demographics";
 import NavigationControls from "./components/elements/NavigationControls.vue";
 import TimeProgressBar from "./components/elements/TimeProgressBar.vue";
@@ -39,7 +40,7 @@ const props = defineProps<{
 // prepare factors: load if factors are already stored locally, otherwise initialize
 let loadedFactors: Factor[] = loadLocallyStoredFactors();
 if (loadedFactors.length == 0) {
-  let newFactors = getRandomly(45); // maximum is currently 45
+  let newFactors = getAlphabetically(45); // maximum is currently 45
   for (const factor of newFactors) {
     if (factor.key) {
       loadedFactors.push({
@@ -183,14 +184,6 @@ function previous() {
   currentState.value = getPreviousState(currentState.value);
 }
 
-function getStyleForStatus(answered: boolean): "todo" | "done" {
-  if (answered) {
-    return "done";
-  } else {
-    return "todo";
-  }
-}
-
 const showTimeUpModal = ref(false);
 
 function handleTimeUp() {
@@ -230,21 +223,7 @@ function increase5() {
           @forwardClicked="next()" />
       </div>
       <div v-else-if="currentState === 'overview'" key="3" class="page">
-        <p>Please click on as many of the following product factors as you want to rate their impact(s) on quality aspects. The product factors are not presented in any particular order and you can just choose randomly or click on those which interest you. When the time is up you will be informed, but you can also finish earlier by clicking on the Finish button on the bottom right.<br>
-        While answering the questions, please use your personal experience and think about applications that you have (recently) worked on which fit the context of cloud-native in a broader sense.
-        </p>
-        <div class="factorOverview">
-          <button class="factorButton" :class="getStyleForStatus(factor.answered)"
-            v-for="(factor, factorIndex) of factors" :key="factorIndex" @click="answerQuestion(factorIndex)">
-            <span class="buttonNameIcon">{{ factor.name }}</span>
-            <span class="award" v-if="factor.answered">
-              <font-awesome-icon icon="fa-solid fa-award" />
-            </span>
-            <span v-else-if="!factor.answered">
-              <font-awesome-icon icon="fa-solid fa-circle-question" />
-            </span>
-          </button>
-        </div>
+        <FactorOverview :factors="factors" @factorSelected="factorIndex => answerQuestion(factorIndex)"></FactorOverview>
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Finish'"
           @forwardClicked="next()" />
       </div>
@@ -409,49 +388,6 @@ button:focus {
   flex: 1;
   padding: 0 1rem 0 1rem;
   row-gap: 1.5em;
-}
-
-.factorOverview {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  row-gap: 0.9em;
-  column-gap: 1em;
-}
-
-.factorButton {
-  font-size: 1.2em;
-  padding: 0.4em;
-  word-wrap: break-word;
-  min-width: 150px;
-  border-style: solid;
-  border-width: 1pt;
-  border-radius: 3pt;
-  border-color: var(--vt-c-indigo);
-}
-
-.todo {
-  background-color: var(--color-button);
-}
-
-.todo:hover {
-  background-color: var(--color-button-hover);
-}
-
-.done {
-  background-color: #f8c620;
-  padding-right: 1.6em;
-}
-
-.done:hover {
-  background-color: #dfac07;
-}
-
-.award {
-  font-size: 1.7em;
-  position: absolute;
-  top: -2px;
 }
 
 .buttonNameIcon {
