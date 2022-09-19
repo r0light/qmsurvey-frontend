@@ -40,6 +40,7 @@ function getStyleForStatus(answered: boolean): "todo" | "done" {
   padding: 0.4em;
   word-wrap: break-word;
   min-width: 150px;
+  width: 297px;
   border-style: solid;
   border-width: 1pt;
   border-radius: 3pt;
@@ -72,12 +73,13 @@ function getStyleForStatus(answered: boolean): "todo" | "done" {
 .buttonFactorIcon {
     width: 10%;
     margin-right: 0;
+    display: flex;
+    align-items: center;
 }
 
 .award {
   position: absolute;
-  top: -7px;
-  right: 4px;
   font-size: 1.7em;
+  right: 8px;
 }
 </style>
