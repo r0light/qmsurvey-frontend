@@ -339,7 +339,6 @@ button:focus {
   justify-content: space-between;
   max-width: 1280px;
   width: 100%;
-  min-height: 820px;
   row-gap: 10px;
   padding: 1rem 0 2rem 0;
 }
