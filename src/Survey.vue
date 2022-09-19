@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import Welcome from "./components/Welcome.vue";
 import ExampleQuestion from "./components/ExampleQuestion.vue";
 import FactorOverview from "./components/FactorOverview.vue";
@@ -22,19 +22,18 @@ import {
   saveFactorLocally,
   loadFactorLocally,
 } from "./surveyHandling";
-import { increaseTimeLimit, startPause } from "./timerManagement";
 import { getEmptyImpacts } from "./aspectRating";
 import type { Factor } from "./factors";
 import { getAlphabetically } from "./factors";
 import type { DemographicValues } from "./demographics";
 import NavigationControls from "./components/elements/NavigationControls.vue";
-import TimeProgressBar from "./components/elements/TimeProgressBar.vue";
+import ProgressOverview from "./components/elements/ProgressOverview.vue"
+
+export type SurveyState = "welcome" | "example" | "overview" | "question" | "demographics" | "done";
 
 const props = defineProps<{
   isPilot: boolean;
   startTime: number;
-  paused: boolean;
-  timeLimit: number;
 }>();
 
 // prepare factors: load if factors are already stored locally, otherwise initialize
@@ -96,7 +95,8 @@ function answerQuestion(factorIndex: number) {
   currentState.value = "question";
 }
 
-type SurveyState = "welcome" | "example" | "overview" | "question" | "demographics" | "done"
+
+
 const currentState = ref<SurveyState>("welcome");
 
 function getNextState(currentState: SurveyState): SurveyState {
@@ -184,34 +184,14 @@ function previous() {
   currentState.value = getPreviousState(currentState.value);
 }
 
-const showTimeUpModal = ref(false);
-
-function handleTimeUp() {
-  showTimeUpModal.value = true;
-}
-
-function finishAfterTimeUp() {
-  transitionDirection.value = "fadeToLeft";
-  currentState.value = "demographics";
-  showTimeUpModal.value = false;
-}
-
-const timeStateChange = ref(0);
-
-function increase5() {
-  increaseTimeLimit(300); // 5 minutes means 300 seconds
-  timeStateChange.value = timeStateChange.value + 1; // increase by one to trigger change in TimeProgressBar
-  showTimeUpModal.value = false;
-}
-
 </script>
 
 <template>
   <header></header>
 
   <main class="main">
+    <ProgressOverview :currentState="currentState"></ProgressOverview>
     <div class="pilotHint" v-if="isPilot">Pilot study</div>
-    <TimeProgressBar v-if="currentState !== 'done'" :start="startTime" :maxTime="timeLimit" :paused="paused" :increaseTrigger="timeStateChange" @timeUp="handleTimeUp()" />
     <Transition :name="transitionDirection" mode="out-in">
       <div v-if="currentState === 'welcome'" key="1" class="page">
         <Welcome />
@@ -270,23 +250,6 @@ function increase5() {
             }
           ">
             Start now
-          </button>
-        </div>
-      </template>
-    </Modal>
-  </Teleport>
-  <Teleport to="body">
-    <Modal :show="showTimeUpModal" @close="showTimeUpModal = false">
-      <template #body>
-        <div class="timeUp">
-          <h3>Time's up <span v-if="timeStateChange > 0">again</span>!</h3>
-          <p>Thanks for taking the time to fill out this survey. There is just one more question left about your background. You can click on Finish to answer it and submit the survey:</p>
-          <button @click="finishAfterTimeUp">
-            <span class="buttonNameIcon">Finish</span><font-awesome-icon icon="fa-solid fa-flag-checkered" />
-          </button>
-          <p>But if you could spare some more time and want to rate more impacts, you can also continue:</p>
-          <button @click="increase5">
-            Actually, I could do 5 more minutes
           </button>
         </div>
       </template>
@@ -378,7 +341,7 @@ button:focus {
   width: 100%;
   min-height: 820px;
   row-gap: 10px;
-  padding: 2rem 0 2rem 0;
+  padding: 1rem 0 2rem 0;
 }
 
 .page {
@@ -388,6 +351,7 @@ button:focus {
   flex: 1;
   padding: 0 1rem 0 1rem;
   row-gap: 1.5em;
+  margin-top: 10px;
 }
 
 .buttonNameIcon {
@@ -428,23 +392,6 @@ button:focus {
 .fadeToRight-leave-to {
   transform: translateX(20px);
   opacity: 0;
-}
-
-.timeUp {
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  font-size: 1.3em;
-}
-
-.timeUp p {
-  font-size: 0.9em;
-}
-
-.timeUp button {
-  font-size: 1em;
-  flex: 1;
-  padding: 0.5em;
 }
 
 .okButton {

@@ -54,6 +54,9 @@ const loading = ref(false);
 const showErrorModal = ref(false);
 
 function sendContactEmail() {
+  if (email.value === "") {
+    return;
+  }
   loading.value = true;
   submitContact(email.value)
     .then((emailSubmitted) => {

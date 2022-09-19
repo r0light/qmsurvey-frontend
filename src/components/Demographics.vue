@@ -11,7 +11,11 @@ const generalExperience = ref(demographics.generalExperience);
 const cloudExperience = ref(demographics.cloudExperience);
 
 function notInIndustry() {
-  return jobArea.value != "industry";
+  return jobArea.value !== "industry";
+}
+
+function isAStudent() {
+  return jobArea.value !== "industry" && jobArea.value !== "academia";
 }
 
 const emit = defineEmits(["updatedDemographics"]);
@@ -34,7 +38,7 @@ function updateValue() {
     </h3>
     <div>
       <p>
-        Based on your current job, would you introduce yourself rather as
+        Based on your current (primary) job, would you introduce yourself rather as
         working in industry or academia?
       </p>
       <input
@@ -66,7 +70,7 @@ function updateValue() {
       <label class="radioLabel" for="student">Student</label><br />
     </div>
     <div>
-      <label for="title">What is your current job title?</label><br />
+      <label for="title" v-bind:class="{ disabled: isAStudent() }">What is your current job title? (only if not a student)</label><br />
       <input
         class="textInput"
         type="text"
@@ -74,6 +78,7 @@ function updateValue() {
         name="jobTitle"
         list="titles"
         v-model="jobTitle"
+        v-bind:disabled="isAStudent()"
         @input="updateValue"
         placeholder="Job title"
       /><br />

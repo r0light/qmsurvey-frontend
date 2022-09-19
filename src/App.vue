@@ -9,8 +9,6 @@ import LoadingIcon from "./components/elements/LoadingIcon.vue";
 const validation = ref("loading");
 const pilot = ref(false);
 const startTime = ref(-1);
-const paused = ref(false);
-const timeLimit = ref(600);
 const showErrorModal = ref(false);
 
 checkTokenValidity()
@@ -18,8 +16,6 @@ checkTokenValidity()
     validation.value = "valid";
     pilot.value = ok.isPilot;
     startTime.value = ok.startTime;
-    paused.value = ok.paused;
-    timeLimit.value = ok.timeLimit;
   })
   .catch((invalid) => {
     if (invalid instanceof Error) {
@@ -38,7 +34,7 @@ function reload() {
   <div v-if="validation == 'loading'">
     <LoadingIcon />
   </div>
-  <Survey v-if="validation == 'valid'" :isPilot="pilot" :startTime="startTime" :paused="paused" :timeLimit="timeLimit" />
+  <Survey v-if="validation == 'valid'" :isPilot="pilot" :startTime="startTime" />
   <div v-if="validation == 'invalid'">
     <div class="invalid">
       <h1>There currently is no survey to answer!</h1>

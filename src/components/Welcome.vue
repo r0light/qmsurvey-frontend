@@ -6,8 +6,7 @@
       Hello and thank you for your willingness to participate in this survey!
     </h1>
 
-    <p>The timer you see above is not meant to pressure you, but to ensure that you do not spend more than the promised 10 minutes. It will just inform you after 10 minutes and has no other effect on the actual survey. But if it annoys you, you can also pause it. So please take your time to read the instructions and then proceed.</p>
-
+    <p class="newParagraph"></p>
     <p class="newParagraph">
       The aim of this survey is to investigate the <span class="bold">impact</span> of different <span class="bold">product factors</span> of a software system on <span class="bold">software quality</span>. 
       Product factors are properties of a software system which characterize the way it is implemented and deployed. Product factors can also be the result of applying certain patterns or practices.
@@ -16,7 +15,8 @@
     <p class="newParagraph">
       The survey is part of our general effort of creating a quality model for cloud-native application architectures. 
       With it, we want to empirically investigate relationships within the model.
-      Your task is to decide for each product factor individually how it impacts software quality aspects.
+      If you have practical experience with implementing web-based applications that run in the cloud, we would appreciate your help.
+      Your task is to decide for individual product factors how they impact software quality aspects.
       There is an example on the next page to show how to do that.
     </p>
 

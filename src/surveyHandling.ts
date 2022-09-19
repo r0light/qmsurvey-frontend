@@ -1,7 +1,7 @@
 import type { Factor } from "./factors";
 import type { DemographicValues } from "./demographics"
 import { getEmptyDemographics } from "./demographics";
-import { getTimeState, clearTimeState } from './timerManagement';
+import { generateSecondsTimeStamp } from './timerManagement';
 import type { PilotFeedback } from "./components/Feedback.vue";
 
 export function saveExampleTriedLocally(): void {
@@ -106,7 +106,6 @@ export function clearStoredSurveyData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('sessionId');
     localStorage.removeItem('pilot');
-    clearTimeState();
     clearLocallyStoredFactors();
     clearLocallyStoredDemographics();
 }
@@ -136,16 +135,14 @@ switch (import.meta.env.MODE) {
 export type TokenValidationResult = {
     isPilot: boolean;
     startTime: number;
-    paused: boolean;
-    timeLimit: number;
 }
 
 export function checkTokenValidity(): Promise<TokenValidationResult> {
     return new Promise((resolve, reject) => {
-        let currentTimeState = getTimeState();
+        let currentTime = generateSecondsTimeStamp();
         if (import.meta.env.MODE === "offline") {
             token = "devToken";
-            resolve({ isPilot: false, startTime: currentTimeState.adjustedStartTime, paused: currentTimeState.currentlyPaused, timeLimit: currentTimeState.currentTimeLimit});
+            resolve({ isPilot: false, startTime: currentTime });
         } else {
             let urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('survey')) {
@@ -155,7 +152,7 @@ export function checkTokenValidity(): Promise<TokenValidationResult> {
                     token = storedToken;
                     sessionId = localStorage['sessionId'];
                     pilot = (localStorage['pilot']  === "true");
-                    resolve({ isPilot: pilot, startTime: currentTimeState.adjustedStartTime, paused: currentTimeState.currentlyPaused, timeLimit: currentTimeState.currentTimeLimit});
+                    resolve({ isPilot: pilot, startTime: currentTime });
                 } else {
                     clearLocallyStoredFactors();
                     let uuid = generateUUID();
@@ -167,7 +164,7 @@ export function checkTokenValidity(): Promise<TokenValidationResult> {
                         body: JSON.stringify({
                             token: currentToken,
                             sessionId: uuid,
-                            clientStartTime: new Date(currentTimeState.startTime * 1000).toISOString() // *1000 to convert to milliseconds again
+                            clientStartTime: new Date(currentTime * 1000).toISOString() // *1000 to convert to milliseconds again
                         })
                     })
                     .then(response => {
@@ -178,22 +175,19 @@ export function checkTokenValidity(): Promise<TokenValidationResult> {
                             localStorage['sessionId'] = sessionId;
                             return response.json();
                         } else {
-                            clearTimeState();
                             reject(response);
                         }
                     })
                     .then(responseBody => {
                         pilot = responseBody.pilot;
                         localStorage['pilot'] = pilot;
-                        resolve({ isPilot: pilot, startTime: currentTimeState.adjustedStartTime, paused: currentTimeState.currentlyPaused, timeLimit: currentTimeState.currentTimeLimit});
+                        resolve({ isPilot: pilot, startTime: currentTime });
                     })
                     .catch(error => {
-                        clearTimeState();
                         reject(error);
                     })
                 }
             } else {
-                clearTimeState();
                 reject("No survey token provided!");
             }
         }
