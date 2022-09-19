@@ -44,7 +44,7 @@
         <em>Endpoint</em> is an <em>External Endpoint</em> that is available to
         the public. Finally, <em>Components</em> are deployed on
         <em>Infrastructure</em> which is an abstract element to describe the
-        different possibilites for deploying software, e.g., a VM from an
+        different possibilities for deploying software, e.g., a VM from an
         Infrastructure as a Service (IaaS) offering, a Container Orchestration
         Engine managed by a cloud provider, a Platform as a Service (PaaS)
         offering.

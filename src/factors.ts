@@ -84,7 +84,7 @@ function shuffle(array: any[]) {
 const factors = {
     "secretsStoredInSpecializedServices": {
         "name": "Secrets stored in specialized services",
-        "description": "A dedicated backing service to host secrets (e.g. passwords, access tokens, encryption keys) exists. All secrets required by a system are hosted in this backing service where they can also be managed (for example they can be revoked or replaced with updated secrets). Components fetch secrets from this backing services in a controlled way when they need them."
+        "description": "A dedicated backing service to host secrets (e.g., passwords, access tokens, encryption keys) exists. All secrets required by a system are hosted in this backing service where they can also be managed (for example they can be revoked or replaced with updated secrets). Components fetch secrets from this backing service in a controlled way when they need them."
     },
     "accessControlManagementConsistency": {
         "name": "Access control management consistency",
@@ -116,11 +116,11 @@ const factors = {
     },
     "asynchronousCommunication": {
         "name": "Asynchronous communication",
-        "description": "Asynchronous links (e.g. based on messaging backing services) are preferred for the communication between components. That way, components are decoupled in time meaning that not all linked components need to be available at the same time for a successful communication. Additionally, callers do not await a response."
+        "description": "Asynchronous links (e.g., based on messaging backing services) are preferred for the communication between components. That way, components are decoupled in time meaning that not all linked components need to be available at the same time for a successful communication. Additionally, callers do not await a response."
     },
     "persistentCommunication": {
         "name": "Persistent communication",
-        "description": "Links persist messages which have been sent (e.g. based on messaging backing services). That way, components are decoupled, because components need not yet exist at the time a message is sent, but can still receive a message. Communication can also be repeated, because persisted messages can be retrieved again."
+        "description": "Links persist messages which have been sent (e.g., based on messaging backing services). That way, components are decoupled, because components need not yet exist at the time a message is sent but can still receive a message. Communication can also be repeated, because persisted messages can be retrieved again."
     },
     "usageOfExistingSolutionsForNon-CoreCapabilities": {
         "name": "Usage of existing solutions for non-core capabilities",
@@ -128,7 +128,7 @@ const factors = {
     },
     "separationByGateways": {
         "name": "Separation by gateways",
-        "description": "Individual components or groups of components are separated through gateways. That means communication is proxied and controlled at specific gateway components. It also abstracts one part of a system from another so that it can be reused by different components without needing direct links to components that actually provide the needed functionality. This way, communication can also be redirected when component endpoints change without changing the gateway endpoint. Also incoming communication from outside of a system can be directed at external endpoints of a central component (the gateway)."
+        "description": "Individual components or groups of components are separated through gateways. That means communication is proxied and controlled at specific gateway components. It also abstracts one part of a system from another so that it can be reused by different components without needing direct links to components that actually provide the needed functionality. This way, communication can also be redirected when component endpoints change without changing the gateway endpoint. Also, incoming communication from outside of a system can be directed at external endpoints of a central component (the gateway)."
     },
     "consistentCentralizedLogging": {
         "name": "Consistent centralized logging",
@@ -144,7 +144,7 @@ const factors = {
     },
     "healthAndReadinessChecks": {
         "name": "Health and readiness Checks",
-        "description": "All components in a system offer health and readiness checks so that unhealthy components can be identified and communication can be restricted to happen only between healthy and ready components. Health and readiness checks can for example be dedicated endpoints of components which can be called regularly to check a component. That way, also an up-to-date holistic overview of the health of a system is enabled."
+        "description": "All components in a system offer health and readiness checks so that unhealthy components can be identified, and communication can be restricted to happen only between healthy and ready components. Health and readiness checks can for example be dedicated endpoints of components which can be called regularly to check a component. That way, also an up-to-date holistic overview of the health of a system is enabled."
     },
     "automatedInfrastructure": {
         "name": "Automated infrastructure",
@@ -156,7 +156,7 @@ const factors = {
     },
     "dynamicScheduling": {
         "name": "Dynamic scheduling",
-        "description": "Resource provisioning to deployed components is dynamic and automated so that every component is ensured to have the resources it needs and only that many resources are provisioned wich are really needed at the same time. This requires dynamic adjustments to resources to adapt to changing environments. This capability is part of the used infrastructure."
+        "description": "Resource provisioning to deployed components is dynamic and automated so that every component is ensured to have the resources it needs and only that many resources are provisioned which are really needed at the same time. This requires dynamic adjustments to resources to adapt to changing environments. This capability is part of the used infrastructure."
     },
     "limitedRequestTraceScope": {
         "name": "Limited request trace scope",
@@ -216,15 +216,15 @@ const factors = {
     },
     "immutableArtifacts": {
         "name": "Immutable artifacts",
-        "description": "Infrastructure and components of a system are defined and described in its entirety at development time so that artifacts are immutable at runtime. This means upgrades are introduced at runtime through replacement of components instead of modification. Furthermore components do not differ across environments and in case of replication all replicas are identical to avoid unexpected behavior."
+        "description": "Infrastructure and components of a system are defined and described in its entirety at development time so that artifacts are immutable at runtime. This means upgrades are introduced at runtime through replacement of components instead of modification. Furthermore, components do not differ across environments and in case of replication all replicas are identical to avoid unexpected behavior."
     },
     "physicalDataDistribution": {
         "name": "Physical data distribution",
-        "description": "Storage Backing Service instances where Data aggregates are persisted are distributed across physical locations (e.g. availability zones of a cloud vendor) so that even in the case of a failure of one physical location, another physical location is still useable."
+        "description": "Storage Backing Service instances where Data aggregates are persisted are distributed across physical locations (e.g., availability zones of a cloud vendor) so that even in the case of a failure of one physical location, another physical location is still useable."
     },
     "physicalServiceDistribution": {
         "name": "Physical service distribution",
-        "description": "Components are distributed through replication across physical locations (e.g. availability zones of a cloud vendor) so that even in the case of a failure of one physical location, another physical location is still useable."
+        "description": "Components are distributed through replication across physical locations (e.g., availability zones of a cloud vendor) so that even in the case of a failure of one physical location, another physical location is still useable."
     },
     "rollingUpgradesEnabled": {
         "name": "Rolling upgrades enabled",
@@ -236,7 +236,7 @@ const factors = {
     },
     "circuitBreakedCommunication": {
         "name": "Circuit breaked communication",
-        "description": "For links a circuit breaker implementation is used which avoids unnecessary communication and therefore waiting time if a communication is known to fail. Instead the circuit breaker immediately returns an error response of a default response, is possible, while periodically retrying communication in the background"
+        "description": "For links a circuit breaker implementation is used which avoids unnecessary communication and therefore waiting time if a communication is known to fail. Instead, the circuit breaker immediately returns an error response of a default response, is possible, while periodically retrying communication in the background"
     },
     "automatedRestarts": {
         "name": "Automated restarts",
@@ -248,7 +248,7 @@ const factors = {
     },
     "contract-BasedLinks": {
         "name": "Contract-based links",
-        "description": "Contracts are defined for the communication via links so that changes to endpoints can be evaluated by their impact on the contract and delayed when a contract would be broken. That way consumers of endpoints can adapt to changes when necessary without suddenly breaking communication via a link due to a changed endpoint."
+        "description": "Contracts are defined for the communication via links so that changes to endpoints can be evaluated by their impact on the contract and delayed when a contract would be broken. That way consumers of endpoints can adapt to changes when necessary, without suddenly breaking communication via a link due to a changed endpoint."
     },
     "mediatedCommunication": {
         "name": "Mediated communication",
@@ -256,7 +256,7 @@ const factors = {
     },
     "addressingAbstraction": {
         "name": "Addressing abstraction",
-        "description": "In a link from one component to another the specific addresses for reaching the other component is not used, but instead an abstract address is used. That way, the specific addresses of components can be changed without impacting the link between components. This can be achieved for example through service discovery where components are addressed through abstract service names and specific addresses are resolved through service discovery which can be implemented in the infrastructure or a backing service."
+        "description": "In a link from one component to another the specific address for reaching the other component is not used, but instead an abstract address is used. That way, the specific addresses of components can be changed without impacting the link between components. This can be achieved for example through service discovery where components are addressed through abstract service names and specific addresses are resolved through service discovery which can be implemented in the infrastructure or a backing service."
     },
     "communicationPartnerAbstraction": {
         "name": "Communication partner abstraction",

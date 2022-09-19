@@ -81,7 +81,7 @@ const qualityAspects = {
             },
             testability: {
                 name: "Testability",
-                description: "Testability describes how effective the test criteria defined for a system are in checking the intended behavior of a system as well as how facile it is to perform the tests to determine whether the test criteria are met."
+                description: "Testability describes how effective test criteria can be defined and used for a system are to check the intended behavior of a system as well as how facile it is to perform the tests to determine whether the test criteria are met."
             },
             simplicity: {
                 name: "Simplicity",
@@ -98,7 +98,7 @@ const qualityAspects = {
             },
             resourceUtilization: {
                 name: "Resource utilization",
-                description: "Resource utilization describes to what extent resources are only used as required by a system when performing its functions, in terms of storage space needed, CPU utilization, memory usage, or network usage."
+                description: "Resource utilization describes to what extent resources are available and used as required by a system when performing its functions, in terms of storage space needed, CPU utilization, memory usage, or network usage."
             },
             capability: {
                 name: "Capability",
@@ -115,7 +115,7 @@ const qualityAspects = {
         aspects: {
             adaptability: {
                 name: "Adaptability",
-                description: "Adaptability describes how well and how easy a system can be adapted to be executed on different software, platforms, environments, or hardware."
+                description: "Adaptability describes how well and how easy a system can be adapted to be executed on different or evolving software, platforms, environments, or hardware."
             },
             installability: {
                 name: "Installability",
@@ -123,7 +123,7 @@ const qualityAspects = {
             },
             replaceability: {
                 name: "Replaceability",
-                description: "Replaceability describes how well a component or system can replace another comparable component or system."
+                description: "Replaceability describes how well a component or system can replace another component or system for the same purpose in the same environment."
             }
         }
     },
