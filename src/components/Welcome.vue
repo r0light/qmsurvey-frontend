@@ -13,11 +13,17 @@
     </p>
 
     <p class="newParagraph">
-      The survey is part of our general effort of creating a quality model for cloud-native application architectures. 
-      With it, we want to empirically investigate relationships within the model.
-      If you have practical experience with implementing web-based applications that run in the cloud, we would appreciate your help.
+      The survey is part of our general effort of creating a quality model for cloud-native application architectures, focusing on design time aspects. 
+      With the survey, we want to empirically investigate relationships within the model.
+      We are looking for software and IT professionals (developers, engineers, architects) who have experience with implementing web-based applications that run in the cloud.
+    </p>
+    <p class="newParagraph">
       Your task is to decide for individual product factors how they impact software quality aspects.
       There is an example on the next page to show how to do that.
+    </p>
+    <p class="newParagraph">
+      All responses are collected anonymously and we only ask for basic demographic data at the end of the survey which is voluntary to enter.
+      Collected data in aggregated form will possibly be included in publications such as research reports, articles, and dissertations.
     </p>
 
 
