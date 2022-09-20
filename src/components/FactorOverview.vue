@@ -12,9 +12,9 @@ const emit = defineEmits<{
 </script>
 
 <template>
-<p>Please click on as many of the following product factors as you want to rate their impact(s) on quality aspects.
-    The product factors are listed alphabetically and you can choose randomly or click on those which interest you. You can finish any time by clicking on the Finish button on the bottom right.
-    While answering the questions, please use your personal experience and think about applications that you have (recently) worked on which fit the context of cloud-native in a broader sense.
+<p>Please click on any of the following product factors to rate its impact(s) on quality aspects. You can complete as many product factors as you want, depending on your expertise.
+    The product factors are listed alphabetically. You can finish any time by clicking on the Finish button on the bottom right.
+    Please use your personal experience and think about applications that you have (recently) worked on which fit the context of cloud-native in a broader sense.
 </p>
 <div class="factorOverview">
     <div class="factorColumn">

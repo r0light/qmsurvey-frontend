@@ -50,6 +50,10 @@
         offering.
       </p>
     </div>
+
+    <p class="newParagraph screenHint">
+      <span class="bold">For a good user experience of the survey tool, please maximize your browser window</span>
+    </p>
   </div>
 </template>
 
@@ -77,4 +81,11 @@
   margin: 25px 0 5px 0;
   padding: 0.2em;
 }
+
+@media (min-width: 1280px) {
+  .screenHint {
+    display: none;
+  }
+}
+
 </style>

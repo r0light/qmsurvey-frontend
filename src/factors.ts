@@ -244,7 +244,7 @@ const factors = {
     },
     "api-BasedCommunication": {
         "name": "API-based communication",
-        "description": "In a cloud-native application services should offer well-defined, standardized, documented, and declarative APIs for communication. Communication should happen only via such APIs and can be both synchronous or asynchronous."
+        "description": "All endpoints that are offered by a service are part of a well-defined and documented API. That means, the APIs are based on common principles, are declarative instead of imperative, and are documented in a standardized or specified format (such as the OpenAPI specification). Communication only happens via endpoints that are part of such APIs and can be both synchronous or asynchronous."
     },
     "contract-BasedLinks": {
         "name": "Contract-based links",
