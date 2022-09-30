@@ -24,7 +24,7 @@ import {
 } from "./surveyHandling";
 import { getEmptyImpacts } from "./aspectRating";
 import type { Factor } from "./factors";
-import { getAlphabetically } from "./factors";
+import { getRandomly } from "./factors";
 import type { DemographicValues } from "./demographics";
 import NavigationControls from "./components/elements/NavigationControls.vue";
 import ProgressOverview from "./components/elements/ProgressOverview.vue"
@@ -39,7 +39,7 @@ const props = defineProps<{
 // prepare factors: load if factors are already stored locally, otherwise initialize
 let loadedFactors: Factor[] = loadLocallyStoredFactors();
 if (loadedFactors.length == 0) {
-  let newFactors = getAlphabetically(45); // maximum is currently 45
+  let newFactors = getRandomly(20, true); // maximum is currently 45
   for (const factor of newFactors) {
     if (factor.key) {
       loadedFactors.push({

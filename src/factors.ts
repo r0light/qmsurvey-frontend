@@ -35,14 +35,20 @@ export function listFactors(): InitialFactor[] {
     return factorArray;
 }
 
-export function getRandomly(numberOfFactors: number): InitialFactor[] {
+export function getRandomly(numberOfFactors: number, sortAlphabetically: boolean): InitialFactor[] {
     let allFactors: InitialFactor[] = listFactors();
     let shuffled: InitialFactor[] = shuffle(allFactors);
 
     if (numberOfFactors > 0 && numberOfFactors < shuffled.length) {
         shuffled = shuffled.slice(0, numberOfFactors);
     }
-    return shuffled;
+
+    if (sortAlphabetically) {
+        return shuffled.sort(compareName);
+    } else {
+        return shuffled;
+    }
+
 }
 
 export function getAlphabetically(numberOfFactors: number): InitialFactor[] {
