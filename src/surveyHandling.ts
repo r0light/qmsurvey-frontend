@@ -4,17 +4,27 @@ import { getEmptyDemographics } from "./demographics";
 import { generateSecondsTimeStamp } from './timerManagement';
 import type { PilotFeedback } from "./components/Feedback.vue";
 
-export function saveExampleTriedLocally(): void {
-    localStorage['triedExample'] = true;
+export function saveGroupsLocally(groups: String[]): void {
+    localStorage['groups'] = JSON.stringify(groups);
 }
 
-export function checkIfExampleTriedLocally(): boolean {
-    if (localStorage['triedExample']) {
-        return localStorage['triedExample']
-    } else {
-        return false;
+export function loadLocallyStoredGroups(): String[] {
+    let groups: String[] = [];
+    let storedGroups = localStorage.getItem('groups');
+    if (storedGroups) {
+        try {
+            groups = JSON.parse(storedGroups);
+        } catch (e) {
+            localStorage.removeItem('groups');
+        }
     }
+    return groups;
 }
+
+function clearLocallyStoredGroups(): void {
+    localStorage.removeItem('groups');
+}
+
 
 export function saveFactorLocally(factor: Factor): void {
     let factors = loadLocallyStoredFactors();
@@ -102,10 +112,10 @@ export function checkLocallyIfPilot(): boolean {
 }
 
 export function clearStoredSurveyData(): void {
-    localStorage.removeItem('triedExample');
     localStorage.removeItem('token');
     localStorage.removeItem('sessionId');
     localStorage.removeItem('pilot');
+    clearLocallyStoredGroups();
     clearLocallyStoredFactors();
     clearLocallyStoredDemographics();
 }

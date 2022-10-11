@@ -31,6 +31,7 @@ function getStyleForFactorRating() {
             return "inactiveState";
         case "example": 
             return "inactiveState";
+        case "selection":
         case "overview":
         case "question":
             return "activeState";
@@ -45,6 +46,7 @@ function getStyleForDemographics() {
             return "inactiveState";
         case "example": 
             return "inactiveState";
+        case "selection":
         case "overview":
         case "question":
             return "inactiveState";

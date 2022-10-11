@@ -1,5 +1,10 @@
 import type { ImpactWrapper } from "./aspectRating";
 
+export type Group = {
+    key: string;
+    name: string;
+}
+
 export type Factor = {
     name: string;
     description: string;
@@ -35,6 +40,10 @@ export function listFactors(): InitialFactor[] {
     return factorArray;
 }
 
+export function listGroups(): Group[] {
+    return factorGroups.map(group => {return {key: group.key, name: group.name}});
+}
+
 export function getRandomly(numberOfFactors: number, sortAlphabetically: boolean): InitialFactor[] {
     let allFactors: InitialFactor[] = listFactors();
     let shuffled: InitialFactor[] = shuffle(allFactors);
@@ -51,6 +60,45 @@ export function getRandomly(numberOfFactors: number, sortAlphabetically: boolean
 
 }
 
+export function getByGroups(groups: string[], numberOfFactors: number, sortAlphabetically: boolean): InitialFactor[] {
+    // collect all factor keys for the selected groups
+    let factorKeys: string[] = [];
+    groups.forEach(groupKey => {
+        let factorGroup = factorGroups.find(group => group.key === groupKey);
+        if (factorGroup) {
+            factorGroup.factorKeys.forEach(factorKey => {
+                if (!factorKeys.includes(factorKey)) {
+                    factorKeys.push(factorKey);
+                }
+            })
+        }
+    })
+
+    // if necessary limit to set number of factors
+    let shuffled: string[] = shuffle(factorKeys);
+    if (numberOfFactors > 0 && numberOfFactors < shuffled.length) {
+        shuffled = shuffled.slice(0, numberOfFactors);
+    }
+
+    // build factor list
+    let factorsToReturn: InitialFactor[] = [];
+    shuffled.forEach(factorKey => {
+        if (factors[factorKey]) {
+            let factor = factors[factorKey];
+            factorsToReturn.push({
+                key: factorKey,
+                name: factor.name,
+                description: factor.description
+            });
+        }
+    })
+    if (sortAlphabetically) {
+        return factorsToReturn.sort(compareName);
+    } else {
+        return factorsToReturn;
+    }
+}
+
 export function getAlphabetically(numberOfFactors: number): InitialFactor[] {
     let allFactors: InitialFactor[] = listFactors();
     let sorted = allFactors.sort(compareName);
@@ -61,13 +109,13 @@ export function getAlphabetically(numberOfFactors: number): InitialFactor[] {
 }
 
 function compareName(factorA: InitialFactor, factorB: InitialFactor) {
-    if ( factorA.name < factorB.name ){
+    if (factorA.name < factorB.name) {
         return -1;
-      }
-      if ( factorA.name > factorB.name ){
+    }
+    if (factorA.name > factorB.name) {
         return 1;
-      }
-      return 0;
+    }
+    return 0;
 }
 
 // props to https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -87,7 +135,7 @@ function shuffle(array: any[]) {
     return array;
 }
 
-const factors = {
+const factors: InitialFactorWrapper = {
     "secretsStoredInSpecializedServices": {
         "name": "Secrets stored in specialized services",
         "description": "A dedicated backing service to host secrets (e.g., passwords, access tokens, encryption keys) exists. All secrets required by a system are hosted in this backing service where they can also be managed (for example they can be revoked or replaced with updated secrets). Components fetch secrets from this backing service in a controlled way when they need them."
@@ -273,6 +321,7 @@ const factors = {
 
 const factorGroups = [
     {
+        "key": "cloudInfrastructure",
         "name": "Cloud Infrastructure",
         "factorKeys": [
             "automatedInfrastructure",
@@ -296,6 +345,7 @@ const factorGroups = [
         ]
     },
     {
+        "key": "networkCommunication",
         "name": "Network Communication",
         "factorKeys": [
             "asynchronousCommunication",
@@ -319,8 +369,9 @@ const factorGroups = [
         ]
     },
     {
+        "key": "applicationAdministration",
         "name": "Application Administration",
-        "factorKeys":[
+        "factorKeys": [
             "accessControlManagementConsistency",
             "accountSeparation",
             "authenticationDelegation",
@@ -341,8 +392,10 @@ const factorGroups = [
             "managedBackingServices"
         ]
     },
-    {   "name": "Data Storage",
-        "factorKeys":[
+    {
+        "key": "dataStorage",
+        "name": "Data Storage",
+        "factorKeys": [
             "mostlyStatelessServices",
             "specializedStatefulServices",
             "horizontalDataReplication",
@@ -363,7 +416,9 @@ const factorGroups = [
             "backingServiceDecentralization"
         ]
     },
-    {   "name": "Business Domain",
+    {
+        "key": "businessDomain",
+        "name": "Business Domain",
         "factorKeys": [
             "limitedDataScope",
             "addressingAbstraction",

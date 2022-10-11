@@ -10,8 +10,8 @@ import Modal from "./components/Modal.vue";
 import ConnectionErrorModal from "./components/ConnectionErrorModal.vue";
 import Mask from "./components/elements/Mask.vue";
 import {
-  checkIfExampleTriedLocally,
-  saveExampleTriedLocally,
+  saveGroupsLocally,
+  loadLocallyStoredGroups,
   loadLocallyStoredFactors,
   saveAllFactorsLocally,
   loadLocallyStoredDemographics,
@@ -23,37 +23,81 @@ import {
   loadFactorLocally,
 } from "./surveyHandling";
 import { getEmptyImpacts } from "./aspectRating";
-import type { Factor } from "./factors";
-import { getRandomly } from "./factors";
+import type { Factor, InitialFactor } from "./factors";
+import { listGroups, getByGroups } from "./factors";
 import type { DemographicValues } from "./demographics";
 import NavigationControls from "./components/elements/NavigationControls.vue";
 import ProgressOverview from "./components/elements/ProgressOverview.vue"
 
-export type SurveyState = "welcome" | "example" | "overview" | "question" | "demographics" | "done";
+export type SurveyState = "welcome" | "example" | "selection" | "overview" | "question" | "demographics" | "done";
 
 const props = defineProps<{
   isPilot: boolean;
   startTime: number;
 }>();
 
+// prepare groups: load if groups are already stored locally, otherwise initialize
+let loadedGroups: String[] = loadLocallyStoredGroups();
+const selectedGroups = ref<String[]>(loadedGroups);
+
+function addGroupToSelection(group: string) {
+  if (!selectedGroups.value.includes(group)) {
+    selectedGroups.value.push(group);
+    saveGroupsLocally(selectedGroups.value);
+  }
+}
+
+function removeGroupFromSelection(group: string) {
+  if (selectedGroups.value.includes(group)) {
+    selectedGroups.value = selectedGroups.value.filter(g => g !== group);
+    saveGroupsLocally(selectedGroups.value);
+  }
+}
+
 // prepare factors: load if factors are already stored locally, otherwise initialize
 let loadedFactors: Factor[] = loadLocallyStoredFactors();
-if (loadedFactors.length == 0) {
-  let newFactors = getRandomly(20, true); // maximum is currently 45
-  for (const factor of newFactors) {
+const factors = loadedFactors;
+
+function updateLoadedFactors(newFactors: InitialFactor[]) {
+  console.log(newFactors);
+  // keep already answered factors
+  let factorsToKeep = loadedFactors.filter(loaded => loaded.answered);
+  console.log(factorsToKeep);
+
+  // update factors based on new selection
+  for (let factor of newFactors) {
     if (factor.key) {
-      loadedFactors.push({
-        name: factor.name,
-        description: factor.description,
-        key: factor.key,
-        impacts: getEmptyImpacts(),
-        answered: false
-      })
+      console.log(!factorsToKeep.find(kept => kept.key === factor.key));
+      if (!factorsToKeep.find(kept => kept.key === factor.key)) {
+        factorsToKeep.push({
+          name: factor.name,
+          description: factor.description,
+          key: factor.key,
+          impacts: getEmptyImpacts(),
+          answered: false
+        })
+      }
     }
   }
+  // sort alphabetically
+  factorsToKeep = factorsToKeep.sort(compareFactorName);
+
+  // clear all factors
+  loadedFactors.splice(0, loadedFactors.length);
+  // and replace by new factor selection
+  loadedFactors.push(...factorsToKeep);
   saveAllFactorsLocally(loadedFactors);
 }
-const factors = loadedFactors;
+
+function compareFactorName(factorA: Factor, factorB: Factor) {
+  if (factorA.name < factorB.name) {
+    return -1;
+  }
+  if (factorA.name > factorB.name) {
+    return 1;
+  }
+  return 0;
+}
 
 const demographics = loadLocallyStoredDemographics();
 function processDemographics(updatedDemographics: DemographicValues) {
@@ -66,7 +110,14 @@ function processDemographics(updatedDemographics: DemographicValues) {
 }
 
 // initialize first factor
-const currentFactor = ref(factors[0]);
+let emptyFactor: Factor = {
+  name: "",
+  description: "",
+  key: "",
+  impacts: {},
+  answered: false,
+}
+const currentFactor = ref(factors.length === 0 ? emptyFactor : factors[0]);
 
 const loading = ref(false);
 const showErrorModal = ref(false);
@@ -79,14 +130,13 @@ function answerQuestion(factorIndex: number) {
   currentState.value = "question";
 }
 
-
-
 const currentState = ref<SurveyState>("welcome");
 
 function getNextState(currentState: SurveyState): SurveyState {
   switch (currentState) {
     case "welcome": return "example";
-    case "example": return "overview";
+    case "example": return "selection";
+    case "selection": return "overview";
     case "overview": return "demographics";
     case "question": return "overview";
     case "demographics": return "done";
@@ -95,8 +145,13 @@ function getNextState(currentState: SurveyState): SurveyState {
 }
 
 function next() {
-  // send information for current page
-  if (currentState.value === "question") {
+  if (currentState.value === "selection") {
+    // TODO load factors according to selection: use selectedGroups.value
+    let newFactors = getByGroups(["applicationAdministration"], 20, true);// maximum is currently 45
+    updateLoadedFactors(newFactors);
+    proceed();
+  } else if (currentState.value === "question") {
+    // send information for current page
     currentFactor.value.answered = true;
     saveFactorLocally(currentFactor.value);
     submitFactors([currentFactor.value]);
@@ -139,7 +194,8 @@ function getPreviousState(currentState: SurveyState): SurveyState {
   switch (currentState) {
     case "welcome": return "welcome";
     case "example": return "welcome";
-    case "overview": return "example";
+    case "selection": return "example";
+    case "overview": return "selection";
     case "question": return "overview";
     case "demographics": return "overview";
     default: return "welcome";
@@ -168,7 +224,7 @@ function previous() {
 
   <main class="main">
     <Transition name="fadeFromTop">
-    <ProgressOverview v-if="currentState !== 'welcome'" :currentState="currentState"></ProgressOverview>
+      <ProgressOverview v-if="currentState !== 'welcome'" :currentState="currentState"></ProgressOverview>
     </Transition>
     <div class="pilotHint" v-if="isPilot">Pilot study</div>
     <Transition :name="transitionDirection" mode="out-in">
@@ -181,22 +237,31 @@ function previous() {
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Let\'s start!'"
           @forwardClicked="next()" />
       </div>
-      <div v-else-if="currentState === 'overview'" key="3" class="page">
-        <FactorOverview :factors="factors" @factorSelected="factorIndex => answerQuestion(factorIndex)"></FactorOverview>
+      <div v-else-if="currentState === 'selection'" key="3" class="page">
+        <div>
+          In which area are you interested in?
+          <div v-for="group in listGroups()">{{group.name}}</div>
+        </div>
+        <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Next'"
+          @forwardClicked="next()" />
+      </div>
+      <div v-else-if="currentState === 'overview'" key="4" class="page">
+        <FactorOverview :factors="factors" @factorSelected="factorIndex => answerQuestion(factorIndex)">
+        </FactorOverview>
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Finish'"
           @forwardClicked="next()" />
       </div>
-      <div v-else-if="currentState === 'question'" key="4" class="page">
+      <div v-else-if="currentState === 'question'" key="5" class="page">
         <QualityAspectsQuestion v-bind:factor="currentFactor" v-bind:isExample="false" />
         <NavigationControls :backwardText="'Cancel'" @backwardClicked="previous()" :forwardText="'Save'"
           @forwardClicked="next()" />
       </div>
-      <div v-else-if="currentState === 'demographics'" key="5" class="page">
+      <div v-else-if="currentState === 'demographics'" key="6" class="page">
         <Demographics @updatedDemographics="processDemographics" />
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Submit'"
           @forwardClicked="next()" />
       </div>
-      <div v-else-if="currentState === 'done'" key="6" class="page">
+      <div v-else-if="currentState === 'done'" key="7" class="page">
         <Feedback v-bind:isPilotFeedback="isPilot" v-bind:factorsForFeedback="factors" />
       </div>
     </Transition>
@@ -211,9 +276,10 @@ function previous() {
   <Teleport to="body">
     <Modal :show="showNoFactorsModal" @close="showNoFactorsModal = false">
       <template #body>
-        <div class="exampleHint" >
+        <div class="exampleHint">
           <h3>No Impact(s) stated</h3>
-          <p>You have not rated any impact(s) for any factor. Please do so for at least one factor before submitting.</p>
+          <p>You have not rated any impact(s) for any factor. Please do so for at least one factor before submitting.
+          </p>
           <button class="okButton" @click="showNoFactorsModal = false">
             OK
           </button>
