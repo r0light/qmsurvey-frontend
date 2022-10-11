@@ -153,7 +153,9 @@ function processRating(aspectKey: string, rating: number) {
 .factorDescription {
   display: flex;
   flex-direction: column;
-  row-gap: 10px;
+  background-color: #f2f2f2;
+  border: #000 solid 1px;
+  border-radius: 5px;
 }
 
 .factorDescription h1 {
@@ -162,9 +164,7 @@ function processRating(aspectKey: string, rating: number) {
 
 .factorDescription p {
   font-size: 1.2em;
-  background-color: #f2f2f2;
-  border: #000 solid 1px;
-  border-radius: 5px;
+
   padding: 0.5em;
 }
 
@@ -176,7 +176,7 @@ function processRating(aspectKey: string, rating: number) {
 
 .drawnHint {
   position: absolute;
-  z-index: -1;
+  z-index: 5;
 }
 
 .pfHint {
