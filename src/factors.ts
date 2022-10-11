@@ -269,3 +269,120 @@ const factors = {
         "description": "Communication via links is not based on specific communication partners (specific components) but abstracted based on the content of communication. An example is event-driven communication where events are published to channels without the publisher knowing which components receive events and events can therefore also be received by components which are created later in time."
     }
 };
+
+
+const factorGroups = [
+    {
+        "name": "Cloud Infrastructure",
+        "factorKeys": [
+            "automatedInfrastructure",
+            "useInfrastructureAsCode",
+            "dynamicScheduling",
+            "logicalGrouping",
+            "usageOfExistingSolutionsForNon-CoreCapabilities",
+            "managedInfrastructure",
+            "managedBackingServices",
+            "serviceReplication",
+            "built-InAutoscaling",
+            "infrastructureAbstraction",
+            "cloudVendorAbstraction",
+            "immutableArtifacts",
+            "physicalServiceDistribution",
+            "rollingUpgradesEnabled",
+            "secretsStoredInSpecializedServices",
+            "horizontalDataReplication",
+            "resourceLimits",
+            "automatedRestarts"
+        ]
+    },
+    {
+        "name": "Network Communication",
+        "factorKeys": [
+            "asynchronousCommunication",
+            "persistentCommunication",
+            "separationByGateways",
+            "distributedTracingOfInvocations",
+            "limitedRequestTraceScope",
+            "retriesForSafeInvocations",
+            "circuitBreakedCommunication",
+            "api-BasedCommunication",
+            "contract-BasedLinks",
+            "mediatedCommunication",
+            "addressingAbstraction",
+            "communicationPartnerAbstraction",
+            "accessControlManagementConsistency",
+            "commandQueryResponsibilitySegregation",
+            "healthAndReadinessChecks",
+            "verticalDataReplication",
+            "physicalServiceDistribution",
+            "physicalDataDistribution"
+        ]
+    },
+    {
+        "name": "Application Administration",
+        "factorKeys":[
+            "accessControlManagementConsistency",
+            "accountSeparation",
+            "authenticationDelegation",
+            "usageOfExistingSolutionsForNon-CoreCapabilities",
+            "consistentCentralizedLogging",
+            "consistentCentralizedMetrics",
+            "healthAndReadinessChecks",
+            "useInfrastructureAsCode",
+            "backingServiceDecentralization",
+            "resourceLimits",
+            "built-InAutoscaling",
+            "configurationStoredInSpecializedServices",
+            "immutableArtifacts",
+            "rollingUpgradesEnabled",
+            "automatedRestarts",
+            "automatedInfrastructure",
+            "dynamicScheduling",
+            "managedBackingServices"
+        ]
+    },
+    {   "name": "Data Storage",
+        "factorKeys":[
+            "mostlyStatelessServices",
+            "specializedStatefulServices",
+            "horizontalDataReplication",
+            "verticalDataReplication",
+            "shardedDataStoreReplication",
+            "physicalDataDistribution",
+            "limitedDataScope",
+            "secretsStoredInSpecializedServices",
+            "persistentCommunication",
+            "consistentCentralizedLogging",
+            "managedInfrastructure",
+            "configurationStoredInSpecializedServices",
+            "communicationPartnerAbstraction",
+            "cloudVendorAbstraction",
+            "infrastructureAbstraction",
+            "circuitBreakedCommunication",
+            "commandQueryResponsibilitySegregation",
+            "backingServiceDecentralization"
+        ]
+    },
+    {   "name": "Business Domain",
+        "factorKeys": [
+            "limitedDataScope",
+            "addressingAbstraction",
+            "mostlyStatelessServices",
+            "separationByGateways",
+            "limitedRequestTraceScope",
+            "logicalGrouping",
+            "authenticationDelegation",
+            "accountSeparation",
+            "specializedStatefulServices",
+            "asynchronousCommunication",
+            "consistentCentralizedMetrics",
+            "mediatedCommunication",
+            "distributedTracingOfInvocations",
+            "serviceReplication",
+            "shardedDataStoreReplication",
+            "contract-BasedLinks",
+            "retriesForSafeInvocations",
+            "api-BasedCommunication"
+        ]
+    }
+];

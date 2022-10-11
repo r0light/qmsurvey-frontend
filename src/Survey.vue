@@ -190,7 +190,9 @@ function previous() {
   <header></header>
 
   <main class="main">
-    <ProgressOverview :currentState="currentState"></ProgressOverview>
+    <Transition name="fadeFromTop">
+    <ProgressOverview v-if="currentState !== 'welcome'" :currentState="currentState"></ProgressOverview>
+    </Transition>
     <div class="pilotHint" v-if="isPilot">Pilot study</div>
     <Transition :name="transitionDirection" mode="out-in">
       <div v-if="currentState === 'welcome'" key="1" class="page">
@@ -356,6 +358,21 @@ button:focus {
 .buttonNameIcon {
   margin-right: 0.5em;
 }
+
+.fadeFromTop-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.fadeFromTop-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fadeFromTop-enter-from,
+.fadeFromTop-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
 
 .fadeToLeft-enter-active {
   transition: all 0.4s ease;
