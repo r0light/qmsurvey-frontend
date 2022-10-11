@@ -14,8 +14,6 @@ const props = defineProps<{
   isExample: boolean;
 }>();
 
-const emit = defineEmits(["triedExample"]);
-
 function withTooltips(description: string): string {
   return addTooltips(description);
 }
@@ -24,9 +22,6 @@ function processRating(aspectKey: string, rating: number) {
   //save rating
   if (props.factor.impacts) {
     props.factor.impacts[aspectKey] = rating;
-  }
-  if (props.isExample) {
-    emit("triedExample");
   }
 }
 </script>

@@ -68,22 +68,6 @@ function processDemographics(updatedDemographics: DemographicValues) {
 // initialize first factor
 const currentFactor = ref(factors[0]);
 
-// booleans to handle example hint
-const showModal = ref(false);
-const showCongratModal = ref(false);
-let didExample = checkIfExampleTriedLocally();
-let gotExampleHint = false;
-let gotCongratulation = false;
-
-function recognizeTriedExample() {
-  didExample = true;
-  saveExampleTriedLocally();
-  if (gotExampleHint && !gotCongratulation) {
-    showCongratModal.value = true;
-    gotCongratulation = true;
-  }
-}
-
 const loading = ref(false);
 const showErrorModal = ref(false);
 const showNoFactorsModal = ref(false);
@@ -111,13 +95,6 @@ function getNextState(currentState: SurveyState): SurveyState {
 }
 
 function next() {
-  // check if the example has been tried, otherwise show a hint, but only once
-  if (currentState.value === "example" && !didExample && !gotExampleHint) {
-    showModal.value = true;
-    gotExampleHint = true;
-    return;
-  }
-
   // send information for current page
   if (currentState.value === "question") {
     currentFactor.value.answered = true;
@@ -200,7 +177,7 @@ function previous() {
         <NavigationControls :backwardText="''" :forwardText="'Example'" @forwardClicked="next()" />
       </div>
       <div v-else-if="currentState === 'example'" key="2" class="page">
-        <ExampleQuestion @triedExample="recognizeTriedExample" />
+        <ExampleQuestion />
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Let\'s start!'"
           @forwardClicked="next()" />
       </div>
@@ -225,38 +202,6 @@ function previous() {
     </Transition>
   </main>
 
-  <Teleport to="body">
-    <Modal :show="showModal" @close="showModal = false">
-      <template #body>
-        <div class="exampleHint">
-          <h3>Are you sure you want to start?</h3>
-          <p>
-            You haven't tried the example yet. Please try to click on a quality
-            aspect to state an impact.
-          </p>
-          <button class="okButton" @click="showModal = false">OK</button>
-        </div>
-      </template>
-    </Modal>
-  </Teleport>
-  <Teleport to="body">
-    <Modal :show="showCongratModal" @close="showCongratModal = false">
-      <template #body>
-        <div class="exampleHint">
-          <h3>Great!</h3>
-          <p>That's how to do it.</p>
-          <button class="okButton" @click="
-            {
-              showCongratModal = false;
-              next();
-            }
-          ">
-            Start now
-          </button>
-        </div>
-      </template>
-    </Modal>
-  </Teleport>
   <ConnectionErrorModal :show="showErrorModal" :confirmText="'Try again'" @close="showErrorModal = false" @confirmed="
     {
       showErrorModal = false;

@@ -11,13 +11,6 @@ const exampleFactor = {
   answered: false
 };
 
-const emit = defineEmits<{
-  (e: "triedExample"): void;
-}>();
-
-function propagateTriedExample() {
-  emit("triedExample");
-}
 </script>
 
 <template>
@@ -34,7 +27,6 @@ function propagateTriedExample() {
     <QualityAspectsQuestion
       v-bind:factor="exampleFactor"
       v-bind:isExample="true"
-      @triedExample="propagateTriedExample"
     />
   </div>
 </template>
