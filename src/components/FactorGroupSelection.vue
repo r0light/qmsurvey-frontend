@@ -38,7 +38,7 @@ function selectedStyle(groupKey: string): string {
 
 <template>
         <div class="selectionWrapper">
-          <p>In which area are you most interested or have the most expertise? Please select <span class="bold">at least one</span> area to simply filter the factors to rate.</p>
+          <p>In which broad area are you most interested or have the most expertise? Please choose to filter the number of available factors.</p>
           <div class="groupOverview">
             <button class="groupButton" :class="selectedStyle(group.key)" v-for="group in groupData" @click="groupClicked(group.key)">
                 {{group.name}}
