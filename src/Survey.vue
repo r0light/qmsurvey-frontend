@@ -143,9 +143,15 @@ function getNextState(currentState: SurveyState): SurveyState {
   }
 }
 
+const showNoGroupsModal = ref(false);
+
 function next() {
   if (currentState.value === "selection") {
-    // TODO load factors according to selection: use selectedGroups.value
+    if (selectedGroups.value.length <= 0) {
+      // do not proceed if no group has been selected
+      showNoGroupsModal.value = true;
+      return;
+    }
     let newFactors = getByGroups(selectedGroups.value, 20, true);// maximum is currently 45
     updateLoadedFactors(newFactors);
     proceed();
@@ -269,6 +275,20 @@ function previous() {
       next();
     }
   " />
+  <Teleport to="body">
+    <Modal :show="showNoGroupsModal" @close="showNoGroupsModal = false">
+      <template #body>
+        <div class="exampleHint">
+          <h3>No Area selected </h3>
+          <p>You have not selected any area. Please select at least one area.
+          </p>
+          <button class="okButton" @click="showNoGroupsModal = false">
+            OK
+          </button>
+        </div>
+      </template>
+    </Modal>
+  </Teleport>
   <Teleport to="body">
     <Modal :show="showNoFactorsModal" @close="showNoFactorsModal = false">
       <template #body>

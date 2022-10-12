@@ -38,7 +38,7 @@ function selectedStyle(groupKey: string): string {
 
 <template>
         <div class="selectionWrapper">
-          <p>In which area are you interested in? Please select <span class="bold">at least one</span> area to filter the factors to rate.</p>
+          <p>In which area are you most interested or have the most expertise? Please select <span class="bold">at least one</span> area to filter the factors to rate.</p>
           <div class="groupOverview">
             <button class="groupButton" :class="selectedStyle(group.key)" v-for="group in groupData" @click="groupClicked(group.key)">
                 {{group.name}}
@@ -62,10 +62,15 @@ function selectedStyle(groupKey: string): string {
 .groupOverview {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 10px;
     column-gap: 10px;
+    justify-content: center;
 }
 
 .groupButton {
+    display: flex;
+    flex-direction: row;
     font-size: 1.1em;
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -79,11 +84,18 @@ function selectedStyle(groupKey: string): string {
 }
 
 .selectIcon {
+    display: flex;
+    align-items: center;
     margin-left: 1em;
+    width: 17px;
 }
 
 .groupSelected {
     background-color: #99e699;
+}
+
+.groupSelected:hover {
+    background-color: #6fdc6f;
 }
 
 </style>
