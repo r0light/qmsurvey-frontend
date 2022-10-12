@@ -335,7 +335,6 @@ const factorGroups = [
             "built-InAutoscaling",
             "infrastructureAbstraction",
             "cloudVendorAbstraction",
-            "immutableArtifacts",
             "physicalServiceDistribution",
             "rollingUpgradesEnabled",
             "secretsStoredInSpecializedServices",
@@ -362,10 +361,7 @@ const factorGroups = [
             "communicationPartnerAbstraction",
             "accessControlManagementConsistency",
             "commandQueryResponsibilitySegregation",
-            "healthAndReadinessChecks",
-            "verticalDataReplication",
-            "physicalServiceDistribution",
-            "physicalDataDistribution"
+            "verticalDataReplication"
         ]
     },
     {
@@ -389,7 +385,9 @@ const factorGroups = [
             "automatedRestarts",
             "automatedInfrastructure",
             "dynamicScheduling",
-            "managedBackingServices"
+            "managedBackingServices",
+            "infrastructureAbstraction",
+            "cloudVendorAbstraction"
         ]
     },
     {
@@ -408,10 +406,6 @@ const factorGroups = [
             "consistentCentralizedLogging",
             "managedInfrastructure",
             "configurationStoredInSpecializedServices",
-            "communicationPartnerAbstraction",
-            "cloudVendorAbstraction",
-            "infrastructureAbstraction",
-            "circuitBreakedCommunication",
             "commandQueryResponsibilitySegregation",
             "backingServiceDecentralization"
         ]
@@ -421,7 +415,6 @@ const factorGroups = [
         "name": "Business Domain",
         "factorKeys": [
             "limitedDataScope",
-            "addressingAbstraction",
             "mostlyStatelessServices",
             "separationByGateways",
             "limitedRequestTraceScope",
@@ -431,12 +424,8 @@ const factorGroups = [
             "specializedStatefulServices",
             "asynchronousCommunication",
             "consistentCentralizedMetrics",
-            "mediatedCommunication",
-            "distributedTracingOfInvocations",
-            "serviceReplication",
             "shardedDataStoreReplication",
             "contract-BasedLinks",
-            "retriesForSafeInvocations",
             "api-BasedCommunication"
         ]
     }

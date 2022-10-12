@@ -152,7 +152,8 @@ function next() {
       showNoGroupsModal.value = true;
       return;
     }
-    let newFactors = getByGroups(selectedGroups.value, 20, true);// maximum is currently 45
+    let numberOfFactors = 15 + selectedGroups.value.length * 5; // 20, 25, 30, 35, 40 depending on the number of areas selected
+    let newFactors = getByGroups(selectedGroups.value, numberOfFactors, true);// maximum is currently 45
     updateLoadedFactors(newFactors);
     proceed();
   } else if (currentState.value === "question") {
