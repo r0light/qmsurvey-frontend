@@ -7,27 +7,27 @@
     </h1>
 
     <p class="newParagraph"></p>
-    <p class="newParagraph">
+    <p class="newParagraph mainInfo">
       The aim of this survey is to investigate the <span class="bold">impact</span> of different <span class="bold">product factors</span> of a software system on <span class="bold">software quality</span>. 
+    </p>
+    <p class="newParagraph mainInfo">
       Product factors are properties of a software system which characterize the way it is implemented and deployed. Product factors can also be the result of applying certain patterns or practices.
     </p>
+    <p class="newParagraph mainInfo">
+      Your task is to decide for individual product factors how they impact software quality aspects.
+      The example on the next page shows you how to do that.
+    </p>
 
-    <p class="newParagraph">
+    <p class="newParagraph detailInfo">
       The survey is part of our general effort of creating a quality model for cloud-native application architectures, focusing on design time aspects. 
       With the survey, we want to empirically investigate relationships within the model.
-      We are looking for software and IT professionals (developers, engineers, architects) who have experience with implementing web-based applications that run in the cloud.
-    </p>
-    <p class="newParagraph">
-      Your task is to decide for individual product factors how they impact software quality aspects.
-      There is an example on the next page to show how to do that.
-    </p>
-    <p class="newParagraph">
+      We are looking for software and IT professionals (developers, engineers, architects) who have experience with implementing web-based applications that run in the cloud. <br>
       All responses are collected anonymously and we only ask for basic demographic data at the end of the survey which is voluntary to enter.
       Collected data in aggregated form will possibly be included in publications such as research reports, articles, and dissertations.
     </p>
 
 
-
+    <!--
     <div class="termsDescription">
       <p>
         We try to rely on a consistent set of terms to describe product factors, therefore please also read the following description of terms:
@@ -56,6 +56,7 @@
         offering.
       </p>
     </div>
+    -->
 
     <p class="newParagraph screenHint">
       <span class="bold">For a good user experience of the survey tool, please maximize your browser window</span>
@@ -79,6 +80,19 @@
   font-weight: bold;
 }
 
+.mainInfo {
+  font-size: 1.2em;
+}
+
+.detailInfo {
+  font-size: 1em;
+  background-color: #f2f2f2;
+  border: #000 solid 1px;
+  border-radius: 3px;
+  margin: 25px 0 5px 0;
+  padding: 0.2em;
+}
+
 .termsDescription {
   font-size: 1em;
   background-color: #f2f2f2;
@@ -87,6 +101,7 @@
   margin: 25px 0 5px 0;
   padding: 0.2em;
 }
+
 
 @media (min-width: 1280px) {
   .screenHint {

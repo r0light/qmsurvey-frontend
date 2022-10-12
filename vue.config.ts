@@ -18,6 +18,10 @@ function setConfig() {
           proxy: 'https://qmsurvey.pi.uni-bamberg.de'
         }
       };
+    case "ghpages":
+      return {
+        publicPath: "/qmsurvey-frontend/"
+      };
   }
 
 }

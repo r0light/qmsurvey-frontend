@@ -90,7 +90,7 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForWelcome()"></div>
     </div>
-    <div class="progressElement midiBox">
+    <div class="progressElement smallBox">
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForExample()">
             <span class="progressText">
@@ -101,7 +101,7 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForExample()"></div>
     </div>
-    <div class="progressElement midiBox">
+    <div class="progressElement smallBox">
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForSelection()">
             <span class="progressText">
@@ -161,7 +161,7 @@ function getStyleForDone() {
 }
 
 .smallBox {
-    width: 10%;
+    width: 12%;
 }
 
 .bigBox {
@@ -169,7 +169,7 @@ function getStyleForDone() {
 }
 
 .midiBox {
-    width: 15%;
+    width: 18%;
 }
 
 .miniBox {
@@ -206,9 +206,10 @@ function getStyleForDone() {
 
 .progressTextInner {
     margin-right: 3px;
+    font-size: 1.1em;
 }
 
-@media (max-width: 890px) {
+@media (max-width: 940px) {
   .progressElement {
     min-width: 60px;
   }

@@ -14,6 +14,7 @@ const exampleFactor = {
 </script>
 
 <template>
+  <!--
   <p>
     The following <span class="bold">exemplary question</span> explains the
     concept:
@@ -22,6 +23,7 @@ const exampleFactor = {
     The quality aspects mostly stem from the <a href="https://iso25000.com/index.php/en/iso-25000-standards/iso-25010">ISO25010 standard for software product quality</a> and for each a short explanation is provided by hovering over the question mark. 
     If you are ready, you can start on the next page where the actual product factors are listed.
   </p>
+  -->
 
   <div class="exampleWrapper">
     <QualityAspectsQuestion
