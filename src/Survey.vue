@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import Welcome from "./components/Welcome.vue";
 import ExampleQuestion from "./components/ExampleQuestion.vue";
+import FactorGroupSelection from "./components/FactorGroupSelection.vue";
 import FactorOverview from "./components/FactorOverview.vue";
 import QualityAspectsQuestion from "./components/QualityAspectsQuestion.vue";
 import Demographics from "./components/Demographics.vue";
@@ -37,8 +38,8 @@ const props = defineProps<{
 }>();
 
 // prepare groups: load if groups are already stored locally, otherwise initialize
-let loadedGroups: String[] = loadLocallyStoredGroups();
-const selectedGroups = ref<String[]>(loadedGroups);
+let loadedGroups: string[] = loadLocallyStoredGroups();
+const selectedGroups = ref<string[]>(loadedGroups);
 
 function addGroupToSelection(group: string) {
   if (!selectedGroups.value.includes(group)) {
@@ -59,15 +60,13 @@ let loadedFactors: Factor[] = loadLocallyStoredFactors();
 const factors = loadedFactors;
 
 function updateLoadedFactors(newFactors: InitialFactor[]) {
-  console.log(newFactors);
+  console.log("update factors");
   // keep already answered factors
   let factorsToKeep = loadedFactors.filter(loaded => loaded.answered);
-  console.log(factorsToKeep);
 
   // update factors based on new selection
   for (let factor of newFactors) {
     if (factor.key) {
-      console.log(!factorsToKeep.find(kept => kept.key === factor.key));
       if (!factorsToKeep.find(kept => kept.key === factor.key)) {
         factorsToKeep.push({
           name: factor.name,
@@ -147,7 +146,7 @@ function getNextState(currentState: SurveyState): SurveyState {
 function next() {
   if (currentState.value === "selection") {
     // TODO load factors according to selection: use selectedGroups.value
-    let newFactors = getByGroups(["applicationAdministration"], 20, true);// maximum is currently 45
+    let newFactors = getByGroups(selectedGroups.value, 20, true);// maximum is currently 45
     updateLoadedFactors(newFactors);
     proceed();
   } else if (currentState.value === "question") {
@@ -238,10 +237,7 @@ function previous() {
           @forwardClicked="next()" />
       </div>
       <div v-else-if="currentState === 'selection'" key="3" class="page">
-        <div>
-          In which area are you interested in?
-          <div v-for="group in listGroups()">{{group.name}}</div>
-        </div>
+        <FactorGroupSelection :groups="selectedGroups" @groupSelected="addGroupToSelection" @groupDeselected="removeGroupFromSelection" />
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Next'"
           @forwardClicked="next()" />
       </div>

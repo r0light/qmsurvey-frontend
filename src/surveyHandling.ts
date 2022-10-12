@@ -4,12 +4,12 @@ import { getEmptyDemographics } from "./demographics";
 import { generateSecondsTimeStamp } from './timerManagement';
 import type { PilotFeedback } from "./components/Feedback.vue";
 
-export function saveGroupsLocally(groups: String[]): void {
+export function saveGroupsLocally(groups: string[]): void {
     localStorage['groups'] = JSON.stringify(groups);
 }
 
-export function loadLocallyStoredGroups(): String[] {
-    let groups: String[] = [];
+export function loadLocallyStoredGroups(): string[] {
+    let groups: string[] = [];
     let storedGroups = localStorage.getItem('groups');
     if (storedGroups) {
         try {
