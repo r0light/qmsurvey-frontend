@@ -25,13 +25,24 @@ function getStyleForExample() {
     }
 }
 
-function getStyleForFactorRating() {
+function getStyleForSelection() {
     switch(props.currentState) {
         case "welcome": 
-            return "inactiveState";
         case "example": 
             return "inactiveState";
         case "selection":
+            return "activeState";
+        default:
+            return "doneState";
+    }
+}
+
+function getStyleForFactorRating() {
+    switch(props.currentState) {
+        case "welcome": 
+        case "example": 
+        case "selection":
+            return "inactiveState";
         case "overview":
         case "question":
             return "activeState";
@@ -43,9 +54,7 @@ function getStyleForFactorRating() {
 function getStyleForDemographics() {
     switch(props.currentState) {
         case "welcome": 
-            return "inactiveState";
         case "example": 
-            return "inactiveState";
         case "selection":
         case "overview":
         case "question":
@@ -91,6 +100,17 @@ function getStyleForDone() {
             </span>
         </div>
         <div class="rightPart" :class="getStyleForExample()"></div>
+    </div>
+    <div class="progressElement midiBox">
+        <div class="leftPart"></div>
+        <div class="bodyPart" :class="getStyleForSelection()">
+            <span class="progressText">
+                <span class="progressTextInner">Interests</span>
+                <font-awesome-icon v-if="getStyleForSelection() === 'doneState'" icon="fa-regular fa-circle-check" />
+                <font-awesome-icon v-if="getStyleForSelection() === 'activeState'" icon="fa-regular fa-circle-down" />
+            </span>
+        </div>
+        <div class="rightPart" :class="getStyleForSelection()"></div>
     </div>
     <div class="progressElement bigBox">
         <div class="leftPart"></div>
@@ -145,11 +165,11 @@ function getStyleForDone() {
 }
 
 .bigBox {
-    width: 45%;
+    width: 40%;
 }
 
 .midiBox {
-    width: 20%;
+    width: 15%;
 }
 
 .miniBox {
