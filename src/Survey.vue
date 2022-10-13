@@ -60,7 +60,6 @@ let loadedFactors: Factor[] = loadLocallyStoredFactors();
 const factors = loadedFactors;
 
 function updateLoadedFactors(newFactors: InitialFactor[]) {
-  console.log("update factors");
   // keep already answered factors
   let factorsToKeep = loadedFactors.filter(loaded => loaded.answered);
 
