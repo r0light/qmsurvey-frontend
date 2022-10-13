@@ -31,21 +31,21 @@ animations.push(
 animations.push(
   setTimeout(() => {
     showFactorOverlay.value = false;
-  }, 5000)
+  }, 8000)
 )
 
 animations.push(
   setTimeout(() => {
     state.value = "qualityAspects";
     showQaOverlay.value = true;
-  }, 7000)
+  }, 9000)
 )
 
 animations.push(
   setTimeout(() => {
     state.value = "done"
     showQaOverlay.value = false;
-  }, 13000)
+  }, 15000)
 )
 
 function skipExplanations() {
@@ -77,16 +77,15 @@ function skipExplanations() {
   <Teleport to="body">
     <Transition name="fade">
       <div class="exampleOverlay factorOverlay" v-if="showFactorOverlay">
-        <p class="factorExplanation">This is a product factor. It describes a characteristic of a system and the extent
-          to which it is present can be measured.</p>
+        <p class="factorExplanation">This is a product factor. <br>It describes a property of a system. <br>The extent
+          to which a product factor is present can be measured.</p>
       </div>
     </Transition>
   </Teleport>
   <Teleport to="body">
     <Transition name="fade">
       <div class="exampleOverlay qaOverlay" v-if="showQaOverlay">
-        <p class="qaExplanation">These are the quality aspects. You can click on one of them to rate how the presence of
-          the product factor impacts it.</p>
+        <p class="qaExplanation">These are the quality aspects. You can click on one of them to rate how a product factor impacts it, if it is present.</p>
       </div>
     </Transition>
   </Teleport>
@@ -110,6 +109,7 @@ function skipExplanations() {
 
 .exampleText {
   align-self: flex-start;
+  font-size: 1.1em;
 }
 
 .fade-leave-active {
@@ -159,7 +159,7 @@ function skipExplanations() {
 
 .factorExplanation {
   color: #fff;
-  font-size: 1.8em;
+  font-size: 3em;
   font-weight: 600;
   position: relative;
   top: 300px;
@@ -170,10 +170,10 @@ function skipExplanations() {
 
 .qaExplanation {
   color: #fff;
-  font-size: 1.8em;
+  font-size: 3em;
   font-weight: 600;
   position: relative;
-  top: 230px;
+  top: 130px;
   max-width: 1080px;
   margin: auto;
   text-align: center;

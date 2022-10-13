@@ -363,6 +363,10 @@ button:focus {
   font-weight: 700;
 }
 
+.larger {
+  font-size: 1.1em;
+}
+
 .main {
   display: flex;
   flex-direction: column;

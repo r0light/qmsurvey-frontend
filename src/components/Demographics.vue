@@ -93,7 +93,7 @@ function updateValue() {
     <div>
       <label for="sector" v-bind:class="{ disabled: notInIndustry() }"
         >To which type of industry would you assign the company that you
-        currently work for? (only if Industry is selected)</label
+        currently work for? <br> (only if Industry is selected)</label
       ><br />
       <input
         class="textInput"

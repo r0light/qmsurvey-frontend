@@ -56,11 +56,10 @@ function isQAHighlighted() {
       </div>
     </div>
     <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg"
-        alt="product factor" width="275" /></div>
-    <p>
-      Please state at least one impact that <em>{{ factor.name }}</em> has on a quality aspect. You can state as
-      many impacts as you want, but typically between one and three impacts is a
-      reasonable number.
+        alt="product factor" width="250" /></div>
+    <p class="larger">
+      Which quality aspect(s) does <em>{{ factor.name }}</em> impact? <br>Please state only those which the are most clear
+      from your perspective (typically between one and three).
     </p>
     <div class="highlightWrapper" :class="isQAHighlighted()">
       <div class="qa-diagram">
@@ -203,7 +202,7 @@ function isQAHighlighted() {
 
 .pfHint {
   top: 10px;
-  right: -15px;
+  right: 10px;
   z-index: 15;
 }
 

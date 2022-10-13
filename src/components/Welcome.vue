@@ -8,14 +8,14 @@
 
     <p class="newParagraph"></p>
     <p class="newParagraph mainInfo">
-      The aim of this survey is to investigate the <span class="bold">impact</span> of different <span class="bold">product factors</span> of a software system on <span class="bold">software quality</span>. 
+      The aim of this survey is to investigate the <span class="bold">impact</span> of different <span class="bold">product factors</span> of a cloud-native software system on <span class="bold">software quality</span>. 
     </p>
     <p class="newParagraph mainInfo">
       Product factors are properties of a software system which characterize the way it is implemented and deployed. Product factors can also be the result of applying certain patterns or practices.
     </p>
     <p class="newParagraph mainInfo">
       Your task is to decide for individual product factors how they impact software quality aspects.
-      The example on the next page shows you how to do that.
+      The <span class="bold">example on the next page </span> shows you how to do that.
     </p>
 
     <p class="newParagraph detailInfo">
