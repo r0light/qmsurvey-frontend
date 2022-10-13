@@ -19,25 +19,43 @@ const state = ref<ExampleState>("");
 const showFactorOverlay = ref<boolean>(false);
 const showQaOverlay = ref<boolean>(false);
 
-setTimeout(() => {
-  state.value = "productFactor";
-  showFactorOverlay.value = true;
-}, 500)
+// remember all animation so that they can be skipped
+const animations: number[] = [];
+animations.push(
+  setTimeout(() => {
+    state.value = "productFactor";
+    showFactorOverlay.value = true;
+  }, 500)
+)
 
-setTimeout(() => {
+animations.push(
+  setTimeout(() => {
+    showFactorOverlay.value = false;
+  }, 5000)
+)
+
+animations.push(
+  setTimeout(() => {
+    state.value = "qualityAspects";
+    showQaOverlay.value = true;
+  }, 7000)
+)
+
+animations.push(
+  setTimeout(() => {
+    state.value = "done"
+    showQaOverlay.value = false;
+  }, 13000)
+)
+
+function skipExplanations() {
+  animations.forEach(timeoutId => {
+    clearTimeout(timeoutId);
+  })
   showFactorOverlay.value = false;
-}, 5000)
-
-setTimeout(() => {
-  state.value = "qualityAspects";
-  showQaOverlay.value = true;
-}, 7000)
-
-
-setTimeout(() => {
-  state.value = "done"
   showQaOverlay.value = false;
-}, 12000)
+  state.value = "done";
+}
 
 </script>
 
@@ -52,25 +70,32 @@ setTimeout(() => {
     If you are ready, you can start on the next page where the actual product factors are listed.
   </p>
   -->
-
+  <p class="exampleText">Try out the <span class="bold">example</span> below and start once you feel ready:</p>
   <div class="exampleWrapper">
-    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" v-bind:exampleState="state"/>
+    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" v-bind:exampleState="state" />
   </div>
   <Teleport to="body">
     <Transition name="fade">
       <div class="exampleOverlay factorOverlay" v-if="showFactorOverlay">
         <p class="factorExplanation">This is a product factor. It describes a characteristic of a system and the extent
-          to
-          which it is present can be measured.</p>
+          to which it is present can be measured.</p>
       </div>
     </Transition>
   </Teleport>
   <Teleport to="body">
     <Transition name="fade">
       <div class="exampleOverlay qaOverlay" v-if="showQaOverlay">
-        <p class="qaExplanation">These are the quality aspects. You can click on one of them to rate how the presence of the product factor impacts it.</p>
+        <p class="qaExplanation">These are the quality aspects. You can click on one of them to rate how the presence of
+          the product factor impacts it.</p>
       </div>
     </Transition>
+  </Teleport>
+  <Teleport to="body">
+      <div v-if="showFactorOverlay || showQaOverlay">
+        <button class="skipButton" @click="skipExplanations()">
+          <font-awesome-icon icon="fa-solid fa-circle-xmark"/> Skip
+        </button>
+      </div>
   </Teleport>
 </template>
 
@@ -81,11 +106,14 @@ setTimeout(() => {
   width: 100%;
   padding: 10px 0 10px 0;
   border-top: 2px solid var(--vt-c-indigo);
-  border-bottom: 2px solid var(--vt-c-indigo);
+}
+
+.exampleText {
+  align-self: flex-start;
 }
 
 .fade-leave-active {
-  transition: opacity 2s ease;
+  transition: opacity 1.5s ease;
 }
 
 .fade-enter-active {
@@ -107,11 +135,26 @@ setTimeout(() => {
 }
 
 .factorOverlay {
-  z-index: 10;
+  z-index: 15;
 }
 
 .qaOverlay {
-  z-index: 20;
+  z-index: 25;
+}
+
+.skipButton {
+  z-index: 40;
+  position: fixed;
+  top: 30px;
+  right: 50px;
+  background-color: initial;
+  color: #fff;
+  border: none;
+  font-size: 1.5em;
+}
+
+.skipButton:hover {
+  color: var(--vt-c-steelblue-2);
 }
 
 .factorExplanation {
@@ -119,7 +162,7 @@ setTimeout(() => {
   font-size: 1.8em;
   font-weight: 600;
   position: relative;
-  top: 250px;
+  top: 300px;
   max-width: 1080px;
   margin: auto;
   text-align: center;
@@ -130,7 +173,7 @@ setTimeout(() => {
   font-size: 1.8em;
   font-weight: 600;
   position: relative;
-  top: 170px;
+  top: 230px;
   max-width: 1080px;
   margin: auto;
   text-align: center;
@@ -138,7 +181,7 @@ setTimeout(() => {
 
 @media (max-width: 900px) {
   .factorExplanation {
-    top: calc(800px + (100vw * -0.6))
+    top: calc(870px + (100vw * -0.6))
   }
 }
 </style>

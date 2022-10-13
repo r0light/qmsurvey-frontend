@@ -49,47 +49,38 @@ function isQAHighlighted() {
 
 <template>
   <div class="quality-question">
-    <div class="factorDescription" :class="isFactorHighlighted()">
-      <h1>{{ factor.name }}</h1>
-      <p v-html="withTooltips(factor.description)"></p>
+    <div class="highlightWrapper" :class="isFactorHighlighted()">
+      <div class="factorDescription">
+        <h1>{{ factor.name }}</h1>
+        <p v-html="withTooltips(factor.description)"></p>
+      </div>
     </div>
-    <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg" alt="product factor" width="275" /></div>
+    <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg"
+        alt="product factor" width="275" /></div>
     <p>
       Please state at least one impact that <em>{{ factor.name }}</em> has on a quality aspect. You can state as
       many impacts as you want, but typically between one and three impacts is a
       reasonable number.
     </p>
-    <div class="qa-diagram" :class="isQAHighlighted()">
-      <div
-        v-for="(aspect, aspectKey) of qualityAspects"
-        :key="aspectKey"
-        class="qa-group"
-      >
-        <div class="top-aspect">
-          {{ aspect.name }}
-        </div>
-        <div
-          class="sub"
-          v-for="(subAspect, subAspectKey, innerIndex) of aspect.aspects"
-          :key="subAspectKey"
-        >
-          <Lines
-            v-bind:lastOne="
+    <div class="highlightWrapper" :class="isQAHighlighted()">
+      <div class="qa-diagram">
+        <div v-for="(aspect, aspectKey) of qualityAspects" :key="aspectKey" class="qa-group">
+          <div class="top-aspect">
+            {{ aspect.name }}
+          </div>
+          <div class="sub" v-for="(subAspect, subAspectKey, innerIndex) of aspect.aspects" :key="subAspectKey">
+            <Lines v-bind:lastOne="
               innerIndex == Object.keys(aspect.aspects).length - 1
-            "
-          />
-          <SelectableAspect
-            v-bind:aspectKey="(subAspectKey as string)"
-            v-bind:aspectName="subAspect.name"
-            v-bind:aspectDescription="subAspect.description"
-            v-bind:factorName="factor.name"
-            v-bind:passedRating="factor.impacts[subAspectKey]"
-            @rated="processRating"
-          />
+            " />
+            <SelectableAspect v-bind:aspectKey="(subAspectKey as string)" v-bind:aspectName="subAspect.name"
+              v-bind:aspectDescription="subAspect.description" v-bind:factorName="factor.name"
+              v-bind:passedRating="factor.impacts[subAspectKey]" @rated="processRating" />
+          </div>
         </div>
       </div>
     </div>
-    <div v-if="isExample && exampleState === 'done'" class="drawnHint qaHint"><img src="/qualityaspects.svg" alt="quality aspects" width="420" /></div>
+    <div v-if="isExample && exampleState === 'done'" class="drawnHint qaHint"><img src="/qualityaspects.svg"
+        alt="quality aspects" width="420" /></div>
   </div>
 </template>
 
@@ -108,7 +99,7 @@ function isQAHighlighted() {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  font-size: 1.1em;
+  font-size: 1.05em;
   column-gap: 1em;
   background-color: inherit;
 }
@@ -167,6 +158,12 @@ function isQAHighlighted() {
   opacity: 1;
 }
 
+.highlightWrapper {
+  background-color: #fff;
+  border-radius: 0.5em;
+  padding: 5px;
+}
+
 .factorDescription {
   display: flex;
   flex-direction: column;
@@ -186,11 +183,11 @@ function isQAHighlighted() {
 }
 
 .factorHighlighted {
-  z-index: 15;
+  z-index: 30;
 }
 
 .qaHighlighted {
-  z-index: 25;
+  z-index: 30;
   background-color: #fff;
 }
 
@@ -205,7 +202,8 @@ function isQAHighlighted() {
 }
 
 .pfHint {
-  right: 1px;
+  top: 10px;
+  right: -15px;
   z-index: 15;
 }
 
