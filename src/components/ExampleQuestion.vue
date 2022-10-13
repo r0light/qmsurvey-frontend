@@ -3,6 +3,8 @@ import { ref } from "vue";
 import QualityAspectsQuestion from "./QualityAspectsQuestion.vue";
 import { getEmptyImpacts } from "../aspectRating";
 
+export type ExampleState = "" | "productFactor" | "qualityAspects" | "done";
+
 const exampleFactor = {
   name: "Using Easter Eggs in API Responses",
   description:
@@ -12,15 +14,30 @@ const exampleFactor = {
   answered: false
 };
 
+const state = ref<ExampleState>("");
+
 const showFactorOverlay = ref<boolean>(false);
+const showQaOverlay = ref<boolean>(false);
 
 setTimeout(() => {
+  state.value = "productFactor";
   showFactorOverlay.value = true;
 }, 500)
 
 setTimeout(() => {
   showFactorOverlay.value = false;
 }, 5000)
+
+setTimeout(() => {
+  state.value = "qualityAspects";
+  showQaOverlay.value = true;
+}, 7000)
+
+
+setTimeout(() => {
+  state.value = "done"
+  showQaOverlay.value = false;
+}, 12000)
 
 </script>
 
@@ -37,14 +54,21 @@ setTimeout(() => {
   -->
 
   <div class="exampleWrapper">
-    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" />
+    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" v-bind:exampleState="state"/>
   </div>
   <Teleport to="body">
     <Transition name="fade">
-      <div class="factorOverlay" v-if="showFactorOverlay">
+      <div class="exampleOverlay factorOverlay" v-if="showFactorOverlay">
         <p class="factorExplanation">This is a product factor. It describes a characteristic of a system and the extent
           to
           which it is present can be measured.</p>
+      </div>
+    </Transition>
+  </Teleport>
+  <Teleport to="body">
+    <Transition name="fade">
+      <div class="exampleOverlay qaOverlay" v-if="showQaOverlay">
+        <p class="qaExplanation">These are the quality aspects. You can click on one of them to rate how the presence of the product factor impacts it.</p>
       </div>
     </Transition>
   </Teleport>
@@ -73,15 +97,21 @@ setTimeout(() => {
   opacity: 0;
 }
 
-
-.factorOverlay {
+.exampleOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+.factorOverlay {
+  z-index: 10;
+}
+
+.qaOverlay {
+  z-index: 20;
 }
 
 .factorExplanation {
@@ -90,6 +120,17 @@ setTimeout(() => {
   font-weight: 600;
   position: relative;
   top: 250px;
+  max-width: 1080px;
+  margin: auto;
+  text-align: center;
+}
+
+.qaExplanation {
+  color: #fff;
+  font-size: 1.8em;
+  font-weight: 600;
+  position: relative;
+  top: 170px;
   max-width: 1080px;
   margin: auto;
   text-align: center;

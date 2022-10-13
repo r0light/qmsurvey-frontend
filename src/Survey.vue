@@ -255,7 +255,7 @@ function previous() {
           @forwardClicked="next()" />
       </div>
       <div v-else-if="currentState === 'question'" key="5" class="page">
-        <QualityAspectsQuestion v-bind:factor="currentFactor" v-bind:isExample="false" />
+        <QualityAspectsQuestion v-bind:factor="currentFactor" v-bind:isExample="false" v-bind:exampleState="''"/>
         <NavigationControls :backwardText="'Cancel'" @backwardClicked="previous()" :forwardText="'Save'"
           @forwardClicked="next()" />
       </div>

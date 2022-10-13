@@ -6,12 +6,14 @@ import { getQualityAspects } from "../aspectRating";
 import { saveFactorLocally } from "../surveyHandling";
 import { addTooltips } from "../entities";
 import type { Factor } from "../factors";
+import type { ExampleState } from "./ExampleQuestion.vue";
 
 const qualityAspects = getQualityAspects();
 
 const props = defineProps<{
   factor: Factor;
   isExample: boolean;
+  exampleState: ExampleState;
 }>();
 
 function withTooltips(description: string): string {
@@ -25,9 +27,20 @@ function processRating(aspectKey: string, rating: number) {
   }
 }
 
-function isHighlighted() {
+function isFactorHighlighted() {
   if (props.isExample) {
-    return "highlighted";
+    if (props.exampleState === "productFactor") {
+      return "factorHighlighted";
+    }
+  }
+  return "";
+}
+
+function isQAHighlighted() {
+  if (props.isExample) {
+    if (props.exampleState === "qualityAspects") {
+      return "qaHighlighted";
+    }
   }
   return "";
 }
@@ -36,17 +49,17 @@ function isHighlighted() {
 
 <template>
   <div class="quality-question">
-    <div class="factorDescription" :class="isHighlighted()">
+    <div class="factorDescription" :class="isFactorHighlighted()">
       <h1>{{ factor.name }}</h1>
       <p v-html="withTooltips(factor.description)"></p>
     </div>
-    <div v-if="isExample" class="drawnHint pfHint"><img src="/productfactor.svg" alt="product factor" width="275" /></div>
+    <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg" alt="product factor" width="275" /></div>
     <p>
       Please state at least one impact that <em>{{ factor.name }}</em> has on a quality aspect. You can state as
       many impacts as you want, but typically between one and three impacts is a
       reasonable number.
     </p>
-    <div class="qa-diagram">
+    <div class="qa-diagram" :class="isQAHighlighted()">
       <div
         v-for="(aspect, aspectKey) of qualityAspects"
         :key="aspectKey"
@@ -76,7 +89,7 @@ function isHighlighted() {
         </div>
       </div>
     </div>
-    <div v-if="isExample" class="drawnHint qaHint"><img src="/qualityaspects.svg" alt="quality aspects" width="420" /></div>
+    <div v-if="isExample && exampleState === 'done'" class="drawnHint qaHint"><img src="/qualityaspects.svg" alt="quality aspects" width="420" /></div>
   </div>
 </template>
 
@@ -97,6 +110,7 @@ function isHighlighted() {
   flex-wrap: wrap;
   font-size: 1.1em;
   column-gap: 1em;
+  background-color: inherit;
 }
 
 .qa-group {
@@ -171,8 +185,13 @@ function isHighlighted() {
   padding: 0.5em;
 }
 
-.highlighted {
+.factorHighlighted {
   z-index: 15;
+}
+
+.qaHighlighted {
+  z-index: 25;
+  background-color: #fff;
 }
 
 @media (max-width: 1280px) {
@@ -187,12 +206,12 @@ function isHighlighted() {
 
 .pfHint {
   right: 1px;
-  z-index: 20;
+  z-index: 15;
 }
 
 .qaHint {
   bottom: 15px;
   right: 230px;
-  z-index: 5;
+  z-index: 30;
 }
 </style>
