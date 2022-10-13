@@ -24,11 +24,19 @@ function processRating(aspectKey: string, rating: number) {
     props.factor.impacts[aspectKey] = rating;
   }
 }
+
+function isHighlighted() {
+  if (props.isExample) {
+    return "highlighted";
+  }
+  return "";
+}
+
 </script>
 
 <template>
   <div class="quality-question">
-    <div class="factorDescription">
+    <div class="factorDescription" :class="isHighlighted()">
       <h1>{{ factor.name }}</h1>
       <p v-html="withTooltips(factor.description)"></p>
     </div>
@@ -163,6 +171,10 @@ function processRating(aspectKey: string, rating: number) {
   padding: 0.5em;
 }
 
+.highlighted {
+  z-index: 15;
+}
+
 @media (max-width: 1280px) {
   .drawnHint {
     display: none;
@@ -171,15 +183,16 @@ function processRating(aspectKey: string, rating: number) {
 
 .drawnHint {
   position: absolute;
-  z-index: 5;
 }
 
 .pfHint {
   right: 1px;
+  z-index: 20;
 }
 
 .qaHint {
   bottom: 15px;
   right: 230px;
+  z-index: 5;
 }
 </style>
