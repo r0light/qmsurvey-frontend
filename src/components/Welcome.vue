@@ -3,29 +3,19 @@
 <template>
   <div class="welcome">
     <h1>
-      Hello and thank you for your willingness to participate in this survey!
+      Hello <font-awesome-icon icon="fa-regular fa-face-smile" />
     </h1>
 
     <p class="newParagraph"></p>
     <p class="newParagraph mainInfo">
-      The aim of this survey is to investigate the <span class="bold">impact</span> of different <span class="bold">product factors</span> of a cloud-native software system on <span class="bold">software quality</span>. 
+      Thank you for your willingness to participate in this survey. We aim to investigate how different <span class="bold">product factors</span> of a <span class="bold">cloud-native software system</span> impact software quality.
     </p>
     <p class="newParagraph mainInfo">
       Product factors are properties of a software system which characterize the way it is implemented and deployed. Product factors can also be the result of applying certain patterns or practices.
     </p>
     <p class="newParagraph mainInfo">
-      Your task is to decide for individual product factors how they impact software quality aspects.
-      The <span class="bold">example on the next page </span> shows you how to do that.
+      We ask you to rate, how individual product factors impact software quality aspects. We show an example on the next page.
     </p>
-
-    <p class="newParagraph detailInfo">
-      The survey is part of our general effort of creating a quality model for cloud-native application architectures, focusing on design time aspects. 
-      With the survey, we want to empirically investigate relationships within the model.
-      We are looking for software and IT professionals (developers, engineers, architects) who have experience with implementing web-based applications that run in the cloud. <br>
-      All responses are collected anonymously and we only ask for basic demographic data at the end of the survey which is voluntary to enter.
-      Collected data in aggregated form will possibly be included in publications such as research reports, articles, and dissertations.
-    </p>
-
 
     <!--
     <div class="termsDescription">
@@ -82,15 +72,6 @@
 
 .mainInfo {
   font-size: 1.2em;
-}
-
-.detailInfo {
-  font-size: 1em;
-  background-color: #f2f2f2;
-  border: #000 solid 1px;
-  border-radius: 3px;
-  margin: 25px 0 5px 0;
-  padding: 0.2em;
 }
 
 .termsDescription {

@@ -235,7 +235,18 @@ function previous() {
     <Transition :name="transitionDirection" mode="out-in">
       <div v-if="currentState === 'welcome'" key="1" class="page">
         <Welcome />
-        <NavigationControls :backwardText="''" :forwardText="'Example'" @forwardClicked="next()" />
+        <NavigationControls :backwardText="''" :forwardText="'Start'" @forwardClicked="next()" />
+        <p class="newParagraph detailInfo">
+          This survey is part of our general effort of creating a quality model for cloud-native application
+          architectures, focusing on design time aspects.
+          With the survey, we want to empirically investigate relationships within the model.
+          We are looking for software and IT professionals (developers, engineers, architects) who have experience with
+          implementing web-based applications that run in the cloud. <br>
+          All responses are collected anonymously and we only ask for basic demographic data at the end of the survey
+          which is voluntary to enter.
+          Collected data in aggregated form will possibly be included in publications such as research reports,
+          articles, and dissertations.
+        </p>
       </div>
       <div v-else-if="currentState === 'example'" key="2" class="page">
         <ExampleQuestion />
@@ -243,7 +254,8 @@ function previous() {
           @forwardClicked="next()" />
       </div>
       <div v-else-if="currentState === 'selection'" key="3" class="page">
-        <FactorGroupSelection :groups="selectedGroups" @groupSelected="addGroupToSelection" @groupDeselected="removeGroupFromSelection" />
+        <FactorGroupSelection :groups="selectedGroups" @groupSelected="addGroupToSelection"
+          @groupDeselected="removeGroupFromSelection" />
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Next'"
           @forwardClicked="next()" />
       </div>
@@ -254,7 +266,7 @@ function previous() {
           @forwardClicked="next()" />
       </div>
       <div v-else-if="currentState === 'question'" key="5" class="page">
-        <QualityAspectsQuestion v-bind:factor="currentFactor" v-bind:isExample="false" v-bind:exampleState="''"/>
+        <QualityAspectsQuestion v-bind:factor="currentFactor" v-bind:isExample="false" v-bind:exampleState="''" />
         <NavigationControls :backwardText="'Cancel'" @backwardClicked="previous()" :forwardText="'Save'"
           @forwardClicked="next()" />
       </div>
@@ -388,6 +400,15 @@ button:focus {
 
 .buttonNameIcon {
   margin-right: 0.5em;
+}
+
+.detailInfo {
+  font-size: 1em;
+  background-color: #f2f2f2;
+  border: #000 solid 1px;
+  border-radius: 3px;
+  margin: 150px 0 5px 0;
+  padding: 0rem 1rem 0rem 1rem;
 }
 
 .fadeFromTop-enter-active {

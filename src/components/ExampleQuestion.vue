@@ -159,7 +159,7 @@ function skipExplanations() {
 
 .factorExplanation {
   color: #fff;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: 600;
   position: relative;
   top: 300px;
@@ -170,7 +170,7 @@ function skipExplanations() {
 
 .qaExplanation {
   color: #fff;
-  font-size: 3em;
+  font-size: 2em;
   font-weight: 600;
   position: relative;
   top: 130px;
