@@ -151,7 +151,7 @@ function next() {
       showNoGroupsModal.value = true;
       return;
     }
-    let numberOfFactors = 15 + selectedGroups.value.length * 5; // 20, 25, 30, 35, 40 depending on the number of areas selected
+    let numberOfFactors = 15 + selectedGroups.value.length * 3; // 18, 21, 24, 27, 30 depending on the number of areas selected
     let newFactors = getByGroups(selectedGroups.value, numberOfFactors, true);// maximum is currently 45
     updateLoadedFactors(newFactors);
     proceed();
@@ -391,10 +391,10 @@ button:focus {
 .page {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   flex: 1;
   padding: 0 1rem 0 1rem;
-  row-gap: 1.2em;
+  row-gap: 1em;
   margin-top: 10px;
 }
 
@@ -407,7 +407,7 @@ button:focus {
   background-color: #f2f2f2;
   border: #000 solid 1px;
   border-radius: 3px;
-  margin: 150px 0 5px 0;
+  margin: 50px 0 5px 0;
   padding: 0rem 1rem 0rem 1rem;
 }
 
@@ -509,6 +509,10 @@ button:focus {
 
   .logo {
     margin: 0 2rem 0 0;
+  }
+
+  .detailInfo {
+    margin-top: 110px;
   }
 }
 </style>

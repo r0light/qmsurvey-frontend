@@ -12,9 +12,9 @@ const emit = defineEmits<{
 </script>
 
 <template>
-<p class="larger">Please answer as many of the listed product factors as you like. Even just a few answers already support our research. Please use your personal experience and think about applications that you have (recently) worked on.
-  To finish, click on the Finish button on the bottom right.
-</p>
+  <p class="larger">
+    Please click and rate as many product factors as you like. You don't need to process all of them. Afterwards, click the Finish button.
+  </p>
 <div class="factorOverview">
     <div class="factorColumn">
         <FactorButton  v-for="(factor, factorIndex) of factors" :key="factorIndex" :factor="factor" @click="emit('factorSelected', factorIndex)"></FactorButton>
@@ -42,10 +42,5 @@ const emit = defineEmits<{
   padding: 0.5em;
 }
 
-@media (max-width: 1280px) {
-  .factorColumn {
-    justify-content: center;
-  }
-}
 
 </style>

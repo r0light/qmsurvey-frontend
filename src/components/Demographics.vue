@@ -190,6 +190,7 @@ function updateValue() {
 .questions {
   display: flex;
   flex-direction: column;
+  align-self: center;
   row-gap: 20px;
   max-width: 75%;
   font-size: 1.2em;

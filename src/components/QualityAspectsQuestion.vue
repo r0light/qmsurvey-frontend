@@ -89,7 +89,8 @@ function isQAHighlighted() {
 .quality-question {
   display: flex;
   flex-direction: column;
-  row-gap: 10px;
+  align-self: center;
+  row-gap: 8px;
   max-width: 1024px;
   width: 100%;
 }
@@ -177,8 +178,7 @@ function isQAHighlighted() {
 
 .factorDescription p {
   font-size: 1.2em;
-
-  padding: 0.5em;
+  padding: 0.3em;
 }
 
 .factorHighlighted {

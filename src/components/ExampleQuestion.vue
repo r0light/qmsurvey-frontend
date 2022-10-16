@@ -103,7 +103,7 @@ function skipExplanations() {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 10px 0 10px 0;
+  padding: 5px 0 5px 0;
   border-top: 2px solid var(--vt-c-indigo);
 }
 
