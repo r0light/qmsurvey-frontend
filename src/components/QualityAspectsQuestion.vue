@@ -27,30 +27,12 @@ function processRating(aspectKey: string, rating: number) {
   }
 }
 
-function isFactorHighlighted() {
-  if (props.isExample) {
-    if (props.exampleState === "productFactor") {
-      return "factorHighlighted";
-    }
-  }
-  return "";
-}
-
-function isQAHighlighted() {
-  if (props.isExample) {
-    if (props.exampleState === "qualityAspects") {
-      return "qaHighlighted";
-    }
-  }
-  return "";
-}
-
 </script>
 
 <template>
   <div class="quality-question">
-    <div class="highlightWrapper" :class="isFactorHighlighted()">
-      <div class="factorDescription">
+    <div class="highlightWrapper">
+      <div class="factorDescription" id="factorTitleBox">
         <h1>{{ factor.name }}</h1>
         <p v-html="withTooltips(factor.description)"></p>
       </div>
@@ -61,8 +43,8 @@ function isQAHighlighted() {
       Which quality aspect(s) does <em>{{ factor.name }}</em> impact? <br>Please state only those which the are most clear
       from your perspective (typically between one and three).
     </p>
-    <div class="highlightWrapper" :class="isQAHighlighted()">
-      <div class="qa-diagram">
+    <div class="highlightWrapper">
+      <div class="qa-diagram" id="qaDiagramBox">
         <div v-for="(aspect, aspectKey) of qualityAspects" :key="aspectKey" class="qa-group">
           <div class="top-aspect">
             {{ aspect.name }}
@@ -179,15 +161,6 @@ function isQAHighlighted() {
 .factorDescription p {
   font-size: 1.2em;
   padding: 0.3em;
-}
-
-.factorHighlighted {
-  z-index: 30;
-}
-
-.qaHighlighted {
-  z-index: 30;
-  background-color: #fff;
 }
 
 @media (max-width: 1280px) {

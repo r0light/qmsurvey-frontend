@@ -73,13 +73,14 @@ function getSymbolForRating(rating: number) {
     return "";
   }
 }
+
 </script>
 
 <template>
   <button
     class="aspect"
     v-bind:class="getStyleForRating(rating)"
-    id="show-modal"
+    v-bind:id="aspectKey"
     @click="showModal = true"
   >
     {{ aspectName }}

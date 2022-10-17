@@ -16,46 +16,34 @@ const exampleFactor = {
 
 const state = ref<ExampleState>("");
 
-const showFactorOverlay = ref<boolean>(false);
-const showQaOverlay = ref<boolean>(false);
+const showHintTeleporters = ref<boolean>(false);
+const firstTarget = ref<string>("");
+const secondTarget = ref<string>("");
+const thirdTarget = ref<string>("");
+const showFirstHint = ref<boolean>(false);
+const showSecondHint = ref<boolean>(false);
+const showThirdHint = ref<boolean>(false);
 
-// remember all animation so that they can be skipped
-const animations: number[] = [];
-animations.push(
-  setTimeout(() => {
-    state.value = "productFactor";
-    showFactorOverlay.value = true;
-  }, 500)
-)
 
-animations.push(
-  setTimeout(() => {
-    showFactorOverlay.value = false;
-  }, 8000)
-)
+setTimeout(() => {
+  showHintTeleporters.value = true;
+  firstTarget.value = "#factorTitleBox";
+  secondTarget.value = "#qaDiagramBox";
+  thirdTarget.value = "#interoperability";
+}, 100);
 
-animations.push(
-  setTimeout(() => {
-    state.value = "qualityAspects";
-    showQaOverlay.value = true;
-  }, 9000)
-)
+setTimeout(() => {
+  showFirstHint.value = true;
+}, 500);
 
-animations.push(
-  setTimeout(() => {
-    state.value = "done"
-    showQaOverlay.value = false;
-  }, 15000)
-)
-
-function skipExplanations() {
-  animations.forEach(timeoutId => {
-    clearTimeout(timeoutId);
-  })
-  showFactorOverlay.value = false;
-  showQaOverlay.value = false;
-  state.value = "done";
+function checkedFirstHint() {
+  showSecondHint.value = true;
 }
+
+function checkedSecondHint() {
+  showThirdHint.value = true;
+}
+
 
 </script>
 
@@ -70,31 +58,36 @@ function skipExplanations() {
     If you are ready, you can start on the next page where the actual product factors are listed.
   </p>
   -->
-  <p class="exampleText">Try out the <span class="bold">example</span> below and start once you feel ready:</p>
+  <p class="exampleText">Try out the <span class="bold">example</span> below by hovering or clicking the hints ( <span class="hintDescription">X</span> ) and start once you feel ready:</p>
   <div class="exampleWrapper">
     <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" v-bind:exampleState="state" />
   </div>
-  <Teleport to="body">
-    <Transition name="fade">
-      <div class="exampleOverlay factorOverlay" v-if="showFactorOverlay">
-        <p class="factorExplanation">This is a product factor. <br>It describes a property of a system. <br>The extent
-          to which a product factor is present can be measured.</p>
+  <Teleport :to="firstTarget" v-if="showHintTeleporters">
+    <Transition name="fade" mode="out-in">
+    <div class="firstHint" v-if="showFirstHint"  @mouseleave="checkedFirstHint()" @click="checkedFirstHint()">
+      <div class="hintCircle" data-tooltip-hint="This is the product factor. It describes a property of a system. The extent to which a product factor is present can be measured.">
+        1
       </div>
+    </div>
     </Transition>
   </Teleport>
-  <Teleport to="body">
-    <Transition name="fade">
-      <div class="exampleOverlay qaOverlay" v-if="showQaOverlay">
-        <p class="qaExplanation">These are the quality aspects. You can click on one of them to rate how a product factor impacts it, if it is present.</p>
+  <Teleport :to="secondTarget" v-if="showHintTeleporters">
+    <Transition name="fade" mode="out-in">
+    <div class="secondHint" v-if="showSecondHint" @mouseleave="checkedSecondHint()" @click="checkedSecondHint()">
+      <div class="hintCircle" data-tooltip-hint="These are the quality aspects ordered by their top-level quality aspects. After reading the product factor think about which quality aspect the product factor impacts. The (?) describes a quality aspect.">
+        2
       </div>
+    </div>
     </Transition>
   </Teleport>
-  <Teleport to="body">
-      <div v-if="showFactorOverlay || showQaOverlay">
-        <button class="skipButton" @click="skipExplanations()">
-          <font-awesome-icon icon="fa-solid fa-circle-xmark"/> Skip
-        </button>
+  <Teleport :to="thirdTarget" v-if="showHintTeleporters">
+    <Transition name="fade" mode="out-in">
+    <div class="thirdHint" v-if="showThirdHint">
+      <div class="hintCircle" data-tooltip-hint-2="Click on a quality aspect to rate how the product factor impacts the quality aspect, if it is present.">
+        3
       </div>
+    </div>
+    </Transition>
   </Teleport>
 </template>
 
@@ -112,6 +105,118 @@ function skipExplanations() {
   font-size: 1.1em;
 }
 
+.firstHint {
+  position: absolute;
+  left: 50px;
+  top: 5px;
+}
+
+.secondHint {
+  position: absolute;
+  left: -15px;
+  top: -10px;
+}
+
+.thirdHint {
+  position: absolute;
+  top: 35px;
+}
+
+.hintCircle {
+  width: 40px;
+  height: 40px;
+  border: 1px #000 solid;
+  border-radius: 50%;
+  font-size: 2em;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #75b3f0;
+  z-index: 30;
+}
+
+.hintCircle:hover {
+  background-color: #4799eb;
+  cursor: pointer;
+}
+
+.hintDescription {
+  width: 22px;
+  height: 22px;
+  border: 1px #000 solid;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #75b3f0;
+  z-index: 30;
+}
+
+
+[data-tooltip-hint] {
+  position: relative;
+}
+
+[data-tooltip-hint]::after {
+  content: attr(data-tooltip-hint);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+  display: block;
+  position: absolute;
+  bottom: -5em;
+  left: 1em;
+  width: 23em;
+  padding: 0.5em;
+  margin-top: 0;
+  z-index: 100;
+  color: #000;
+  background-color: #75b3f0;  
+  border: solid 1px var(--vt-c-indigo);
+  border-radius: 0.5em;
+  font-size: 18pt;
+}
+
+[data-tooltip-hint]:hover::after, [data-tooltip-hint]:active::after {
+  opacity: 1;
+}
+
+[data-tooltip-hint-2] {
+  position: relative;
+}
+
+[data-tooltip-hint-2]::after {
+  content: attr(data-tooltip-hint-2);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+  display: block;
+  position: absolute;
+  bottom: -3.5em;
+  right: -4em;
+  width: 21em;
+  padding: 0.5em;
+  margin-top: 0;
+  z-index: 100;
+  color: #000;
+  background-color: #75b3f0;  
+  border: solid 1px var(--vt-c-indigo);
+  border-radius: 0.5em;
+  font-size: 18pt;
+}
+
+@media (max-width: 1047px) {
+
+  [data-tooltip-hint-2]::after {
+    left: 0em;
+  }
+}
+
+[data-tooltip-hint-2]:hover::after {
+  opacity: 1;
+}
+
 .fade-leave-active {
   transition: opacity 1.5s ease;
 }
@@ -125,63 +230,4 @@ function skipExplanations() {
   opacity: 0;
 }
 
-.exampleOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
-}
-
-.factorOverlay {
-  z-index: 15;
-}
-
-.qaOverlay {
-  z-index: 25;
-}
-
-.skipButton {
-  z-index: 40;
-  position: fixed;
-  top: 30px;
-  right: 50px;
-  background-color: initial;
-  color: #fff;
-  border: none;
-  font-size: 1.5em;
-}
-
-.skipButton:hover {
-  color: var(--vt-c-steelblue-2);
-}
-
-.factorExplanation {
-  color: #fff;
-  font-size: 2em;
-  font-weight: 600;
-  position: relative;
-  top: 300px;
-  max-width: 1080px;
-  margin: auto;
-  text-align: center;
-}
-
-.qaExplanation {
-  color: #fff;
-  font-size: 2em;
-  font-weight: 600;
-  position: relative;
-  top: 130px;
-  max-width: 1080px;
-  margin: auto;
-  text-align: center;
-}
-
-@media (max-width: 900px) {
-  .factorExplanation {
-    top: calc(870px + (100vw * -0.6))
-  }
-}
 </style>
