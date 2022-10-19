@@ -151,7 +151,7 @@ function next() {
       showNoGroupsModal.value = true;
       return;
     }
-    let numberOfFactors = 15 + selectedGroups.value.length * 3; // 18, 21, 24, 27, 30 depending on the number of areas selected
+    let numberOfFactors = 15 + selectedGroups.value.length * 5; // 18, 21, 24, 27, 30 depending on the number of areas selected
     let newFactors = getByGroups(selectedGroups.value, numberOfFactors, true);// maximum is currently 45
     updateLoadedFactors(newFactors);
     proceed();
