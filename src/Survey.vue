@@ -151,7 +151,7 @@ function next() {
       showNoGroupsModal.value = true;
       return;
     }
-    let numberOfFactors = 15 + selectedGroups.value.length * 5; // 18, 21, 24, 27, 30 depending on the number of areas selected
+    let numberOfFactors = 15 + selectedGroups.value.length * 4; // 19, 23, 27, 31, 35 depending on the number of areas selected
     let newFactors = getByGroups(selectedGroups.value, numberOfFactors, true);// maximum is currently 45
     updateLoadedFactors(newFactors);
     proceed();
@@ -237,11 +237,11 @@ function previous() {
         <Welcome />
         <NavigationControls :backwardText="''" :forwardText="'Start'" @forwardClicked="next()" />
         <p class="newParagraph detailInfo">
+          <span class="bold">Privacy Policy</span><br>
           This survey is part of our general effort of creating a quality model for cloud-native application
           architectures, focusing on design time aspects.
           With the survey, we want to empirically investigate relationships within the model.
-          We are looking for software and IT professionals (developers, engineers, architects) who have experience with
-          implementing web-based applications that run in the cloud. <br>
+          The target audience are software and IT professionals (developers, engineers, architects) who have experience with implementing web-based applications that run in the cloud. <br>
           All responses are collected anonymously and we only ask for basic demographic data at the end of the survey
           which is voluntary to enter.
           Collected data in aggregated form will possibly be included in publications such as research reports,

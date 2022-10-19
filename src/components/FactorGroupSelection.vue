@@ -38,7 +38,7 @@ function selectedStyle(groupKey: string): string {
 
 <template>
         <div class="selectionWrapper">
-          <p class="larger">Before we start, please select your areas of expertise below (at least 1). Our subsequent survey will then focus on your expertise.</p>
+          <p class="larger">First of all, please tell us your areas of expertise from the topics below. Our subsequent survey will then focus on these.</p>
           <div class="groupOverview">
             <button class="groupButton" :class="selectedStyle(group.key)" v-for="group in groupData" @click="groupClicked(group.key)">
                 {{group.name}}

@@ -8,7 +8,13 @@
 
     <p class="newParagraph"></p>
     <p class="newParagraph mainInfo">
-      Thank you for your willingness to participate in this survey. We aim to investigate how different <span class="bold">product factors</span> of a <span class="bold">cloud-native software system</span> impact software quality.
+      Thank you for your willingness to participate in this survey! 
+    </p>
+    <p class="newParagraph mainInfo">
+      We are software engineering researchers from the universities of Bamberg and Stuttgart (Germany).
+    </p>
+    <p class="newParagraph mainInfo">
+      Currently, we are investigating how different <span class="bold">product factors</span> of a <span class="bold">cloud-native software system</span> impact software quality.
     </p>
     <p class="newParagraph mainInfo">
       Product factors are properties of a software system which characterize the way it is implemented and deployed. Product factors can also be the result of applying certain patterns or practices.
@@ -49,7 +55,7 @@
     -->
 
     <p class="newParagraph screenHint">
-      <span class="bold">For a good user experience of the survey tool, please maximize your browser window</span>
+      <span class="bold">Hint: For a good user experience of the survey tool, please maximize your browser window</span>
     </p>
   </div>
 </template>

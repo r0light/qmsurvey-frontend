@@ -94,7 +94,7 @@ function getStyleForDone() {
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForExample()">
             <span class="progressText">
-                <span class="progressTextInner">Example</span>
+                <span class="progressTextInner" v-if="getStyleForExample() !== 'inactiveState'">Example</span>
                 <font-awesome-icon v-if="getStyleForExample() === 'doneState'" icon="fa-regular fa-circle-check" />
                 <font-awesome-icon v-if="getStyleForExample() === 'activeState'" icon="fa-regular fa-circle-down" />
             </span>
@@ -105,7 +105,7 @@ function getStyleForDone() {
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForSelection()">
             <span class="progressText">
-                <span class="progressTextInner">Interests</span>
+                <span class="progressTextInner" v-if="getStyleForSelection() !== 'inactiveState'">Interests</span>
                 <font-awesome-icon v-if="getStyleForSelection() === 'doneState'" icon="fa-regular fa-circle-check" />
                 <font-awesome-icon v-if="getStyleForSelection() === 'activeState'" icon="fa-regular fa-circle-down" />
             </span>
@@ -116,7 +116,7 @@ function getStyleForDone() {
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForFactorRating()">
             <span class="progressText">
-                <span class="progressTextInner">Product factor rating</span>
+                <span class="progressTextInner" v-if="getStyleForFactorRating() !== 'inactiveState'">Product factor rating</span>
                 <font-awesome-icon v-if="getStyleForFactorRating() === 'doneState'" icon="fa-regular fa-circle-check" />
                 <font-awesome-icon v-if="getStyleForFactorRating() === 'activeState'" icon="fa-regular fa-circle-down" />
             </span>
@@ -127,7 +127,7 @@ function getStyleForDone() {
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForDemographics()">
             <span class="progressText">
-                <span class="progressTextInner">Demographics</span>
+                <span class="progressTextInner" v-if="getStyleForDemographics() !== 'inactiveState'">Demographics</span>
                 <font-awesome-icon v-if="getStyleForDemographics() === 'doneState'" icon="fa-regular fa-circle-check" />
                 <font-awesome-icon v-if="getStyleForDemographics() === 'activeState'" icon="fa-regular fa-circle-down" />
             </span>
@@ -138,8 +138,7 @@ function getStyleForDone() {
         <div class="leftPart"></div>
         <div class="bodyPart" :class="getStyleForDone()">
             <span class="progressText">
-                <span class="progressTextInner">Done</span>
-                <font-awesome-icon v-if="getStyleForDemographics() === 'doneState'" icon="fa-regular fa-circle-check" />
+                <span class="progressTextInner" v-if="getStyleForDone() !== 'inactiveState'">Done</span>
             </span>
         </div>
         <div class="rightPart" :class="getStyleForDone()"></div>
