@@ -97,7 +97,7 @@ function checkedSecondHint() {
   justify-content: center;
   width: 100%;
   padding: 5px 0 5px 0;
-  border-top: 2px solid var(--vt-c-indigo);
+  /*border-top: 2px solid var(--vt-c-indigo);*/
 }
 
 .exampleText {

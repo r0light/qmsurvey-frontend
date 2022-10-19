@@ -13,7 +13,7 @@ const emit = defineEmits<{
 
 <template>
   <p class="larger">
-    Please click and rate as many product factors as you like. You don't need to process all of them. Afterwards, click the Finish button.
+    From the list below, please rate the product factors that you feel familiar with. You can rate as many as you want.
   </p>
 <div class="factorOverview">
     <div class="factorColumn">

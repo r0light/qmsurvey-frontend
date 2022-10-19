@@ -40,8 +40,7 @@ function processRating(aspectKey: string, rating: number) {
     <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg"
         alt="product factor" width="250" /></div>
     <p class="larger">
-      Which quality aspect(s) does <em>{{ factor.name }}</em> impact? <br>Please state only those which the are most clear
-      from your perspective (typically between one and three).
+      Which quality aspect(s) does this product factor impact? (typically between one and five)
     </p>
     <div class="highlightWrapper">
       <div class="qa-diagram" id="qaDiagramBox">
