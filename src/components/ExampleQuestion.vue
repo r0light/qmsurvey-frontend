@@ -247,15 +247,12 @@ function openOrNot(hintNumber: number): string {
   z-index: 30;
 }
 
-@media (max-width: 1047px) {
+@media (max-width: 1069px) {
 
-  [data-tooltip-hint-2]::after {
-    left: 0em;
+  .thirdHint.open {
+      right: 0px;
+      left: 20px;
   }
-}
-
-[data-tooltip-hint-2]:hover::after {
-  opacity: 1;
 }
 
 .fade-leave-active {
