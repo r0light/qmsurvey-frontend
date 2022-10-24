@@ -37,6 +37,7 @@ function getStyleForStatus(answered: boolean): "todo" | "done" {
 .factorButton {
   display: flex;
   font-size: 1.1em;
+  color: var(--color-product-factor-text);
   padding: 0.4em;
   word-wrap: break-word;
   min-width: 150px;
@@ -48,20 +49,20 @@ function getStyleForStatus(answered: boolean): "todo" | "done" {
 }
 
 .todo {
-  background-color: var(--color-button);
+  background-color: var(--color-product-factor);
 }
 
 .todo:hover {
-  background-color: var(--color-button-hover);
+  background-color: var(--color-product-factor-hover);
 }
 
 .done {
-  background-color: #f8c620;
+  background-color: #fad252;
   /* padding-right: 1.6em; */
 }
 
 .done:hover {
-  background-color: #dfac07;
+  background-color: #f7bf08;
 }
 
 .buttonFactorName {

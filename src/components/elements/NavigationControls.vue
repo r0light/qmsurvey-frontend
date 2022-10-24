@@ -38,6 +38,7 @@ const emit = defineEmits<{
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    margin-top: 70px;
 }
 
 .navigation button {

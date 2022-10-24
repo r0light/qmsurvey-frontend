@@ -219,6 +219,7 @@ function getStyleForDone() {
     min-width: 100px;
     height: 31.8px;
     background-color: #e9e9ed;
+    color: #2b4f34;
 }
 
 .smallBox {
@@ -300,17 +301,17 @@ function getStyleForDone() {
 }
 
 .activeState {
-    background-color: #ccd8e5;
+    background-color: #cde5d3;
 }
 
 .rightPart.doneState {
     /*border-top: 1px solid #2c3e50;*/
-    border-top: 1px solid #89a5c2;
-    border-right: 1px solid #89a5c2;
+    border-top: 1px solid #78ba89;
+    border-right: 1px solid #78ba89;
 }
 
 .doneState {
-    background-color: #abbfd4;
+    background-color: #abd4b5;
 }
 
 .inactiveState {

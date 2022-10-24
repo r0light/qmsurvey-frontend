@@ -148,7 +148,8 @@ function processRating(aspectKey: string, rating: number) {
 .factorDescription {
   display: flex;
   flex-direction: column;
-  background-color: #f2f2f2;
+  color: var(--color-product-factor-text);
+  background-color: var(--color-product-factor);
   border: #000 solid 1px;
   border-radius: 5px;
 }

@@ -237,7 +237,7 @@ function previous() {
         <Welcome />
         <NavigationControls :backwardText="''" :forwardText="'Start'" @forwardClicked="next()" />
         <p class="newParagraph detailInfo">
-          <span class="bold">Privacy Policy</span><br>
+          <span class="bold">Background & Privacy Policy</span><br>
           This survey is part of our general effort of creating a quality model for cloud-native application
           architectures, focusing on design time aspects.
           With the survey, we want to empirically investigate relationships within the model.

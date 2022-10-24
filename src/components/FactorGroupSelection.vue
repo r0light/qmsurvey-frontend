@@ -57,7 +57,6 @@ function selectedStyle(groupKey: string): string {
     display: flex;
     flex-direction: column;
     row-gap: 30px;
-    margin-bottom: 70px;
 }
 
 .groupOverview {
@@ -79,10 +78,15 @@ function selectedStyle(groupKey: string): string {
     padding-top: 0.8em;
     padding-bottom: 0.8em;
     min-width: 150px;
+    background-color: #c7c7d1;
     border-style: solid;
     border-width: 1pt;
     border-radius: 3pt;
     border-color: var(--vt-c-indigo);
+}
+
+.groupButton:hover {
+    background-color: #ababba;
 }
 
 .selectIcon {

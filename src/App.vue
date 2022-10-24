@@ -94,7 +94,7 @@ function reload() {
 
 footer {
   display: flex;
-  background-color: rgb(33, 37, 41);
+  background-color: #456587;
   color: #fff;
   width: 100%;
   margin-top: auto;
@@ -117,5 +117,13 @@ footer {
   max-width: 1280px;
   margin: 0 auto;
   padding: 10px;
+}
+
+.footer-content a {
+  color: #dde5ee;
+}
+
+.footer-content a:hover {
+  background-color: #2b3f54;
 }
 </style>

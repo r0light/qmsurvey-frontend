@@ -43,6 +43,13 @@
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
 
+  --color-quality-aspect: var(--vt-c-steelblue-1);
+  --color-quality-aspect-hover: var(--vt-c-steelblue-2);
+
+  --color-product-factor: #e5e5cd;
+  --color-product-factor-hover: #d4d4ab;
+  --color-product-factor-text: #4f4f2b;
+
   --section-gap: 160px;
 }
 
