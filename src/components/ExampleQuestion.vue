@@ -58,7 +58,6 @@ function checkedSecondHint() {
     If you are ready, you can start on the next page where the actual product factors are listed.
   </p>
   -->
-  <p class="exampleText">Try out the <span class="bold">example</span> below by hovering or clicking the hints ( <span class="hintDescription">X</span> ) and start once you feel ready:</p>
   <div class="exampleWrapper">
     <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" v-bind:exampleState="state" />
   </div>

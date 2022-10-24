@@ -31,18 +31,16 @@ function processRating(aspectKey: string, rating: number) {
 
 <template>
   <div class="quality-question">
-    <div class="highlightWrapper">
       <div class="factorDescription" id="factorTitleBox">
         <h1>{{ factor.name }}</h1>
         <p v-html="withTooltips(factor.description)"></p>
       </div>
-    </div>
     <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg"
         alt="product factor" width="250" /></div>
     <p class="larger">
-      Which quality aspect(s) does this product factor impact? (typically between one and five)
+      Which quality aspect(s) does this product factor impact? (typically between one and three)
     </p>
-    <div class="highlightWrapper">
+    <div class="qaWrapper">
       <div class="qa-diagram" id="qaDiagramBox">
         <div v-for="(aspect, aspectKey) of qualityAspects" :key="aspectKey" class="qa-group">
           <div class="top-aspect">
@@ -71,7 +69,7 @@ function processRating(aspectKey: string, rating: number) {
   display: flex;
   flex-direction: column;
   align-self: center;
-  row-gap: 8px;
+  row-gap: 15px;
   max-width: 1024px;
   width: 100%;
 }
@@ -104,6 +102,7 @@ function processRating(aspectKey: string, rating: number) {
   border-width: 1.5pt;
   border-color: var(--vt-c-indigo);
   border-radius: 6pt;
+  background-color: #fff;
 }
 
 .sub {
@@ -139,10 +138,11 @@ function processRating(aspectKey: string, rating: number) {
   opacity: 1;
 }
 
-.highlightWrapper {
-  background-color: #fff;
+.qaWrapper {
+  background-color: #eef2f6;
+  /*border: solid 1px var(--vt-c-indigo);*/
   border-radius: 0.5em;
-  padding: 5px;
+  padding: 16px;
 }
 
 .factorDescription {
@@ -150,7 +150,7 @@ function processRating(aspectKey: string, rating: number) {
   flex-direction: column;
   color: var(--color-product-factor-text);
   background-color: var(--color-product-factor);
-  border: #000 solid 1px;
+  /*border: #000 solid 1px;*/
   border-radius: 5px;
 }
 
