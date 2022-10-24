@@ -27,8 +27,8 @@ const showThirdHint = ref<boolean>(false);
 
 setTimeout(() => {
   showHintTeleporters.value = true;
-  firstTarget.value = "#factorTitleBox";
-  secondTarget.value = "#qaDiagramBox";
+  firstTarget.value = "#factorHintAnchor";
+  secondTarget.value = "#qaHintAnchor";
   thirdTarget.value = "#interoperability";
 }, 100);
 
@@ -36,14 +36,50 @@ setTimeout(() => {
   showFirstHint.value = true;
 }, 500);
 
-function checkedFirstHint() {
+setTimeout(() => {
   showSecondHint.value = true;
+}, 1000);
+
+setTimeout(() => {
+  showThirdHint.value = true;
+}, 1500);
+
+function checkedFirstHint() {
+  showFirstHint.value = !showFirstHint.value;
 }
 
 function checkedSecondHint() {
-  showThirdHint.value = true;
+  showSecondHint.value = !showSecondHint.value;
 }
 
+function checkedThirdHint() {
+  showThirdHint.value = !showThirdHint.value;
+}
+
+function openOrNot(hintNumber: number): string {
+  switch (hintNumber) {
+    case 1:
+      if (showFirstHint.value) {
+        return "open";
+      } else {
+        return "closed";
+      }
+    case 2:
+      if (showSecondHint.value) {
+        return "open";
+      } else {
+        return "closed";
+      }
+    case 3:
+      if (showThirdHint.value) {
+        return "open";
+      } else {
+        return "closed";
+      }
+    default:
+      return "closed";
+  }
+}
 
 </script>
 
@@ -63,29 +99,45 @@ function checkedSecondHint() {
   </div>
   <Teleport :to="firstTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
-    <div class="firstHint" v-if="showFirstHint"  @mouseleave="checkedFirstHint()" @click="checkedFirstHint()">
-      <div class="hintCircle" data-tooltip-hint="This is the product factor. It describes a property of a system. The extent to which a product factor is present can be measured.">
-        1
+      <div class="hint firstHint" :class="openOrNot(1)" @click="checkedFirstHint()">
+        <div>
+          1.
+        </div>
+        <div v-if="showFirstHint">This is the product factor. It describes a property of a system. The extent to which a
+          product factor is present can be measured.</div>
+        <button v-if="showFirstHint" class="modal-default-button close-button">
+          <font-awesome-icon icon="fa-solid fa-circle-xmark" />
+        </button>
       </div>
-    </div>
     </Transition>
   </Teleport>
   <Teleport :to="secondTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
-    <div class="secondHint" v-if="showSecondHint" @mouseleave="checkedSecondHint()" @click="checkedSecondHint()">
-      <div class="hintCircle" data-tooltip-hint="These are the quality aspects ordered by their top-level quality aspects. After reading the product factor think about which quality aspect the product factor impacts. The (?) describes a quality aspect.">
-        2
+      <div class="hint secondHint" :class="openOrNot(2)" @click="checkedSecondHint()">
+        <div>
+          2.
+        </div>
+        <div v-if="showSecondHint">These are the quality aspects ordered by their top-level quality aspects. After
+          reading the product factor think about which quality aspect the product factor impacts. The (?) describes a
+          quality aspect.</div>
+        <button v-if="showSecondHint" class="modal-default-button close-button">
+          <font-awesome-icon icon="fa-solid fa-circle-xmark" />
+        </button>
       </div>
-    </div>
     </Transition>
   </Teleport>
   <Teleport :to="thirdTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
-    <div class="thirdHint" v-if="showThirdHint">
-      <div class="hintCircle" data-tooltip-hint-2="Click on a quality aspect to rate how the product factor impacts the quality aspect, if it is present.">
-        3
+      <div class="hint thirdHint" :class="openOrNot(3)" @click="checkedThirdHint()" v-on:click.stop>
+        <div>
+          3.
+        </div>
+        <div v-if="showThirdHint">Click on a quality aspect to rate how the product factor impacts the quality aspect,
+          if it is present.</div>
+        <button v-if="showThirdHint" class="modal-default-button close-button">
+          <font-awesome-icon icon="fa-solid fa-circle-xmark" />
+        </button>
       </div>
-    </div>
     </Transition>
   </Teleport>
 </template>
@@ -104,14 +156,50 @@ function checkedSecondHint() {
   font-size: 1.1em;
 }
 
+.hint {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  padding: 10px;
+
+  z-index: 10;
+}
+
+.hint.open {
+  background-color: #e9e9ed;
+  border: 1px solid #000;
+  border-radius: 5px;
+  opacity: 0.9;
+  width: 75%;
+  height: 100%;
+  font-size: 1.5em;
+  color: #000;
+  /*transition: width 1s, height 1s, font-size 1s;*/
+}
+
+.hint button {
+  display: flex;
+  padding: 5px;
+  font-size: 1.2em;
+  font-weight: 900;
+  border-style: none;
+  border-radius: inherit;
+  background-color: inherit;
+  color: #818198;
+}
+
+.hint button:hover {
+  /*color: var(--vt-c-indigo);*/
+  color: #505062;
+}
+
 .firstHint {
-  position: absolute;
-  left: 50px;
+  left: 5px;
   top: 5px;
 }
 
 .secondHint {
-  position: absolute;
   left: -15px;
   top: -10px;
 }
@@ -119,9 +207,16 @@ function checkedSecondHint() {
 .thirdHint {
   position: absolute;
   top: 35px;
+  right: 30px;
+  max-width: 300px;
 }
 
-.hintCircle {
+.thirdHint.open {
+  width: 500px;
+  height: fit-content;
+}
+
+.closed {
   width: 40px;
   height: 40px;
   border: 1px #000 solid;
@@ -131,12 +226,12 @@ function checkedSecondHint() {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #75b3f0;
+  background-color: #e8e8e9;
   z-index: 30;
 }
 
-.hintCircle:hover {
-  background-color: #4799eb;
+.closed:hover {
+  background-color: #bebec1;
   cursor: pointer;
 }
 
@@ -150,59 +245,6 @@ function checkedSecondHint() {
   align-items: center;
   background-color: #75b3f0;
   z-index: 30;
-}
-
-
-[data-tooltip-hint] {
-  position: relative;
-}
-
-[data-tooltip-hint]::after {
-  content: attr(data-tooltip-hint);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s;
-  display: block;
-  position: absolute;
-  bottom: -5em;
-  left: 1em;
-  width: 23em;
-  padding: 0.5em;
-  margin-top: 0;
-  z-index: 100;
-  color: #000;
-  background-color: #75b3f0;  
-  border: solid 1px var(--vt-c-indigo);
-  border-radius: 0.5em;
-  font-size: 18pt;
-}
-
-[data-tooltip-hint]:hover::after, [data-tooltip-hint]:active::after {
-  opacity: 1;
-}
-
-[data-tooltip-hint-2] {
-  position: relative;
-}
-
-[data-tooltip-hint-2]::after {
-  content: attr(data-tooltip-hint-2);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s;
-  display: block;
-  position: absolute;
-  bottom: -3.5em;
-  right: -4em;
-  width: 21em;
-  padding: 0.5em;
-  margin-top: 0;
-  z-index: 100;
-  color: #000;
-  background-color: #75b3f0;  
-  border: solid 1px var(--vt-c-indigo);
-  border-radius: 0.5em;
-  font-size: 18pt;
 }
 
 @media (max-width: 1047px) {
@@ -228,5 +270,4 @@ function checkedSecondHint() {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>

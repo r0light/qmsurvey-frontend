@@ -31,7 +31,8 @@ function processRating(aspectKey: string, rating: number) {
 
 <template>
   <div class="quality-question">
-      <div class="factorDescription" id="factorTitleBox">
+      <div class="factorDescription">
+        <div id="factorHintAnchor"></div>
         <h1>{{ factor.name }}</h1>
         <p v-html="withTooltips(factor.description)"></p>
       </div>
@@ -41,7 +42,8 @@ function processRating(aspectKey: string, rating: number) {
       Which quality aspect(s) does this product factor impact? (typically between one and three)
     </p>
     <div class="qaWrapper">
-      <div class="qa-diagram" id="qaDiagramBox">
+      <div id="qaHintAnchor"></div>
+      <div class="qa-diagram">
         <div v-for="(aspect, aspectKey) of qualityAspects" :key="aspectKey" class="qa-group">
           <div class="top-aspect">
             {{ aspect.name }}
@@ -161,6 +163,10 @@ function processRating(aspectKey: string, rating: number) {
 .factorDescription p {
   font-size: 1.2em;
   padding: 0.3em;
+}
+
+#factorHintAnchor, #qaHintAnchor {
+  position: absolute;
 }
 
 @media (max-width: 1280px) {
