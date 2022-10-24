@@ -5,9 +5,32 @@ const props = defineProps<{
     currentState: SurveyState;
 }>();
 
+function getBackgroundForWelcome() {
+    switch(props.currentState) {
+        case "welcome":
+            return "inactiveState";
+        case "example":
+            return "activeState";
+        default:
+            return "doneState";
+    }
+}
+
 function getStyleForWelcome() {
     switch(props.currentState) {
         case "welcome": 
+            return "activeState";
+        default:
+            return "doneState";
+    }
+}
+
+function getBackgroundForExample() {
+    switch(props.currentState) {
+        case "welcome":
+        case "example":
+            return "inactiveState";
+        case "selection":
             return "activeState";
         default:
             return "doneState";
@@ -25,12 +48,41 @@ function getStyleForExample() {
     }
 }
 
+function getBackgroundForSelection() {
+    switch(props.currentState) {
+        case "welcome":
+        case "example":
+        case "selection":
+            return "inactiveState";
+        case "overview":
+        case "question":
+            return "activeState";
+        default:
+            return "doneState";
+    }
+}
+
 function getStyleForSelection() {
     switch(props.currentState) {
         case "welcome": 
         case "example": 
             return "inactiveState";
         case "selection":
+            return "activeState";
+        default:
+            return "doneState";
+    }
+}
+
+function getBackgroundForFactorRating() {
+    switch(props.currentState) {
+        case "welcome":
+        case "example":
+        case "selection":
+        case "overview":
+        case "question":
+            return "inactiveState";
+        case "demographics":
             return "activeState";
         default:
             return "doneState";
@@ -51,6 +103,16 @@ function getStyleForFactorRating() {
     }
 }
 
+function getBackgroundForDemographics() {
+    switch(props.currentState) {
+        case "done":
+            return "doneState";
+        default:
+            return "inactiveState";
+    }
+}
+
+
 function getStyleForDemographics() {
     switch(props.currentState) {
         case "welcome": 
@@ -63,6 +125,15 @@ function getStyleForDemographics() {
             return "activeState";
         default:
             return "doneState";
+    }
+}
+
+function getBackgroundForDone() {
+    switch(props.currentState) {
+        case "done":
+            return "doneState";
+        default:
+            return "inactiveState";
     }
 }
 
@@ -79,8 +150,8 @@ function getStyleForDone() {
 
 <template>
 <div class="progressContainer">
-    <div class="progressElement smallBox">
-        <div class="leftPart"></div>
+    <div class="progressElement smallBox" :class="getBackgroundForWelcome()">
+        <div class="leftPart leftestPart"></div>
         <div class="bodyPart" :class="getStyleForWelcome()">
             <span class="progressText">
                 <span class="progressTextInner">Hello</span> 
@@ -90,8 +161,8 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForWelcome()"></div>
     </div>
-    <div class="progressElement smallBox">
-        <div class="leftPart"></div>
+    <div class="progressElement smallBox" :class="getBackgroundForExample()">
+        <div class="leftPart" :class="getStyleForExample()"></div>
         <div class="bodyPart" :class="getStyleForExample()">
             <span class="progressText">
                 <span class="progressTextInner" v-if="getStyleForExample() !== 'inactiveState'">Example</span>
@@ -101,8 +172,8 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForExample()"></div>
     </div>
-    <div class="progressElement smallBox">
-        <div class="leftPart"></div>
+    <div class="progressElement smallBox" :class="getBackgroundForSelection()">
+        <div class="leftPart" :class="getStyleForSelection()"></div>
         <div class="bodyPart" :class="getStyleForSelection()">
             <span class="progressText">
                 <span class="progressTextInner" v-if="getStyleForSelection() !== 'inactiveState'">Interests</span>
@@ -112,8 +183,8 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForSelection()"></div>
     </div>
-    <div class="progressElement bigBox">
-        <div class="leftPart"></div>
+    <div class="progressElement bigBox" :class="getBackgroundForFactorRating()">
+        <div class="leftPart" :class="getStyleForFactorRating()"></div>
         <div class="bodyPart" :class="getStyleForFactorRating()">
             <span class="progressText">
                 <span class="progressTextInner" v-if="getStyleForFactorRating() !== 'inactiveState'">Product factor rating</span>
@@ -123,8 +194,8 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForFactorRating()"></div>
     </div>
-    <div class="progressElement midiBox">
-        <div class="leftPart"></div>
+    <div class="progressElement midiBox" :class="getBackgroundForDemographics()">
+        <div class="leftPart" :class="getStyleForDemographics()"></div>
         <div class="bodyPart" :class="getStyleForDemographics()">
             <span class="progressText">
                 <span class="progressTextInner" v-if="getStyleForDemographics() !== 'inactiveState'">Demographics</span>
@@ -134,8 +205,8 @@ function getStyleForDone() {
         </div>
         <div class="rightPart" :class="getStyleForDemographics()"></div>
     </div>
-    <div class="progressElement miniBox">
-        <div class="leftPart"></div>
+    <div class="progressElement miniBox rightest">
+        <div class="leftPart" :class="getStyleForDone()"></div>
         <div class="bodyPart" :class="getStyleForDone()">
             <span class="progressText">
                 <span class="progressTextInner" v-if="getStyleForDone() !== 'inactiveState'">Done</span>
@@ -157,6 +228,7 @@ function getStyleForDone() {
 .progressElement {
     min-width: 100px;
     height: 31.8px;
+    background-color: #e9e9ed;
 }
 
 .smallBox {
@@ -182,8 +254,12 @@ function getStyleForDone() {
     /*border-top: 1px solid #000;
     border-right: 1px solid #000;*/
     transform: scale(0.9, 1.5) rotate(45deg) translateY(9.3px) translateX(-1.5px);
-    background-color: #fff;
+    background-color: #e9e9ed;
     z-index: 5;
+}
+
+.leftestPart {
+    background-color: #fff;
 }
 
 .bodyPart {
@@ -194,6 +270,7 @@ function getStyleForDone() {
     border-bottom: 1px solid #000;*/
     display: flex;
     justify-content: center;
+    
 }
 
 .progressText {
@@ -228,8 +305,18 @@ function getStyleForDone() {
     z-index: 10;
 }
 
+.rightest {
+    background-color: #fff;
+}
+
 .activeState {
     background-color: #ccd8e5;
+}
+
+.rightPart.doneState {
+    /*border-top: 1px solid #2c3e50;*/
+    border-top: 1px solid #89a5c2;
+    border-right: 1px solid #89a5c2;
 }
 
 .doneState {
