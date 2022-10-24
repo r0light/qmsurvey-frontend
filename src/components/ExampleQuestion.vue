@@ -105,7 +105,7 @@ function openOrNot(hintNumber: number): string {
         </div>
         <div v-if="showFirstHint">This is the product factor. It describes a property of a system. The extent to which a
           product factor is present can be measured.</div>
-        <button v-if="showFirstHint" class="modal-default-button close-button">
+        <button  v-if="showFirstHint">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
         </button>
       </div>
@@ -162,20 +162,21 @@ function openOrNot(hintNumber: number): string {
   flex-direction: row;
   column-gap: 10px;
   padding: 10px;
-
   z-index: 10;
+  background-color: #e8e8e9;
+  border: 1px solid #000;
+  color: #000;
+  font-family: inherit;
 }
 
 .hint.open {
-  background-color: #e9e9ed;
-  border: 1px solid #000;
   border-radius: 5px;
-  opacity: 0.9;
+  opacity: 0.95;
   width: 75%;
   height: 100%;
+  overflow: hidden;
   font-size: 1.5em;
-  color: #000;
-  /*transition: width 1s, height 1s, font-size 1s;*/
+  transition: width 1s, height 1s, font-size 1s, display 1s;
 }
 
 .hint button {
@@ -197,18 +198,21 @@ function openOrNot(hintNumber: number): string {
 .firstHint {
   left: 5px;
   top: 5px;
+  max-height: 140px;
 }
 
 .secondHint {
   left: -15px;
   top: -10px;
+  max-height: 200px;
 }
 
 .thirdHint {
   position: absolute;
   top: 35px;
   right: 30px;
-  max-width: 300px;
+  max-width: 500px;
+  max-height: 150px;
 }
 
 .thirdHint.open {
@@ -219,21 +223,20 @@ function openOrNot(hintNumber: number): string {
 .closed {
   width: 40px;
   height: 40px;
-  border: 1px #000 solid;
   border-radius: 50%;
   font-size: 2em;
-  font-family: inherit;
+  
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e8e8e9;
-  z-index: 30;
+  overflow: hidden;
 }
 
 .closed:hover {
   background-color: #bebec1;
   cursor: pointer;
 }
+
 
 .hintDescription {
   width: 22px;
@@ -248,6 +251,11 @@ function openOrNot(hintNumber: number): string {
 }
 
 @media (max-width: 1069px) {
+
+  .hint.open {
+    width: 90%;
+    max-height: 100%;
+  }
 
   .thirdHint.open {
       right: 0px;
