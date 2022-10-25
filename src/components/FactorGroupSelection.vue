@@ -78,7 +78,7 @@ function selectedStyle(groupKey: string): string {
     padding-top: 0.8em;
     padding-bottom: 0.8em;
     min-width: 150px;
-    background-color: #c7c7d1;
+    background-color: #eaede9;
     border-style: solid;
     border-width: 1pt;
     border-radius: 3pt;
@@ -86,7 +86,7 @@ function selectedStyle(groupKey: string): string {
 }
 
 .groupButton:hover {
-    background-color: #ababba;
+    background-color: #6fdc6f;
 }
 
 .selectIcon {

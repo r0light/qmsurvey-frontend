@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import QualityAspectsQuestion from "./QualityAspectsQuestion.vue";
 import { getEmptyImpacts } from "../aspectRating";
+import { faListSquares } from "@fortawesome/free-solid-svg-icons";
 
 export type ExampleState = "" | "productFactor" | "qualityAspects" | "done";
 
@@ -21,9 +22,11 @@ const firstTarget = ref<string>("");
 const secondTarget = ref<string>("");
 const thirdTarget = ref<string>("");
 const showFirstHint = ref<boolean>(false);
+const firstHintTextSwitch = ref<boolean>(false);
 const showSecondHint = ref<boolean>(false);
+const secondHintTextSwitch = ref<boolean>(false);
 const showThirdHint = ref<boolean>(false);
-
+const thirdHintTextSwitch = ref<boolean>(false);
 
 setTimeout(() => {
   showHintTeleporters.value = true;
@@ -33,27 +36,45 @@ setTimeout(() => {
 }, 100);
 
 setTimeout(() => {
-  showFirstHint.value = true;
+  toggleFirstHint();
 }, 500);
 
 setTimeout(() => {
-  showSecondHint.value = true;
-}, 1000);
+  toggleSecondHint();
+}, 2000);
 
 setTimeout(() => {
-  showThirdHint.value = true;
-}, 1500);
+  toggleThirdHint();
+}, 3500);
 
-function checkedFirstHint() {
-  showFirstHint.value = !showFirstHint.value;
+function toggleFirstHint() {
+  if (showFirstHint.value) {
+    showFirstHint.value = false;
+    setTimeout(() => firstHintTextSwitch.value = false, 1000);
+  } else {
+    showFirstHint.value = true;
+    firstHintTextSwitch.value = true;
+  }
 }
 
-function checkedSecondHint() {
-  showSecondHint.value = !showSecondHint.value;
+function toggleSecondHint() {
+  if (showSecondHint.value) {
+    showSecondHint.value = false;
+    setTimeout(() => secondHintTextSwitch.value = false, 1000);
+  } else {
+    showSecondHint.value = true;
+    secondHintTextSwitch.value = true;
+  }
 }
 
-function checkedThirdHint() {
-  showThirdHint.value = !showThirdHint.value;
+function toggleThirdHint() {
+  if (showThirdHint.value) {
+    showThirdHint.value = false;
+    setTimeout(() => thirdHintTextSwitch.value = false, 1000);
+  } else {
+    showThirdHint.value = true;
+    thirdHintTextSwitch.value = true;
+  }
 }
 
 function openOrNot(hintNumber: number): string {
@@ -99,13 +120,14 @@ function openOrNot(hintNumber: number): string {
   </div>
   <Teleport :to="firstTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
-      <div class="hint firstHint" :class="openOrNot(1)" @click="checkedFirstHint()">
-        <div>
+      <div class="hint firstHint" :class="openOrNot(1)" @click="toggleFirstHint()">
+        <span v-show="!firstHintTextSwitch" class="closedText" :class="openOrNot(1)">
           1.
-        </div>
-        <div v-if="showFirstHint">This is the product factor. It describes a property of a system. The extent to which a
-          product factor is present can be measured.</div>
-        <button  v-if="showFirstHint">
+        </span>
+        <span v-show="firstHintTextSwitch" class="openText" :class="openOrNot(1)">
+          1. This is the product factor. It describes a property of a system. The extent to which a product factor is present can be measured.
+        </span>
+        <button v-show="showFirstHint">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
         </button>
       </div>
@@ -113,14 +135,14 @@ function openOrNot(hintNumber: number): string {
   </Teleport>
   <Teleport :to="secondTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
-      <div class="hint secondHint" :class="openOrNot(2)" @click="checkedSecondHint()">
-        <div>
+      <div class="hint secondHint" :class="openOrNot(2)" @click="toggleSecondHint()">
+        <span v-show="!secondHintTextSwitch" class="closedText" :class="openOrNot(2)">
           2.
-        </div>
-        <div v-if="showSecondHint">These are the quality aspects ordered by their top-level quality aspects. After
-          reading the product factor think about which quality aspect the product factor impacts. The (?) describes a
-          quality aspect.</div>
-        <button v-if="showSecondHint" class="modal-default-button close-button">
+        </span>
+        <span v-show="secondHintTextSwitch" class="openText" :class="openOrNot(2)">
+          2. These are the quality aspects ordered by their top-level quality aspects. After reading the product factor think about which quality aspect the product factor impacts. The (?) describes a quality aspect.
+        </span>
+        <button v-show="showSecondHint" class="modal-default-button close-button">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
         </button>
       </div>
@@ -128,13 +150,14 @@ function openOrNot(hintNumber: number): string {
   </Teleport>
   <Teleport :to="thirdTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
-      <div class="hint thirdHint" :class="openOrNot(3)" @click="checkedThirdHint()" v-on:click.stop>
-        <div>
+      <div class="hint thirdHint" :class="openOrNot(3)" @click="toggleThirdHint()" v-on:click.stop>
+        <span v-show="!thirdHintTextSwitch" class="closedText" :class="openOrNot(3)">
           3.
-        </div>
-        <div v-if="showThirdHint">Click on a quality aspect to rate how the product factor impacts the quality aspect,
-          if it is present.</div>
-        <button v-if="showThirdHint" class="modal-default-button close-button">
+        </span>
+        <span v-show="thirdHintTextSwitch" class="openText" :class="openOrNot(3)">
+          3. Click on a quality aspect to rate how the product factor impacts the quality aspect, if it is present.
+        </span>
+        <button v-show="showThirdHint" class="modal-default-button close-button">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
         </button>
       </div>
@@ -163,10 +186,11 @@ function openOrNot(hintNumber: number): string {
   column-gap: 10px;
   padding: 10px;
   z-index: 10;
-  background-color: #e8e8e9;
+  background-color: #cde5d3;
   border: 1px solid #000;
   color: #000;
   font-family: inherit;
+  transition: width 1s, height 1s, font-size 1s, border-radius 1.5s;
 }
 
 .hint.open {
@@ -176,7 +200,6 @@ function openOrNot(hintNumber: number): string {
   height: 100%;
   overflow: hidden;
   font-size: 1.5em;
-  transition: width 1s, height 1s, font-size 1s, display 1s;
 }
 
 .hint button {
@@ -187,12 +210,36 @@ function openOrNot(hintNumber: number): string {
   border-style: none;
   border-radius: inherit;
   background-color: inherit;
-  color: #818198;
+  color: #6d7e67;
 }
 
 .hint button:hover {
   /*color: var(--vt-c-indigo);*/
-  color: #505062;
+  color: #556250;
+}
+
+.closedText {
+  transition: opacity 1s;
+}
+
+.openText {
+  transition: opacity 1s;
+}
+
+.closedText.closed {
+  opacity: 1;
+}
+
+.closedText.open {
+  opacity: 0;
+}
+
+.openText.closed {
+  opacity: 0;
+}
+
+.openText.open {
+  opacity: 1;
 }
 
 .firstHint {
@@ -213,14 +260,16 @@ function openOrNot(hintNumber: number): string {
   right: 30px;
   max-width: 500px;
   max-height: 150px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .thirdHint.open {
   width: 500px;
   height: fit-content;
+  font-size: 1.4em;
 }
 
-.closed {
+.hint.closed {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -232,8 +281,8 @@ function openOrNot(hintNumber: number): string {
   overflow: hidden;
 }
 
-.closed:hover {
-  background-color: #bebec1;
+.hint.closed:hover {
+  background-color: #abd4b5;
   cursor: pointer;
 }
 
@@ -260,6 +309,9 @@ function openOrNot(hintNumber: number): string {
   .thirdHint.open {
       right: 0px;
       left: 20px;
+      width: 300px;
+      height: fit-content;
+      max-height: fit-content;
   }
 }
 

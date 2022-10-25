@@ -45,6 +45,13 @@ const emit = defineEmits<{
     font-size: 1.2em;
     width: 8em;
     padding: 0.5em;
+    background-color: #e9e9ed;
+    border: 1px solid #b9b9c6;
+    border-radius: 5px;
+}
+
+.navigation button:hover {
+    background-color: #d5d5dd;
 }
 
 .previous {
