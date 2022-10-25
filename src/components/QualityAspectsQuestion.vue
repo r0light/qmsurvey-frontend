@@ -13,7 +13,10 @@ const qualityAspects = getQualityAspects();
 const props = defineProps<{
   factor: Factor;
   isExample: boolean;
-  exampleState: ExampleState;
+}>();
+
+const emit = defineEmits<{
+  (e: "triedExample"): void;
 }>();
 
 function withTooltips(description: string): string {
@@ -24,6 +27,9 @@ function processRating(aspectKey: string, rating: number) {
   //save rating
   if (props.factor.impacts) {
     props.factor.impacts[aspectKey] = rating;
+  }
+  if (props.isExample) {
+    emit("triedExample");
   }
 }
 
@@ -36,8 +42,6 @@ function processRating(aspectKey: string, rating: number) {
         <h1>{{ factor.name }}</h1>
         <p v-html="withTooltips(factor.description)"></p>
       </div>
-    <div v-if="isExample && exampleState === 'done'" class="drawnHint pfHint"><img src="/productfactor.svg"
-        alt="product factor" width="250" /></div>
     <p class="larger">
       Which quality aspect(s) does this product factor impact? (typically between one and three)
     </p>
@@ -59,8 +63,6 @@ function processRating(aspectKey: string, rating: number) {
         </div>
       </div>
     </div>
-    <div v-if="isExample && exampleState === 'done'" class="drawnHint qaHint"><img src="/qualityaspects.svg"
-        alt="quality aspects" width="420" /></div>
   </div>
 </template>
 

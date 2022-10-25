@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 const props = defineProps<{
     backwardText: string
     forwardText: string
+    nextHint: string
 }>()
 
 const showBackward = computed<boolean>(() => (props.backwardText !== ""))
@@ -24,11 +25,14 @@ const emit = defineEmits<{
           <font-awesome-icon icon="fa-solid fa-circle-left" /> {{ backwardText }}
         </span>
       </button>
+      <div class="nextButtonWrapper">
+        <span v-if="nextHint !== ''" v-html="nextHint"></span>
       <button class="next" @click="emit('forwardClicked')" v-if="showForward">
         <span>
             {{ forwardText }} <font-awesome-icon icon="fa-solid fa-circle-right" />
         </span>
       </button>
+      </div>
     </div>
 </template>
 
@@ -39,11 +43,13 @@ const emit = defineEmits<{
     justify-content: space-between;
     width: 100%;
     margin-top: 70px;
+    align-items: flex-end;
 }
 
 .navigation button {
     font-size: 1.2em;
     width: 8em;
+    height: 2.5em;
     padding: 0.5em;
     background-color: #e9e9ed;
     border: 1px solid #b9b9c6;
@@ -60,5 +66,12 @@ const emit = defineEmits<{
 
 .next {
   margin-left: auto;
+}
+
+.nextButtonWrapper {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

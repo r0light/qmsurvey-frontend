@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import QualityAspectsQuestion from "./QualityAspectsQuestion.vue";
 import { getEmptyImpacts } from "../aspectRating";
-import { faListSquares } from "@fortawesome/free-solid-svg-icons";
 
 export type ExampleState = "" | "productFactor" | "qualityAspects" | "done";
 
@@ -15,7 +14,13 @@ const exampleFactor = {
   answered: false
 };
 
-const state = ref<ExampleState>("");
+const emit = defineEmits<{
+  (e: "triedExample"): void;
+}>();
+
+function propagateTriedExample() {
+  emit("triedExample");
+}
 
 const showHintTeleporters = ref<boolean>(false);
 const firstTarget = ref<string>("");
@@ -116,7 +121,7 @@ function openOrNot(hintNumber: number): string {
   </p>
   -->
   <div class="exampleWrapper">
-    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" v-bind:exampleState="state" />
+    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" @triedExample="propagateTriedExample"/>
   </div>
   <Teleport :to="firstTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
@@ -199,7 +204,7 @@ function openOrNot(hintNumber: number): string {
   width: 75%;
   height: 100%;
   overflow: hidden;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .hint button {
@@ -245,13 +250,13 @@ function openOrNot(hintNumber: number): string {
 .firstHint {
   left: 5px;
   top: 5px;
-  max-height: 140px;
+  max-height: 100px;
 }
 
 .secondHint {
   left: -15px;
   top: -10px;
-  max-height: 200px;
+  max-height: 150px;
 }
 
 .thirdHint {
@@ -259,21 +264,21 @@ function openOrNot(hintNumber: number): string {
   top: 35px;
   right: 30px;
   max-width: 500px;
-  max-height: 150px;
+  max-height: 130px;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .thirdHint.open {
   width: 500px;
   height: fit-content;
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 .hint.closed {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  font-size: 2em;
+  font-size: 1.7em;
   
   display: flex;
   justify-content: center;

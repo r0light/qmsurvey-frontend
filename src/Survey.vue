@@ -11,6 +11,8 @@ import Modal from "./components/Modal.vue";
 import ConnectionErrorModal from "./components/ConnectionErrorModal.vue";
 import Mask from "./components/elements/Mask.vue";
 import {
+  checkIfExampleTriedLocally,
+  saveExampleTriedLocally,
   saveGroupsLocally,
   loadLocallyStoredGroups,
   loadLocallyStoredFactors,
@@ -121,6 +123,16 @@ const loading = ref(false);
 const showErrorModal = ref(false);
 const showNoFactorsModal = ref(false);
 const transitionDirection = ref("fadeToLeft");
+const didExample = ref(checkIfExampleTriedLocally());
+const exampleNextHint = ref(didExample.value ? "You are ready!" : "Try the example first!");
+let gotExampleHint = false;
+const showExampleModal = ref(false);
+
+function recognizeTriedExample() {
+  didExample.value = true;
+  saveExampleTriedLocally();
+  exampleNextHint.value = "You are ready!";
+}
 
 function answerQuestion(factorIndex: number) {
   transitionDirection.value = "fadeToLeft";
@@ -145,6 +157,14 @@ function getNextState(currentState: SurveyState): SurveyState {
 const showNoGroupsModal = ref(false);
 
 function next() {
+
+  // check if the example has been tried, otherwise show a hint, but only once
+  if (currentState.value === "example" && !didExample.value && !gotExampleHint) {
+    showExampleModal.value = true;
+    gotExampleHint = true;
+    return;
+  }
+
   if (currentState.value === "selection") {
     if (selectedGroups.value.length <= 0) {
       // do not proceed if no group has been selected
@@ -235,7 +255,7 @@ function previous() {
     <Transition :name="transitionDirection" mode="out-in">
       <div v-if="currentState === 'welcome'" key="1" class="page">
         <Welcome />
-        <NavigationControls :backwardText="''" :forwardText="'Start'" @forwardClicked="next()" />
+        <NavigationControls :backwardText="''" :forwardText="'Start'" @forwardClicked="next()" nextHint=""/>
         <p class="newParagraph detailInfo">
           <span class="bold">Background & Privacy Policy</span><br>
           This survey is part of our general effort of creating a quality model for cloud-native application
@@ -249,31 +269,31 @@ function previous() {
         </p>
       </div>
       <div v-else-if="currentState === 'example'" key="2" class="page">
-        <ExampleQuestion />
+        <ExampleQuestion @triedExample="recognizeTriedExample"/>
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Let\'s start!'"
-          @forwardClicked="next()" />
+          @forwardClicked="next()" :nextHint="exampleNextHint"/>
       </div>
       <div v-else-if="currentState === 'selection'" key="3" class="page">
         <FactorGroupSelection :groups="selectedGroups" @groupSelected="addGroupToSelection"
           @groupDeselected="removeGroupFromSelection" />
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Next'"
-          @forwardClicked="next()" />
+          @forwardClicked="next()" nextHint=""/>
       </div>
       <div v-else-if="currentState === 'overview'" key="4" class="page">
         <FactorOverview :factors="factors" @factorSelected="factorIndex => answerQuestion(factorIndex)">
         </FactorOverview>
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Finish'"
-          @forwardClicked="next()" />
+          @forwardClicked="next()" nextHint=""/>
       </div>
       <div v-else-if="currentState === 'question'" key="5" class="page">
         <QualityAspectsQuestion v-bind:factor="currentFactor" v-bind:isExample="false" v-bind:exampleState="''" />
         <NavigationControls :backwardText="'Cancel'" @backwardClicked="previous()" :forwardText="'Save'"
-          @forwardClicked="next()" />
+          @forwardClicked="next()" nextHint=""/>
       </div>
       <div v-else-if="currentState === 'demographics'" key="6" class="page">
         <Demographics @updatedDemographics="processDemographics" />
         <NavigationControls :backwardText="'Previous'" @backwardClicked="previous()" :forwardText="'Submit'"
-          @forwardClicked="next()" />
+          @forwardClicked="next()" nextHint=""/>
       </div>
       <div v-else-if="currentState === 'done'" key="7" class="page">
         <Feedback v-bind:isPilotFeedback="isPilot" v-bind:factorsForFeedback="factors" />
@@ -287,6 +307,20 @@ function previous() {
       next();
     }
   " />
+  <Teleport to="body">
+    <Modal :show="showExampleModal" @close="showExampleModal = false">
+      <template #body>
+        <div class="exampleHint">
+          <h3>Are you sure you want to start?</h3>
+          <p>
+            You haven't tried the example yet. Please try to click on a quality
+            aspect to state an impact.
+          </p>
+          <button class="okButton" @click="showExampleModal = false">OK</button>
+        </div>
+      </template>
+    </Modal>
+  </Teleport>
   <Teleport to="body">
     <Modal :show="showNoGroupsModal" @close="showNoGroupsModal = false">
       <template #body>
