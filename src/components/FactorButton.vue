@@ -46,6 +46,7 @@ function getStyleForStatus(answered: boolean): "todo" | "done" {
   border-width: 1pt;
   border-radius: 3pt;
   border-color: var(--vt-c-indigo);
+  align-items: center;
 }
 
 .todo {
@@ -58,7 +59,6 @@ function getStyleForStatus(answered: boolean): "todo" | "done" {
 
 .done {
   background-color: #fad252;
-  /* padding-right: 1.6em; */
 }
 
 .done:hover {

@@ -91,7 +91,7 @@ function processRating(aspectKey: string, rating: number) {
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-width: 160px;
+  max-width: 158px;
 }
 
 .top-aspect {
