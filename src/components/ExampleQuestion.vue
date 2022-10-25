@@ -195,7 +195,6 @@ function openOrNot(hintNumber: number): string {
   border: 1px solid #000;
   color: #000;
   font-family: inherit;
-  transition: width 1s, height 1s, font-size 1s, border-radius 1.5s;
 }
 
 .hint.open {
@@ -205,6 +204,7 @@ function openOrNot(hintNumber: number): string {
   height: 100%;
   overflow: hidden;
   font-size: 1.3em;
+  transition: width 1s, height 1s, font-size 1s;
 }
 
 .hint button {
@@ -279,11 +279,11 @@ function openOrNot(hintNumber: number): string {
   height: 40px;
   border-radius: 50%;
   font-size: 1.7em;
-  
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  transition: width 1s, height 1s, font-size 1s, border-radius 2.5s;
 }
 
 .hint.closed:hover {
