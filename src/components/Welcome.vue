@@ -36,7 +36,10 @@
     <p class="newParagraph mainInfo">
       For every completion of the survey, we donate 2€ (in equivalent £) to <a href="https://codeclub.org">Code Club</a>
       <span><a href="https://codeclub.org"><img class="inline-logo" src="/codeclub.png"
-            alt="Code Club Logo" /></a></span>
+            alt="Code Club Logo" /></a></span>. Thank you for your support!
+    </p>
+    <p class="newParagraph mainInfo">
+      Jonas Fritzsch and Robin Lichtenthäler
     </p>
 
     <!--
@@ -106,7 +109,7 @@
 }
 
 .newParagraph {
-  margin-top: 1em;
+  margin-top: 15px;
 }
 
 .bold {
@@ -118,7 +121,7 @@
 }
 
 .inline-logo {
-  max-width: 60px;
+  max-width: 55px;
   vertical-align: middle;
   margin-left: 5px;
 }

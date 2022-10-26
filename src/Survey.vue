@@ -462,7 +462,7 @@ button:focus {
   background-color: #f2f2f2;
   border: #000 solid 1px;
   border-radius: 3px;
-  margin: 50px 0 5px 0;
+  margin: 40px 0 5px 0;
   padding: 0rem 1rem 0rem 1rem;
 }
 
