@@ -3,8 +3,8 @@
 <template>
   <div class="welcome">
     <div class="logos">
-      <img src="logo-bamberg.png" alt="University of Bamberg Logo"/>
-      <img src="logo-stuttgart.png" alt="University of Stuttgart Logo"/>
+      <img src="/logo-bamberg.png" alt="University of Bamberg Logo"/>
+      <img src="/logo-stuttgart.png" alt="University of Stuttgart Logo"/>
     </div>
     <h1>
       Hello <font-awesome-icon icon="fa-regular fa-face-smile" />
@@ -27,7 +27,7 @@
       We ask you to rate, how individual product factors impact software quality aspects. We show an example on the next page.
     </p>
     <p class="newParagraph mainInfo">
-      For every completion of the survey, we donate 2€ (in equivalent £) to <a href="https://codeclub.org">Code Club</a> <span><a href="https://codeclub.org"><img class="inline-logo" src="codeclub.png" alt="Code Club Logo"/></a></span>
+      For every completion of the survey, we donate 2€ (in equivalent £) to <a href="https://codeclub.org">Code Club</a> <span><a href="https://codeclub.org"><img class="inline-logo" src="/codeclub.png" alt="Code Club Logo"/></a></span>
     </p>
 
     <!--
