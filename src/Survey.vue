@@ -11,33 +11,39 @@ import Modal from "./components/Modal.vue";
 import ConnectionErrorModal from "./components/ConnectionErrorModal.vue";
 import Mask from "./components/elements/Mask.vue";
 import {
+  saveLastStateLocally,
+  loadLocallyStoredState,
   checkIfExampleTriedLocally,
   saveExampleTriedLocally,
   saveGroupsLocally,
   loadLocallyStoredGroups,
   loadLocallyStoredFactors,
+  loadFactorLocally,
   saveAllFactorsLocally,
+  saveFactorLocally,
   loadLocallyStoredDemographics,
   saveDemographicsLocally,
-  submitDemographics,
-  submitFactors,
   clearStoredSurveyData,
-  saveFactorLocally,
-  loadFactorLocally,
+  sendClientStateUpdate,
+  submitFactors,
+  submitDemographics,
 } from "./surveyHandling";
 import { getEmptyImpacts } from "./aspectRating";
 import type { Factor, InitialFactor } from "./factors";
-import { listGroups, getByGroups } from "./factors";
+import { getByGroups } from "./factors";
 import type { DemographicValues } from "./demographics";
 import NavigationControls from "./components/elements/NavigationControls.vue";
 import ProgressOverview from "./components/elements/ProgressOverview.vue"
 
 export type SurveyState = "welcome" | "example" | "selection" | "overview" | "question" | "demographics" | "done";
+const stateOrder: SurveyState[] = ["welcome", "example", "selection", "overview", "question", "demographics", "done"];
 
 const props = defineProps<{
   isPilot: boolean;
   startTime: number;
 }>();
+
+let lastState = loadLocallyStoredState();
 
 // prepare groups: load if groups are already stored locally, otherwise initialize
 let loadedGroups: string[] = loadLocallyStoredGroups();
@@ -138,6 +144,7 @@ function answerQuestion(factorIndex: number) {
   transitionDirection.value = "fadeToLeft";
   currentFactor.value = factors[factorIndex];
   currentState.value = "question";
+  syncLastState();
 }
 
 const currentState = ref<SurveyState>("welcome");
@@ -151,6 +158,19 @@ function getNextState(currentState: SurveyState): SurveyState {
     case "question": return "overview";
     case "demographics": return "done";
     default: return "welcome";
+  }
+}
+
+function syncLastState() {
+  let lastStateIndex = stateOrder.indexOf(lastState);
+  let newState = currentState.value;
+  let newStateIndex = stateOrder.indexOf(newState);
+
+  if (newStateIndex > lastStateIndex) {
+    sendClientStateUpdate(newState).then(response => {
+      saveLastStateLocally(newState);
+      lastState = newState;
+    })
   }
 }
 
@@ -213,6 +233,7 @@ function next() {
 function proceed() {
   transitionDirection.value = "fadeToLeft";
   currentState.value = getNextState(currentState.value);
+  syncLastState();
 }
 
 function getPreviousState(currentState: SurveyState): SurveyState {

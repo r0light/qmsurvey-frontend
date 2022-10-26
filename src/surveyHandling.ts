@@ -3,6 +3,20 @@ import type { DemographicValues } from "./demographics"
 import { getEmptyDemographics } from "./demographics";
 import { generateSecondsTimeStamp } from './timerManagement';
 import type { PilotFeedback } from "./components/Feedback.vue";
+import type { SurveyState } from "./Survey.vue";
+
+export function saveLastStateLocally(lastState: SurveyState): void {
+    localStorage['lastState'] = lastState;
+}
+
+export function loadLocallyStoredState(): SurveyState {
+    let lastState: SurveyState = "welcome";
+    let storedState = localStorage.getItem('lastState');
+    if (storedState) {
+        lastState = storedState as SurveyState;
+    }
+    return lastState;
+}
 
 export function saveExampleTriedLocally(): void {
     localStorage['triedExample'] = true;
@@ -124,6 +138,7 @@ export function checkLocallyIfPilot(): boolean {
 }
 
 export function clearStoredSurveyData(): void {
+    localStorage.removeItem('lastState');
     localStorage.removeItem('triedExample');
     localStorage.removeItem('token');
     localStorage.removeItem('sessionId');
@@ -149,7 +164,7 @@ switch (import.meta.env.MODE) {
         serverURL = "http://localhost:8080";
         break;
     case "production":
-        serverURL = "https://qmsurvey.pi.uni-bamberg.de"; // "https://qmsurvey.pi.uni-bamberg.de:80" "http://localhost:80"
+        serverURL = "https://qmsurvey.pi.uni-bamberg.de"; // "https://qmsurvey.pi.uni-bamberg.de" "http://localhost:80"
         break;
     case "offline":
     default:
@@ -174,7 +189,7 @@ export function checkTokenValidity(): Promise<TokenValidationResult> {
                 if (storedToken && currentToken === storedToken && localStorage['sessionId'] && localStorage['pilot']) {
                     token = storedToken;
                     sessionId = localStorage['sessionId'];
-                    pilot = (localStorage['pilot']  === "true");
+                    pilot = (localStorage['pilot'] === "true");
                     resolve({ isPilot: pilot, startTime: currentTime });
                 } else {
                     clearLocallyStoredFactors();
@@ -190,25 +205,25 @@ export function checkTokenValidity(): Promise<TokenValidationResult> {
                             clientStartTime: new Date(currentTime * 1000).toISOString() // *1000 to convert to milliseconds again
                         })
                     })
-                    .then(response => {
-                        if (response.status == 200) {
-                            token = currentToken;
-                            localStorage['token'] = currentToken;
-                            sessionId = uuid;
-                            localStorage['sessionId'] = sessionId;
-                            return response.json();
-                        } else {
-                            reject(response);
-                        }
-                    })
-                    .then(responseBody => {
-                        pilot = responseBody.pilot;
-                        localStorage['pilot'] = pilot;
-                        resolve({ isPilot: pilot, startTime: currentTime });
-                    })
-                    .catch(error => {
-                        reject(error);
-                    })
+                        .then(response => {
+                            if (response.status == 200) {
+                                token = currentToken;
+                                localStorage['token'] = currentToken;
+                                sessionId = uuid;
+                                localStorage['sessionId'] = sessionId;
+                                return response.json();
+                            } else {
+                                reject(response);
+                            }
+                        })
+                        .then(responseBody => {
+                            pilot = responseBody.pilot;
+                            localStorage['pilot'] = pilot;
+                            resolve({ isPilot: pilot, startTime: currentTime });
+                        })
+                        .catch(error => {
+                            reject(error);
+                        })
                 }
             } else {
                 reject("No survey token provided!");
@@ -234,6 +249,34 @@ function generateUUID(): string {
     });
 };
 
+export function sendClientStateUpdate(newState: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (import.meta.env.MODE === "offline") {
+            resolve();
+        } else {
+            // send only those factors which have been answered and parse factors with correct naming for backend
+
+            fetch(`${serverURL}/backend/api/${sessionId}/clientstate`, {
+                method: 'PUT',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                redirect: 'follow',
+                body: JSON.stringify({
+                    token: token,
+                    lastState: newState
+                })
+            }).then(response => {
+                if (response.status == 200) {
+                    resolve();
+                } else {
+                    reject(response);
+                }
+            }).catch(error => {
+                reject(error);
+            })
+        }
+    })
+}
 
 export function submitFactors(factors: Factor[]): Promise<void> {
     return new Promise((resolve, reject) => {

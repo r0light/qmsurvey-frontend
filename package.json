@@ -1,6 +1,6 @@
 {
   "name": "qm-validation",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "scripts": {
     "dev": "vite",
     "offline": "vite --mode offline",
