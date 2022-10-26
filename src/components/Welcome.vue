@@ -2,6 +2,10 @@
 
 <template>
   <div class="welcome">
+    <div class="logos">
+      <img src="logo-bamberg.png" alt="University of Bamberg Logo"/>
+      <img src="logo-stuttgart.png" alt="University of Stuttgart Logo"/>
+    </div>
     <h1>
       Hello <font-awesome-icon icon="fa-regular fa-face-smile" />
     </h1>
@@ -21,6 +25,9 @@
     </p>
     <p class="newParagraph mainInfo">
       We ask you to rate, how individual product factors impact software quality aspects. We show an example on the next page.
+    </p>
+    <p class="newParagraph mainInfo">
+      For every completion of the survey, we donate 2€ (in equivalent £) to <a href="https://codeclub.org">Code Club</a> <span><a href="https://codeclub.org"><img class="inline-logo" src="codeclub.png" alt="Code Club Logo"/></a></span>
     </p>
 
     <!--
@@ -68,6 +75,19 @@
   padding: 0 1rem 0 1rem;
 }
 
+.logos {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  column-gap: 20px;
+}
+
+.logos img {
+  width: 100%;
+  min-width: 50px;
+  max-width: 120px;
+}
+
 .newParagraph {
   margin-top: 1em;
 }
@@ -78,6 +98,11 @@
 
 .mainInfo {
   font-size: 1.2em;
+}
+
+.inline-logo {
+  max-width: 60px;
+  vertical-align: middle;
 }
 
 .termsDescription {
