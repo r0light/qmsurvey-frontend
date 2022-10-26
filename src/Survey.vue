@@ -566,8 +566,5 @@ button:focus {
     margin: 0 2rem 0 0;
   }
 
-  .detailInfo {
-    margin-top: 110px;
-  }
 }
 </style>

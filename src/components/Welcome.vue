@@ -2,32 +2,41 @@
 
 <template>
   <div class="welcome">
-    <div class="logos">
-      <img src="/logo-bamberg.png" alt="University of Bamberg Logo"/>
-      <img src="/logo-stuttgart.png" alt="University of Stuttgart Logo"/>
+    <div class="topWrapper">
+      <h1>
+        Hello
+        <font-awesome-icon icon="fa-regular fa-face-smile" />
+      </h1>
+      <div class="logos">
+        <img src="/logo-bamberg.png" alt="University of Bamberg Logo" />
+        <img src="/logo-stuttgart.png" alt="University of Stuttgart Logo" />
+      </div>
     </div>
-    <h1>
-      Hello <font-awesome-icon icon="fa-regular fa-face-smile" />
-    </h1>
+
 
     <p class="newParagraph"></p>
     <p class="newParagraph mainInfo">
-      Thank you for your willingness to participate in this survey! 
+      Thank you for your willingness to participate in this survey!
     </p>
     <p class="newParagraph mainInfo">
       We are software engineering researchers from the universities of Bamberg and Stuttgart (Germany).
     </p>
     <p class="newParagraph mainInfo">
-      Currently, we are investigating how different <span class="bold">product factors</span> of a <span class="bold">cloud-native software system</span> impact software quality.
+      Currently, we are investigating how different <span class="bold">product factors</span> of a <span
+        class="bold">cloud-native software system</span> impact software quality.
     </p>
     <p class="newParagraph mainInfo">
-      Product factors are properties of a software system which characterize the way it is implemented and deployed. Product factors can also be the result of applying certain patterns or practices.
+      Product factors are properties of a software system which characterize the way it is implemented and deployed.
+      Product factors can also be the result of applying certain patterns or practices.
     </p>
     <p class="newParagraph mainInfo">
-      We ask you to rate, how individual product factors impact software quality aspects. We show an example on the next page.
+      We ask you to rate, how individual product factors impact software quality aspects. We show an example on the next
+      page.
     </p>
     <p class="newParagraph mainInfo">
-      For every completion of the survey, we donate 2€ (in equivalent £) to <a href="https://codeclub.org">Code Club</a> <span><a href="https://codeclub.org"><img class="inline-logo" src="/codeclub.png" alt="Code Club Logo"/></a></span>
+      For every completion of the survey, we donate 2€ (in equivalent £) to <a href="https://codeclub.org">Code Club</a>
+      <span><a href="https://codeclub.org"><img class="inline-logo" src="/codeclub.png"
+            alt="Code Club Logo" /></a></span>
     </p>
 
     <!--
@@ -75,6 +84,14 @@
   padding: 0 1rem 0 1rem;
 }
 
+.topWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap-reverse;
+}
+
 .logos {
   display: flex;
   flex-direction: row;
@@ -85,7 +102,7 @@
 .logos img {
   width: 100%;
   min-width: 50px;
-  max-width: 120px;
+  max-width: 100px;
 }
 
 .newParagraph {
@@ -103,6 +120,7 @@
 .inline-logo {
   max-width: 60px;
   vertical-align: middle;
+  margin-left: 5px;
 }
 
 .termsDescription {
@@ -120,5 +138,4 @@
     display: none;
   }
 }
-
 </style>
