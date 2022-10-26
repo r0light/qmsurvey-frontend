@@ -126,7 +126,7 @@ function processRating(aspectKey: string, rating: number) {
 
   display: block;
   position: absolute;
-  bottom: -6em;
+  bottom: -5em;
   left: -6em;
   width: 23em;
   padding: 0.5em;

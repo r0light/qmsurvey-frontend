@@ -28,6 +28,7 @@ const emit = defineEmits<{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 50px;
 }
 
 .factorColumn {
