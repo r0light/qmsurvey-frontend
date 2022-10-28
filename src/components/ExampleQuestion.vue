@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { Ref } from "vue";
 import QualityAspectsQuestion from "./QualityAspectsQuestion.vue";
 import { getEmptyImpacts } from "../aspectRating";
 
@@ -53,32 +54,28 @@ setTimeout(() => {
 }, 3500);
 
 function toggleFirstHint() {
-  if (showFirstHint.value) {
-    showFirstHint.value = false;
-    setTimeout(() => firstHintTextSwitch.value = false, 1000);
-  } else {
-    showFirstHint.value = true;
-    firstHintTextSwitch.value = true;
-  }
+  toggleHintAndTextDelayed(showFirstHint, firstHintTextSwitch);
 }
 
 function toggleSecondHint() {
-  if (showSecondHint.value) {
-    showSecondHint.value = false;
-    setTimeout(() => secondHintTextSwitch.value = false, 1000);
-  } else {
-    showSecondHint.value = true;
-    secondHintTextSwitch.value = true;
-  }
+  toggleHintAndTextDelayed(showSecondHint, secondHintTextSwitch);
 }
 
 function toggleThirdHint() {
-  if (showThirdHint.value) {
-    showThirdHint.value = false;
-    setTimeout(() => thirdHintTextSwitch.value = false, 1000);
+  toggleHintAndTextDelayed(showThirdHint, thirdHintTextSwitch);
+}
+
+function toggleHintAndTextDelayed(showHint: Ref<boolean>, showText: Ref<boolean>) {
+  if (showHint.value) {
+    showHint.value = false;
+    setTimeout(() => {
+      if (!showHint.value) { // because of the animation delay, only set to false if still false
+        showText.value = false
+      }
+    }, 1000);
   } else {
-    showThirdHint.value = true;
-    thirdHintTextSwitch.value = true;
+    showHint.value = true;
+    showText.value = true;
   }
 }
 
@@ -110,18 +107,9 @@ function openOrNot(hintNumber: number): string {
 </script>
 
 <template>
-  <!--
-  <p>
-    The following <span class="bold">exemplary question</span> explains the
-    concept:
-    The <em>product factor</em> ({{ exampleFactor.name }}) is described at
-    the top and you can click on any of the quality aspects (Confidentiality, Reusability, ...) below it to rate how it impacts that quality aspect if it is present in a system.
-    The quality aspects mostly stem from the <a href="https://iso25000.com/index.php/en/iso-25000-standards/iso-25010">ISO25010 standard for software product quality</a> and for each a short explanation is provided by hovering over the question mark. 
-    If you are ready, you can start on the next page where the actual product factors are listed.
-  </p>
-  -->
   <div class="exampleWrapper">
-    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true" @triedExample="propagateTriedExample"/>
+    <QualityAspectsQuestion v-bind:factor="exampleFactor" v-bind:isExample="true"
+      @triedExample="propagateTriedExample" />
   </div>
   <Teleport :to="firstTarget" v-if="showHintTeleporters">
     <Transition name="fade" mode="out-in">
@@ -130,7 +118,7 @@ function openOrNot(hintNumber: number): string {
           1.
         </span>
         <span v-show="firstHintTextSwitch" class="openText" :class="openOrNot(1)">
-          1. This is the product factor. It describes a property of a system. The extent to which a product factor is present can be measured.
+          1. This is the product factor. It describes a measurable property of a system.
         </span>
         <button v-show="showFirstHint">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
@@ -145,7 +133,7 @@ function openOrNot(hintNumber: number): string {
           2.
         </span>
         <span v-show="secondHintTextSwitch" class="openText" :class="openOrNot(2)">
-          2. These are the quality aspects ordered by their top-level quality aspects. After reading the product factor think about which quality aspect the product factor impacts. The (?) describes a quality aspect.
+          2. These are the quality aspects ordered by their top-level quality aspects. Think about which quality aspect the product factor above impacts. 
         </span>
         <button v-show="showSecondHint" class="modal-default-button close-button">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
@@ -160,7 +148,7 @@ function openOrNot(hintNumber: number): string {
           3.
         </span>
         <span v-show="thirdHintTextSwitch" class="openText" :class="openOrNot(3)">
-          3. Click on a quality aspect to rate how the product factor impacts the quality aspect, if it is present.
+          3. Click on a quality aspect to rate how it is impacted if a system features this product factor.
         </span>
         <button v-show="showThirdHint" class="modal-default-button close-button">
           <font-awesome-icon icon="fa-solid fa-circle-xmark" />
@@ -256,22 +244,22 @@ function openOrNot(hintNumber: number): string {
 .secondHint {
   left: -15px;
   top: -10px;
-  max-height: 150px;
+  max-height: 90px;
 }
 
 .thirdHint {
   position: absolute;
   top: 35px;
   right: 30px;
-  max-width: 500px;
-  max-height: 130px;
+  max-width: 400px;
+  max-height: 100px;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .thirdHint.open {
   width: 500px;
   height: fit-content;
-  font-size: 1.3em;
+  font-size: 1.24em;
 }
 
 .hint.closed {
@@ -312,11 +300,11 @@ function openOrNot(hintNumber: number): string {
   }
 
   .thirdHint.open {
-      right: 0px;
-      left: 20px;
-      width: 300px;
-      height: fit-content;
-      max-height: fit-content;
+    right: 0px;
+    left: 20px;
+    width: 300px;
+    height: fit-content;
+    max-height: fit-content;
   }
 }
 

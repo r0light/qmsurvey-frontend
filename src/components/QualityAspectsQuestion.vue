@@ -43,7 +43,7 @@ function processRating(aspectKey: string, rating: number) {
         <p v-html="withTooltips(factor.description)"></p>
       </div>
     <p class="larger">
-      Which quality aspect(s) does this product factor impact? (typically between one and three)
+      Which quality aspect(s) does this product factor impact? (typically between one and five)
     </p>
     <div class="qaWrapper">
       <div id="qaHintAnchor"></div>
