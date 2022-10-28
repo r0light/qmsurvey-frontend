@@ -23,13 +23,9 @@
     </p>
     <p class="newParagraph mainInfo">
       Currently, we are investigating how different <span class="bold">product factors</span> of a <span
-        class="bold">cloud-native software system</span> impact software quality.
-    </p>
-    <p class="newParagraph mainInfo">
+        class="bold">cloud-native software system</span> impact software quality.<br>
       Product factors are properties of a software system which characterize the way it is implemented and deployed.
-      Product factors can also be the result of applying certain patterns or practices.
-    </p>
-    <p class="newParagraph mainInfo">
+      Product factors can also be the result of applying certain patterns or practices.<br>
       We ask you to rate, how individual product factors impact software quality aspects. We show an example on the next
       page.
     </p>
@@ -99,13 +95,13 @@
   display: flex;
   flex-direction: row;
   align-self: flex-end;
-  column-gap: 20px;
 }
 
 .logos img {
   width: 100%;
   min-width: 50px;
   max-width: 100px;
+  margin: 0 15px 0 15px;
 }
 
 .newParagraph {

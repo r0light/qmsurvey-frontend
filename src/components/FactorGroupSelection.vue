@@ -57,7 +57,7 @@ function selectedStyle(groupKey: string): string {
     display: flex;
     flex-direction: column;
     row-gap: 30px;
-    margin-bottom: 100px;
+    margin: 10px 0 100px 0;
 }
 
 .groupOverview {

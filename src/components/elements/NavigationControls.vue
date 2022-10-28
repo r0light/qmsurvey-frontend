@@ -42,7 +42,7 @@ const emit = defineEmits<{
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 22px;
     align-items: flex-end;
 }
 
