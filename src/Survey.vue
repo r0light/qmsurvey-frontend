@@ -168,7 +168,10 @@ function syncLastState() {
 
   if (newStateIndex > lastStateIndex) {
     sendClientStateUpdate(newState).then(response => {
-      saveLastStateLocally(newState);
+      if (newState !== "done") {
+        // only save in local storage if it is not the last state ("done")
+        saveLastStateLocally(newState);
+      }
       lastState = newState;
     })
   }
